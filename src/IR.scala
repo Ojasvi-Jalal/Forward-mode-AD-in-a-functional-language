@@ -1,14 +1,7 @@
 import java.util.concurrent.atomic.AtomicLong
 
-import lift.arithmetic.{ArithExpr, Cst, ExtensibleVar, Range, RangeUnknown, SimplifiedExpr, Var}
-
 import scala.language.implicitConversions
 
-object Type {
-  implicit def aeToATT(ae: ArithExpr): ArithTypeT = ArithType(ae)
-
-  implicit def intToATT(i: Int): ArithTypeT = ArithType(Cst(i))
-}
 
 /**
   * the root node of all expressions and types
@@ -52,11 +45,21 @@ case class Lambda(p: Expr, b: Expr) extends Function{
 
 trait BuiltInFunc extends Function
 
-case class add(a: Scalar, b: Scalar) extends BuiltInFunc {
+case class Add(lhs: Expr, rhs : Expr) extends FunCall {
 
+  def inferType() : Type = {
+    if (lhs.t != rhs.t)
+      thorw Excpetion...
+    this.t = lhs.t
+    lhs.t
+  }
+
+  override def build(newChildren: Seq[IR]): Add = Add(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr])
+
+  override def children: Seq[Expr] = Seq(lhs,rhs)
 }
 
-case class multiply(a: Scalar, b: Scalar) extends BuiltInFunc{
+case class Multiply(a: Scalar, b: Scalar) extends BuiltInFunc{
 
 }
 
@@ -66,7 +69,7 @@ case class multiply(a: Scalar, b: Scalar) extends BuiltInFunc{
 
 trait FunctionCall extends Expr {
   val args: Seq[IR] //the list of args
-  val t: Type //function type
+  var t: Type //function type
 
 
 }
@@ -185,9 +188,9 @@ trait Type extends IR {
 trait Scalar extends Type
 
 case class Int extends Scalar{
-  override def build(newChildren: Seq[IR]): Int = ???
+  override def build(newChildren: Seq[IR]): Int = Int()
 
-  override def children: Seq[Int] = ???
+  override def children: Seq[Int] = Seq() //there's no children of int
 
   override def kind: Kind = ???
 
@@ -201,8 +204,8 @@ case class Float extends Scalar{
 }
 
 case class FunctionType(in: Type, out: Type) extends Type{
-  override def kind: Kind = ???
-  override def superType: Type = ???
+  override def kind: Kind = ??? //get rid
+  override def superType: Type = ??? //rid
   override def build(newChildren: Seq[IR]): FunctionType = FunctionType(newChildren.head.asInstanceOf[Type], newChildren(1).asInstanceOf[Type])
   override def children: Seq[Type] = Seq(in, out)
 }
