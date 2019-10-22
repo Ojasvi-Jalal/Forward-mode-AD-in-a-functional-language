@@ -19,7 +19,7 @@ trait IR extends BuildableTreeNode[IR] {
   */
 
 trait Expr extends IR {
-  val t: Type
+  var t: Type
 
   override def build(newChildren: Seq[IR]): Expr
 
