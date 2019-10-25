@@ -54,6 +54,10 @@ case class Add(lhs: Expr, rhs : Expr) extends FunCall {
     lhs.t
   }
 
+  def evaluate(lhs: Expr, rhs:Expr): Int ={
+    lhs+rhs
+  }
+
   override def build(newChildren: Seq[IR]): Add = Add(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr])
 
   override def children: Seq[Expr] = Seq(lhs,rhs)
@@ -200,7 +204,7 @@ case class Int extends Scalar{
 case class Float extends Scalar{
   override def build(newChildren: Seq[IR]): IR = ???
 
-  override def children: Seq[Float] = ???
+  override def children: Seq[Float_comp] = ???
 }
 
 case class FunctionType(in: Type, out: Type) extends Type{

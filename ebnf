@@ -1,0 +1,29 @@
+varDecl ::= type IDENT
+
+
+params ::= [IDENT: type ("," IDENT: type)*]
+
+type   ::= "FloatType", "FunctionType"
+
+expr   ::=
+           |functionCall
+           | anonymousFunction
+           | builtInFunction
+           | param
+           | values
+
+functionCall ::= IDENT "(" [exp ("," exp)*] ")"
+
+builtInFunction     ::= Add
+anonymousFunction   ::= Lambda
+values              ::= FloatLiteral
+param               ::= variables
+variables           ::= IDENT
+operator            ::= "+"
+
+
+
+
+
+
+
