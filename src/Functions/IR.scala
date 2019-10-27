@@ -78,14 +78,8 @@ trait BuiltInFunction extends Function {
 }
 
 case class AddFloat(x: FloatLiteral) extends BuiltInFunction {
-//
-//  def inferType() : Type = {
-//    assert (lhs.t == rhs.t)
-//    this.t = lhs.t
-//    lhs.t
-//  }
 
-  override def build(newChildren: Seq[IR]): Expr = ???
+  override def build(newChildren: Seq[IR]): Expr = AddFloat(newChildren(0).asInstanceOf[FloatLiteral])
 
   override def children: Seq[FloatLiteral] = Seq(x)
 
@@ -109,22 +103,14 @@ case class AddFloat(x: FloatLiteral) extends BuiltInFunction {
 //
 //}
 
-//case class Multiply(lhs: Expr, rhs : Expr) extends BuiltInFunction {
-//
-//  def inferType() : Type = {
-//    assert (lhs.t == rhs.t)
-//    this.t = lhs.t
-//    lhs.t
-//  }
-//
-//  override def build(newChildren: Seq[IR]): Multiply = Multiply(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr])
-//
-//  override def children: Seq[Expr] = Seq(lhs,rhs)
-//
-//  override def toString = "(" + lhs + " * " + rhs + ")"
-//
-//  override var t = _
-//}
+case class MultiplyFloat(x: FloatLiteral) extends BuiltInFunction {
+
+  override def build(newChildren: Seq[IR]): MultiplyFloat = MultiplyFloat(newChildren(0).asInstanceOf[FloatLiteral])
+
+  override def children: Seq[Expr] = Seq(x)
+
+  override var t: Type = FunctionType(x.t, FunctionType(x.t, x.t))
+}
 
 case class Param() extends Expr {
   override var t: Type = ???
@@ -133,10 +119,6 @@ case class Param() extends Expr {
 
   override def children = ???
 }
-//
-//case object Variables extends Param {
-//
-//}
 
 trait Values extends Expr {
 
