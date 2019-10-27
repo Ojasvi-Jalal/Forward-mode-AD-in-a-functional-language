@@ -12,6 +12,9 @@ object FloatTypeChecker {
 //        val isSameType =  (typeArg1 == typeArg2)
 //        println(isSameType)
         return typeCheck(arg1)}
+      case FunctionCall(FunctionCall(_:MultiplyFloat, arg2),arg1) => {
+        //assert(typeCheck(arg1) == typeCheck(arg2))
+        return typeCheck(arg1)}
+      }
     }
   }
-}

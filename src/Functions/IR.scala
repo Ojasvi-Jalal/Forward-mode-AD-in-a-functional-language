@@ -88,24 +88,28 @@ case class AddFloat(x: FloatLiteral) extends BuiltInFunction {
   override var t: Type = FunctionType(x.t, FunctionType(x.t, x.t))
 }
 
-//case class AddInt(x: Integer) extends Add(x) { //call add with arg x and return a function that takes in y as an argument and returns x + y
-//  def add(x: Integer): (Integer => Integer) = {
-//    (y: IntLiteral) => {
-//      x.t + y.t
-//    }
-//  }
-//
-//  override def build(newChildren: Seq[IR]): Add = ???
-//
-//  override def children: Seq[Expr] = ???
-//
-//  val t: Type = _
-//
-//}
 
 case class MultiplyFloat(x: FloatLiteral) extends BuiltInFunction {
 
   override def build(newChildren: Seq[IR]): MultiplyFloat = MultiplyFloat(newChildren(0).asInstanceOf[FloatLiteral])
+
+  override def children: Seq[Expr] = Seq(x)
+
+  override var t: Type = FunctionType(x.t, FunctionType(x.t, x.t))
+}
+
+case class DivideFloat(x: FloatLiteral) extends BuiltInFunction {
+
+  override def build(newChildren: Seq[IR]): DivideFloat = DivideFloat(newChildren(0).asInstanceOf[FloatLiteral])
+
+  override def children: Seq[Expr] = Seq(x)
+
+  override var t: Type = FunctionType(x.t, FunctionType(x.t, x.t))
+}
+
+case class PowerFloat(x: FloatLiteral) extends BuiltInFunction {
+
+  override def build(newChildren: Seq[IR]): PowerFloat = PowerFloat(newChildren(0).asInstanceOf[FloatLiteral])
 
   override def children: Seq[Expr] = Seq(x)
 

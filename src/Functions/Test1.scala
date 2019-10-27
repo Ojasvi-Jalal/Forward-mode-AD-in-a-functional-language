@@ -6,13 +6,20 @@ import Functions.{AddFloat, Expr, FloatLiteral, FloatType}
       val var2 = FloatLiteral(4)
       val sum  =  ExprFunctions.+(var1.asInstanceOf[Expr],var2.asInstanceOf[Expr])
       val product = ExprFunctions.*(var1.asInstanceOf[Expr],var2.asInstanceOf[Expr])
+      val division = ExprFunctions./(var1.asInstanceOf[Expr],var2.asInstanceOf[Expr])
+      val power = ExprFunctions.^(var1.asInstanceOf[Expr],var2.asInstanceOf[Expr])
       //println(s"sum of $var1 and $var2 = $sum")
       println("var1 = "+ Evaluator.eval(var1))
       println("var2 = "+ Evaluator.eval(var2))
       println("sum = "+Evaluator.eval(sum))
       println("product = "+Evaluator.eval(product))
+      println("division = "+Evaluator.eval(division))
+      println("power = "+Evaluator.eval(power))
       println(TypeChecker.typeCheck(var1))
       println(TypeChecker.typeCheck(var2))
       println(TypeChecker.typeCheck(sum))
+      println(TypeChecker.typeCheck(product))
+
+
   }
 
