@@ -8,5 +8,6 @@ import Functions.{AddFloat, Expr, FloatLiteral, FloatType}
 
       println(ans)
       println(Evaluator.eval(ans))
+      println(TypeChecker.typeCheck(ans))
   }
 
