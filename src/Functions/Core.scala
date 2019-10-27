@@ -1,5 +1,5 @@
 package Core
 
-import functions.IR
+import Functions.IR
 
 trait Core extends IR

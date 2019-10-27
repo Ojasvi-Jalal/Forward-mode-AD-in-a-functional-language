@@ -1,4 +1,4 @@
-package functions
+package Functions
 
 import scala.collection.mutable
 
@@ -44,37 +44,12 @@ trait Expr extends IR {
 //  }
 }
 
-object Evaluator {
-  def eval(e:Expr) : Any = {
-    e.t match {
-      case _:FloatType => FloatEvaluator.eval(e)
-    }
-  }
-}
-
-object FloatEvaluator {
-  val paramToArg = mutable.HashMap[Param,Expr]()
-  def eval(e:Expr) : Float = {
-    e match {
-      case FloatLiteral(f) => f
-      case FunctionCall(FunctionCall(_:AddFloat, arg2),arg1) =>  eval(arg1) + eval(arg2)
-      case FunctionCall(Lambda(param,body),arg) =>
-        // store in a map   param -> arg and eval body
-        paramToArg.put(param, arg)
-        eval(body)
-      case p:Param =>
-        // fish it up from the map and eval the expr
-        eval(paramToArg(p))
-    }
-  }
-}
-
 case class FunctionCall(f: Expr, arg: Expr) extends Expr {
-  override var t: Type = _
+  override var t: Type = FunctionType(f.t,arg.t)
 
   override def build(newChildren: Seq[IR]): Expr = ???
 
-  override def children: Seq[IR] = ???
+  override def children: Seq[IR] = Seq(f,arg)
 }
 
 trait Function extends Expr {
@@ -87,7 +62,7 @@ trait AnonymousFunction extends Function {
 
 
 case class Lambda(p: Param, b: Expr) extends AnonymousFunction {
-  override val t: Type = ???
+  override var t: Type = ???
 
   override def build(newChildren: Seq[IR]): Lambda = Lambda(newChildren(0).asInstanceOf[Param], newChildren(1).asInstanceOf[Expr])
 
@@ -102,7 +77,7 @@ trait BuiltInFunction extends Function {
 
 }
 
-abstract case class AddFloat(x: Expr) extends BuiltInFunction {
+case class AddFloat(x: FloatLiteral) extends BuiltInFunction {
 //
 //  def inferType() : Type = {
 //    assert (lhs.t == rhs.t)
@@ -110,12 +85,13 @@ abstract case class AddFloat(x: Expr) extends BuiltInFunction {
 //    lhs.t
 //  }
 
-  override def build(newChildren: Seq[IR]): Expr
+  override def build(newChildren: Seq[IR]): Expr = ???
 
-  override def children: Seq[Expr]
+  override def children: Seq[FloatLiteral] = Seq(x)
 
   //override def toString = "(" + lhs + " + " + rhs + ")" // ask
-  override var t: Type = FunctionType(FloatType.asInstanceOf[Type], FunctionType(FloatType.asInstanceOf[Type], FloatType.asInstanceOf[Type]))
+  //override var t: Type = FunctionType(FloatType.asInstanceOf[Type], FunctionType(FloatType.asInstanceOf[Type], FloatType.asInstanceOf[Type]))
+  override var t: Type = FunctionType(x.t, FunctionType(x.t, x.t))
 }
 
 //case class AddInt(x: Integer) extends Add(x) { //call add with arg x and return a function that takes in y as an argument and returns x + y
@@ -151,23 +127,24 @@ abstract case class AddFloat(x: Expr) extends BuiltInFunction {
 //}
 
 case class Param() extends Expr {
-  override var t = ???
+  override var t: Type = ???
 
   override def build(newChildren: Seq[IR]) = ???
 
   override def children = ???
 }
-
-case object Variables extends Param {
-
-}
+//
+//case object Variables extends Param {
+//
+//}
 
 trait Values extends Expr {
 
 }
 
 case class FloatLiteral(f: Float) extends Values{
-  override val t: Type = FloatType()
+  //override var t: FloatType = FloatType(f)
+  override var t: Type = FloatType(f)
 
   override def build(newChildren: Seq[IR]) = FloatLiteral(newChildren.head.asInstanceOf[Float])
 
@@ -190,9 +167,9 @@ trait Type extends IR
 
 trait Scalar extends Type
 
-case class FloatType() extends Scalar {
-  override def build(newChildren: Seq[IR]): FloatType = FloatType()
-  override def children: Seq[FloatType] = Seq() //there's no children of float
+case class FloatType(f:Float) extends Scalar {
+  override def build(newChildren: Seq[IR]): FloatType = FloatType(f)
+  override def children: Seq[Type] = Seq() //there's no children of float
 }
 
 case class FunctionType(in: Type, out: Type) extends Type {

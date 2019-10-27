@@ -1,4 +1,4 @@
-package functions
+package Functions
 
 trait TreeNode[T <: TreeNode[T]] {
   def children: Seq[T]
