@@ -22,22 +22,13 @@ trait Expr extends IR {
 
   override def build(newChildren: Seq[IR]): Expr
 
-//  final def hasFreeTypeVar: Boolean = {
-//    visit({
-//      case _: TypeVarT => return true
-//      case _ =>
-//    }, _ => Unit)
-//    false
-//  }
-
-  def +(that: Expr): Expr = FunctionCall(FunctionCall(AddDouble(DoubleLiteral(this.asInstanceOf[DoubleLiteral].d)).asInstanceOf[Expr], this), that)
+  def +(that: Expr): Expr = FunctionCall(FunctionCall(AddDouble(this), this), that)
   def *(that: Expr): Expr = FunctionCall(FunctionCall(MultiplyDouble(DoubleLiteral(this.asInstanceOf[DoubleLiteral].d)).asInstanceOf[Expr], this), that)
   def /(that: Expr): Expr = FunctionCall(FunctionCall(DivideDouble(DoubleLiteral(this.asInstanceOf[DoubleLiteral].d)).asInstanceOf[Expr], this), that)
   def ^(that: Expr): Expr = FunctionCall(FunctionCall(PowerDouble(DoubleLiteral(this.asInstanceOf[DoubleLiteral].d)).asInstanceOf[Expr], this), that)
-  def $(that: Expr): Expr = FunctionCall(this, that) // func $ arg
+  def $(that: Param): Expr = FunctionCall(Lambda(that, this),DoubleLiteral(1)) // func $ arg// x*2 $ x+2 => (x+2)*2 => 2x+ 4 => 2
   // implicit  e.g. : FloatLiteral(2) + FloatLiteral(3.0f)    /// 2 + 3.0f
   // later can write implicit conversions
-
 }
 
 case class FunctionCall(f: Expr, arg: Expr) extends Expr {
@@ -58,14 +49,11 @@ trait AnonymousFunction extends Function {
 
 
 case class Lambda(p: Param, b: Expr) extends AnonymousFunction {
-  override var t: Type = ???
+  override var t: Type = FunctionType(p.t, FunctionType(p.t, p.t))
 
   override def build(newChildren: Seq[IR]): Lambda = Lambda(newChildren(0).asInstanceOf[Param], newChildren(1).asInstanceOf[Expr])
 
   override def children: Seq[IR] = Seq(p,b)
-
-  override def toString = "(" + p + ":" + p.t + ") =>" + b
-
 }
 
 
@@ -73,14 +61,12 @@ trait BuiltInFunction extends Function {
 
 }
 
-case class AddDouble(x: DoubleLiteral) extends BuiltInFunction {
+case class AddDouble(x: Expr) extends BuiltInFunction {
 
   override def build(newChildren: Seq[IR]): Expr = AddDouble(newChildren(0).asInstanceOf[DoubleLiteral])
 
-  override def children: Seq[DoubleLiteral] = Seq(x)
+  override def children: Seq[Expr] = Seq(x)
 
-  //override def toString = "(" + lhs + " + " + rhs + ")" // ask
-  //override var t: Type = FunctionType(FloatType.asInstanceOf[Type], FunctionType(FloatType.asInstanceOf[Type], FloatType.asInstanceOf[Type]))
   override var t: Type = FunctionType(x.t, FunctionType(x.t, x.t))
 }
 
@@ -113,11 +99,20 @@ case class PowerDouble(x: DoubleLiteral) extends BuiltInFunction {
 }
 
 case class Param() extends Expr {
-  override var t: Type = ???
+
+  override var t: Type = DoubleType
 
   override def build(newChildren: Seq[IR]) = ???
 
-  override def children = ???
+  override def children = Seq()
+}
+
+case class Var() extends Expr {
+  override var t: Type = DoubleType
+
+  override def build(newChildren: Seq[IR]) = Var()
+
+  override def children = Seq()
 }
 
 trait Values extends Expr {
@@ -125,7 +120,6 @@ trait Values extends Expr {
 }
 
 case class DoubleLiteral(d: Double) extends Values{
-  //override var t: FloatType = FloatType(f)
   override var t: Type = DoubleType
 
   override def build(newChildren: Seq[IR]) = DoubleLiteral(newChildren.head.asInstanceOf[Double])
