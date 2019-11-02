@@ -1,4 +1,4 @@
-package Functions
+package intermediateRep
 
 trait TreeNode[T <: TreeNode[T]] {
   def children: Seq[T]

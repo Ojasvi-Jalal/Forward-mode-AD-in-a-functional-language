@@ -1,4 +1,6 @@
-package Functions
+package typeCheck
+
+import intermediateRep.{Expr, Type, DoubleLiteral, FunctionCall, AddDouble, MultiplyDouble}
 
 object FloatTypeChecker {
   def typeCheck(e:Expr) : Type = {

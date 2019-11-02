@@ -1,5 +1,6 @@
-package Functions
+package eval
 
+import intermediateRep.{Param, Expr, DoubleLiteral, FunctionCall, AddDouble, MultiplyDouble, DivideDouble, PowerDouble, Lambda}
 import scala.collection.mutable
 import scala.language.implicitConversions
 

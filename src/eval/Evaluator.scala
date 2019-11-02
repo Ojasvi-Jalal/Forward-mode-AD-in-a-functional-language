@@ -1,4 +1,6 @@
-package Functions
+package eval
+
+import intermediateRep.{Expr, DoubleType, FunctionType}
 
 object Evaluator {
   def eval(e:Expr) : Any = {
