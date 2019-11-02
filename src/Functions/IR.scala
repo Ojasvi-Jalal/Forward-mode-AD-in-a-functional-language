@@ -42,6 +42,15 @@ trait Expr extends IR {
 //    }, _ => Unit)
 //    false
 //  }
+
+  def +(that: Expr): Expr = FunctionCall(FunctionCall(AddDouble(DoubleLiteral(this.asInstanceOf[DoubleLiteral].d)).asInstanceOf[Expr], this), that)
+  def *(that: Expr): Expr = FunctionCall(FunctionCall(MultiplyDouble(DoubleLiteral(this.asInstanceOf[DoubleLiteral].d)).asInstanceOf[Expr], this), that)
+  def /(that: Expr): Expr = FunctionCall(FunctionCall(DivideDouble(DoubleLiteral(this.asInstanceOf[DoubleLiteral].d)).asInstanceOf[Expr], this), that)
+  def ^(that: Expr): Expr = FunctionCall(FunctionCall(PowerDouble(DoubleLiteral(this.asInstanceOf[DoubleLiteral].d)).asInstanceOf[Expr], this), that)
+  def $(that: Expr): Expr = FunctionCall(this, that) // func $ arg
+  // implicit  e.g. : FloatLiteral(2) + FloatLiteral(3.0f)    /// 2 + 3.0f
+  // later can write implicit conversions
+
 }
 
 case class FunctionCall(f: Expr, arg: Expr) extends Expr {
@@ -77,11 +86,11 @@ trait BuiltInFunction extends Function {
 
 }
 
-case class AddFloat(x: FloatLiteral) extends BuiltInFunction {
+case class AddDouble(x: DoubleLiteral) extends BuiltInFunction {
 
-  override def build(newChildren: Seq[IR]): Expr = AddFloat(newChildren(0).asInstanceOf[FloatLiteral])
+  override def build(newChildren: Seq[IR]): Expr = AddDouble(newChildren(0).asInstanceOf[DoubleLiteral])
 
-  override def children: Seq[FloatLiteral] = Seq(x)
+  override def children: Seq[DoubleLiteral] = Seq(x)
 
   //override def toString = "(" + lhs + " + " + rhs + ")" // ask
   //override var t: Type = FunctionType(FloatType.asInstanceOf[Type], FunctionType(FloatType.asInstanceOf[Type], FloatType.asInstanceOf[Type]))
@@ -89,27 +98,27 @@ case class AddFloat(x: FloatLiteral) extends BuiltInFunction {
 }
 
 
-case class MultiplyFloat(x: FloatLiteral) extends BuiltInFunction {
+case class MultiplyDouble(x: DoubleLiteral) extends BuiltInFunction {
 
-  override def build(newChildren: Seq[IR]): MultiplyFloat = MultiplyFloat(newChildren(0).asInstanceOf[FloatLiteral])
-
-  override def children: Seq[Expr] = Seq(x)
-
-  override var t: Type = FunctionType(x.t, FunctionType(x.t, x.t))
-}
-
-case class DivideFloat(x: FloatLiteral) extends BuiltInFunction {
-
-  override def build(newChildren: Seq[IR]): DivideFloat = DivideFloat(newChildren(0).asInstanceOf[FloatLiteral])
+  override def build(newChildren: Seq[IR]): MultiplyDouble = MultiplyDouble(newChildren(0).asInstanceOf[DoubleLiteral])
 
   override def children: Seq[Expr] = Seq(x)
 
   override var t: Type = FunctionType(x.t, FunctionType(x.t, x.t))
 }
 
-case class PowerFloat(x: FloatLiteral) extends BuiltInFunction {
+case class DivideDouble(x: DoubleLiteral) extends BuiltInFunction {
 
-  override def build(newChildren: Seq[IR]): PowerFloat = PowerFloat(newChildren(0).asInstanceOf[FloatLiteral])
+  override def build(newChildren: Seq[IR]): DivideDouble = DivideDouble(newChildren(0).asInstanceOf[DoubleLiteral])
+
+  override def children: Seq[Expr] = Seq(x)
+
+  override var t: Type = FunctionType(x.t, FunctionType(x.t, x.t))
+}
+
+case class PowerDouble(x: DoubleLiteral) extends BuiltInFunction {
+
+  override def build(newChildren: Seq[IR]): PowerDouble = PowerDouble(newChildren(0).asInstanceOf[DoubleLiteral])
 
   override def children: Seq[Expr] = Seq(x)
 
@@ -128,11 +137,11 @@ trait Values extends Expr {
 
 }
 
-case class FloatLiteral(f: Float) extends Values{
+case class DoubleLiteral(d: Double) extends Values{
   //override var t: FloatType = FloatType(f)
-  override var t: Type = FloatType(f)
+  override var t: Type = DoubleType
 
-  override def build(newChildren: Seq[IR]) = FloatLiteral(newChildren.head.asInstanceOf[Float])
+  override def build(newChildren: Seq[IR]) = DoubleLiteral(newChildren.head.asInstanceOf[Double])
 
   override def children = Seq()
 }
@@ -149,17 +158,31 @@ case class FloatLiteral(f: Float) extends Values{
   */
 
 
-trait Type extends IR
+trait Type extends IR { //=== or override hash
+  def ===(that: Type) : Boolean
+}
 
-trait Scalar extends Type
+trait Scalar extends Type { //can use set //
+  override def ===(that: Type) = {
+    this == that
+  }
+}
 
-case class FloatType(f:Float) extends Scalar {
-  override def build(newChildren: Seq[IR]): FloatType = FloatType(f)
-  override def children: Seq[Type] = Seq() //there's no children of float
+object DoubleType extends Scalar {
+  override def build(newChildren: Seq[IR]) = DoubleType
+
+  override def children: Seq[Type] = Seq()
 }
 
 case class FunctionType(in: Type, out: Type) extends Type {
   override def build(newChildren: Seq[IR]): FunctionType = FunctionType(newChildren.head.asInstanceOf[Type], newChildren(1).asInstanceOf[Type])
   override def children: Seq[Type] = Seq(in, out)
+  override def ===(that: Type) = {
+    that match {
+      case FunctionType(thatInT, thatOutT) =>
+        in.equals(thatInT) && out.equals(thatOutT)
+      case _ => false
+    }
+  }
 }
 
