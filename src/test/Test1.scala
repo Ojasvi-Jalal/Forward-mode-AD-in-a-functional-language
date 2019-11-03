@@ -1,6 +1,6 @@
 package test
 
-import eval.{Evaluator, FloatEvaluator}
+import eval.{Evaluator, DoubleEvaluator}
 import intermediateRep.{DoubleLiteral, Expr, Param}
 import typeCheck.TypeChecker
 
@@ -14,8 +14,8 @@ object Test1 extends App{
     var x = Param()
     var body = x + var1
     val lambda = body $ x
-    println("lambda = "+ FloatEvaluator.eval(lambda))
-    //println("var = "+x)
+    println("lambda = "+ DoubleEvaluator.eval(lambda))
+//    println("var = "+x)
 //    println("var1 = "+ Evaluator.eval(var1))
 //    println("var2 = "+ Evaluator.eval(var2))
 //    println("sum = "+Evaluator.eval(sum))

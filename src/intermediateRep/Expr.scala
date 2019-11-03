@@ -23,9 +23,9 @@ trait Expr extends IR {
   override def build(newChildren: Seq[IR]): Expr
 
   def +(that: Expr): Expr = FunctionCall(FunctionCall(AddDouble(this), this), that)
-  def *(that: Expr): Expr = FunctionCall(FunctionCall(MultiplyDouble(DoubleLiteral(this.asInstanceOf[DoubleLiteral].d)).asInstanceOf[Expr], this), that)
-  def /(that: Expr): Expr = FunctionCall(FunctionCall(DivideDouble(DoubleLiteral(this.asInstanceOf[DoubleLiteral].d)).asInstanceOf[Expr], this), that)
-  def ^(that: Expr): Expr = FunctionCall(FunctionCall(PowerDouble(DoubleLiteral(this.asInstanceOf[DoubleLiteral].d)).asInstanceOf[Expr], this), that)
+  def *(that: Expr): Expr = FunctionCall(FunctionCall(MultiplyDouble(this), this), that)
+  def /(that: Expr): Expr = FunctionCall(FunctionCall(DivideDouble(this), this), that)
+  def ^(that: Expr): Expr = FunctionCall(FunctionCall(PowerDouble(this), this), that)
   def $(that: Param): Expr = FunctionCall(Lambda(that, this),DoubleLiteral(1)) // func $ arg// x*2 $ x+2 => (x+2)*2 => 2x+ 4 => 2
   // implicit  e.g. : FloatLiteral(2) + FloatLiteral(3.0f)    /// 2 + 3.0f
   // later can write implicit conversions
@@ -71,7 +71,7 @@ case class AddDouble(x: Expr) extends BuiltInFunction {
 }
 
 
-case class MultiplyDouble(x: DoubleLiteral) extends BuiltInFunction {
+case class MultiplyDouble(x: Expr) extends BuiltInFunction {
 
   override def build(newChildren: Seq[IR]): MultiplyDouble = MultiplyDouble(newChildren(0).asInstanceOf[DoubleLiteral])
 
@@ -80,7 +80,7 @@ case class MultiplyDouble(x: DoubleLiteral) extends BuiltInFunction {
   override var t: Type = FunctionType(x.t, FunctionType(x.t, x.t))
 }
 
-case class DivideDouble(x: DoubleLiteral) extends BuiltInFunction {
+case class DivideDouble(x: Expr) extends BuiltInFunction {
 
   override def build(newChildren: Seq[IR]): DivideDouble = DivideDouble(newChildren(0).asInstanceOf[DoubleLiteral])
 
@@ -89,7 +89,7 @@ case class DivideDouble(x: DoubleLiteral) extends BuiltInFunction {
   override var t: Type = FunctionType(x.t, FunctionType(x.t, x.t))
 }
 
-case class PowerDouble(x: DoubleLiteral) extends BuiltInFunction {
+case class PowerDouble(x: Expr) extends BuiltInFunction {
 
   override def build(newChildren: Seq[IR]): PowerDouble = PowerDouble(newChildren(0).asInstanceOf[DoubleLiteral])
 
@@ -105,14 +105,20 @@ case class Param() extends Expr {
   override def build(newChildren: Seq[IR]) = ???
 
   override def children = Seq()
+
 }
 
-case class Var() extends Expr {
+case class Var(x:Param) extends Expr {
+  val value : Param = x
   override var t: Type = DoubleType
 
-  override def build(newChildren: Seq[IR]) = Var()
+  override def build(newChildren: Seq[IR]) = Var(x)
 
   override def children = Seq()
+
+  def ===(that: Var) : Boolean = {
+    this.value == that.value
+  }
 }
 
 trait Values extends Expr {

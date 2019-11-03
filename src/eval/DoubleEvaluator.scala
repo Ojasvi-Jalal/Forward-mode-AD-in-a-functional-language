@@ -4,7 +4,7 @@ import intermediateRep.{Param, Expr, DoubleLiteral, FunctionCall, AddDouble, Mul
 import scala.collection.mutable
 import scala.language.implicitConversions
 
-object FloatEvaluator {
+object DoubleEvaluator {
   val paramToArg = mutable.HashMap[Param,Expr]()
   def eval(e:Expr, hm : mutable.HashMap[Param, Double] = mutable.HashMap[Param, Double]()) : Double = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
