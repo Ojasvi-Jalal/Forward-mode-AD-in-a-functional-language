@@ -19,7 +19,7 @@ object DifferentiateDouble {
       case FunctionCall(FunctionCall(_:MultiplyDouble, arg2),arg1) => {
         differentiateProduct(arg1, arg2, withRespectTo)
       }
-      case FunctionCall(FunctionCall(_:DivideDouble, arg2),arg1) => differentiateDivision(arg1,arg2, withRespectTo)
+      case FunctionCall(FunctionCall(_:DivideDouble, arg1),arg2) => differentiateDivision(arg1,arg2, withRespectTo)
 //      case FunctionCall(FunctionCall(_:PowerDouble, arg2),arg1) => {
 //        val exponent  = arg1//java.lang.Double.valueOf(eval(arg1))
 //        val base      = arg2//java.lang.Double.valueOf(eval(arg2))
@@ -43,11 +43,20 @@ object DifferentiateDouble {
     }
   }
 
-  def differentiateDivision(lhs: Expr, rhs: Expr, param: Param): Double = {
-    (lhs, rhs) match {
-      case (DoubleLiteral(d), exp) => - (DoubleEvaluator.eval(lhs) * differentiate(exp, param)) / (rhs ^ DoubleLiteral(2))
-      case (exp, DoubleLiteral(d)) => (differentiate(lhs, param) * DoubleEvaluator.eval(rhs)) / (rhs ^ DoubleLiteral(2))
-      case (e1, e2) => ((differentiate(e1, param) * DoubleEvaluator.eval(e2)) - (differentiate(e2, param) * DoubleEvaluator.eval(e1))) / (e2 ^ DoubleLiteral(2))
+  def differentiateDivision(numerator: Expr, denominator: Expr, param: Param): Double = {
+    (numerator, denominator) match {
+      case (DoubleLiteral(d), exp) => var new_numerator = - DoubleEvaluator.eval(numerator) * differentiate(denominator, param)
+        var new_denominator = denominator ^ DoubleLiteral(2)
+        var result = new_numerator / DoubleEvaluator.eval(new_denominator)
+        result
+      case (exp, DoubleLiteral(d)) => var new_numerator = DoubleEvaluator.eval(denominator) * differentiate(numerator, param)
+        var new_denominator = denominator ^ DoubleLiteral(2)
+        var result  = new_numerator / DoubleEvaluator.eval(new_denominator)
+        result
+      case (e1, e2) => var new_numerator = ((differentiate(e1, param) * DoubleEvaluator.eval(e2)) - (differentiate(e2, param) * DoubleEvaluator.eval(e1)))
+        var new_denominator = (e2 ^ DoubleLiteral(2))
+        var result = new_numerator / DoubleEvaluator.eval(new_denominator)
+        result
     }
   }
 }

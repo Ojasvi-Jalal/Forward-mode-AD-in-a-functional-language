@@ -11,6 +11,7 @@ object DiffTest extends App{
   println("differentiate_x = "+ Differentiate.differentiate(x, y))
   println("differentiate_Constant = "+ Differentiate.differentiate(DoubleLiteral(9), x))
   println("differentiate_Product = "+ Differentiate.differentiate(x*DoubleLiteral(3), x))
+  println("differentiate_Quotient = "+ Differentiate.differentiate(x/DoubleLiteral(3), x))
   //    println("var = "+x)
   //    println("var1 = "+ Evaluator.eval(var1))
   //    println("var2 = "+ Evaluator.eval(var2))
