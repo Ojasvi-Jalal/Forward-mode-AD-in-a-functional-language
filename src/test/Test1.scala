@@ -1,7 +1,7 @@
 package test
 
 import eval.{Evaluator, DoubleEvaluator}
-import intermediateRep.{DoubleLiteral, Expr, Param}
+import intermediateRep.{DoubleLiteral, Param}
 import typeCheck.TypeChecker
 
 object Test1 extends App{
@@ -11,17 +11,17 @@ object Test1 extends App{
     val product = var1 * var2
     val division = var1 / var2
     val power = var1 ^ var2
-    var x = Param()
+    var x = Param("x")
     var body = x + var1
     val lambda = body $ x
+    println("var = "+Evaluator.eval(x))
     println("lambda = "+ DoubleEvaluator.eval(lambda))
-//    println("var = "+x)
-//    println("var1 = "+ Evaluator.eval(var1))
-//    println("var2 = "+ Evaluator.eval(var2))
-//    println("sum = "+Evaluator.eval(sum))
-//    println("product = "+Evaluator.eval(product))
-//    println("division = "+Evaluator.eval(division))
-//    println("power = "+Evaluator.eval(power))
+    println("var1 = "+ Evaluator.eval(var1))
+    println("var2 = "+ Evaluator.eval(var2))
+    println("sum = "+Evaluator.eval(sum))
+    println("product = "+Evaluator.eval(product))
+    println("division = "+Evaluator.eval(division))
+    println("power = "+Evaluator.eval(power))
 //    println(TypeChecker.typeCheck(var1))
 //    println(TypeChecker.typeCheck(var2))
 //    println(TypeChecker.typeCheck(sum))

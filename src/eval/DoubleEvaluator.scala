@@ -1,21 +1,22 @@
 package eval
 
-import intermediateRep.{Param, Expr, DoubleLiteral, FunctionCall, AddDouble, MultiplyDouble, DivideDouble, PowerDouble, Lambda}
+import intermediateRep._
+
 import scala.collection.mutable
 import scala.language.implicitConversions
 
 object DoubleEvaluator {
   val paramToArg = mutable.HashMap[Param,Expr]()
-  def eval(e:Expr, hm : mutable.HashMap[Param, Double] = mutable.HashMap[Param, Double]()) : Double = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
+  def eval(e:Expr, hm : mutable.HashMap[Param, Double] = mutable.HashMap[Param, Double]()) : Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
-      case DoubleLiteral(d) => d
-      case FunctionCall(FunctionCall(_:AddDouble, arg2),arg1) =>  eval(arg1) + eval(arg2)
-      case FunctionCall(FunctionCall(_:MultiplyDouble, arg2),arg1) => eval(arg1) * eval(arg2)
-      case FunctionCall(FunctionCall(_:DivideDouble, arg2),arg1) => eval(arg1) / eval(arg2)
+      case DoubleLiteral(d) => DoubleLiteral(d)
+      case FunctionCall(FunctionCall(_:AddDouble, arg2),arg1) =>  DoubleLiteral(java.lang.Double.valueOf(eval(arg1).toString) + java.lang.Double.valueOf(eval(arg2).toString))
+      case FunctionCall(FunctionCall(_:MultiplyDouble, arg2),arg1) => DoubleLiteral(java.lang.Double.valueOf(eval(arg1).toString) * java.lang.Double.valueOf(eval(arg2).toString))
+      case FunctionCall(FunctionCall(_:DivideDouble, arg2),arg1) => DoubleLiteral(java.lang.Double.valueOf(eval(arg1).toString) / java.lang.Double.valueOf(eval(arg2).toString))
       case FunctionCall(FunctionCall(_:PowerDouble, arg2),arg1) => {
-        val exponent  = eval(arg1)//java.lang.Double.valueOf(eval(arg1))
-        val base      = eval(arg2)//java.lang.Double.valueOf(eval(arg2))
-        scala.math.pow(base,exponent)
+        val exponent  = java.lang.Double.valueOf(eval(arg1).toString)
+        val base      = java.lang.Double.valueOf(eval(arg2).toString)
+        DoubleLiteral(scala.math.pow(base,exponent))
       }
       case FunctionCall(Lambda(param,body),arg) =>
         // store in a map   param -> arg and eval body
@@ -23,7 +24,12 @@ object DoubleEvaluator {
         eval(body,hm)
       case p:Param =>
         // fish it up from the map and eval the expr
-        eval(paramToArg(p))
+        if (paramToArg.contains(p)){
+          eval(paramToArg(p))
+        }
+        else{
+          Var(p).value
+        }
     }
   }
 }

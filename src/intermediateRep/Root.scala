@@ -6,7 +6,8 @@ package intermediateRep
   */
 
 trait IR extends BuildableTreeNode[IR] {
-  def toShortString: String = getClass.getName.split('$').head
+  def toShortString: String = ""//getClass.toString//.getName.//.split('$').head
 
-  override def toString: String = toShortString + (if (children.nonEmpty) ("[" + children.mkString(";") + "]") else "")
+  //override def toString: String = toShortString + (if (children.nonEmpty) ("[" + children.mkString(";") + "]") else "")
+  //override def toString: String = children.mkString(",")
 }

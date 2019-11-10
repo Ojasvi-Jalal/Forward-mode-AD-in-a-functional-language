@@ -36,6 +36,8 @@ case class FunctionCall(f: Expr, arg: Expr) extends Expr {
 
   override def build(newChildren: Seq[IR]): Expr = ???
 
+  //override def toString(): String = arg.toString
+
   override def children: Seq[IR] = Seq(f,arg)
 }
 
@@ -98,9 +100,11 @@ case class PowerDouble(x: Expr) extends BuiltInFunction {
   override var t: Type = FunctionType(x.t, FunctionType(x.t, x.t))
 }
 
-case class Param() extends Expr {
+case class Param(x: String) extends Expr {
 
   override var t: Type = DoubleType
+
+  override def toString(): String = x
 
   override def build(newChildren: Seq[IR]) = ???
 
@@ -110,6 +114,7 @@ case class Param() extends Expr {
 
 case class Var(x:Param) extends Expr {
   val value : Param = x
+
   override var t: Type = DoubleType
 
   override def build(newChildren: Seq[IR]) = Var(x)
@@ -127,6 +132,8 @@ trait Values extends Expr {
 
 case class DoubleLiteral(d: Double) extends Values{
   override var t: Type = DoubleType
+
+  override def toString(): String = d.toString
 
   override def build(newChildren: Seq[IR]) = DoubleLiteral(newChildren.head.asInstanceOf[Double])
 
