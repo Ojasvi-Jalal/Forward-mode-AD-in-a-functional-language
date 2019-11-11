@@ -11,12 +11,29 @@ object DoubleEvaluator {
     e match {
       case DoubleLiteral(d) => DoubleLiteral(d)
       case FunctionCall(FunctionCall(_:AddDouble, arg2),arg1) =>  DoubleLiteral(java.lang.Double.valueOf(eval(arg1).toString) + java.lang.Double.valueOf(eval(arg2).toString))
-      case FunctionCall(FunctionCall(_:MultiplyDouble, arg2),arg1) => DoubleLiteral(java.lang.Double.valueOf(eval(arg1).toString) * java.lang.Double.valueOf(eval(arg2).toString))
-      case FunctionCall(FunctionCall(_:DivideDouble, arg2),arg1) => DoubleLiteral(java.lang.Double.valueOf(eval(arg1).toString) / java.lang.Double.valueOf(eval(arg2).toString))
-      case FunctionCall(FunctionCall(_:PowerDouble, arg2),arg1) => {
-        val exponent  = java.lang.Double.valueOf(eval(arg1).toString)
-        val base      = java.lang.Double.valueOf(eval(arg2).toString)
-        DoubleLiteral(scala.math.pow(base,exponent))
+      case FunctionCall(FunctionCall(_:MultiplyDouble, arg2),arg1) => {
+        (arg1, arg2) match {
+          case (arg1: Param, _) => Param(arg1 + " * " + arg2)
+          case (_, arg2: Param) => Param(arg1 + " * " + arg2)
+          case (_, _) => DoubleLiteral(java.lang.Double.valueOf(eval(arg1).toString) * java.lang.Double.valueOf(eval(arg2).toString))
+        }
+      }
+      case FunctionCall(FunctionCall(_:DivideDouble, arg2),arg1) => {
+        (arg1, arg2) match {
+          case (arg1: Param, _) => Param(arg1 + " / " + arg2)
+          case (_, arg2: Param) => Param(arg1 + " / " + arg2)
+          case (_, _) => DoubleLiteral(java.lang.Double.valueOf(eval(arg1).toString) / java.lang.Double.valueOf(eval(arg2).toString))
+        }}
+      case FunctionCall(FunctionCall(_:PowerDouble, arg1),arg2) => {
+        (arg1, arg2) match {
+          case (arg1: Param, _) => Param(arg1 + " ^ " + arg2)
+          case (_, arg2: Param) => Param(arg1 + " ^ " + arg2)
+          case (_, _) => {
+            val exponent  = java.lang.Double.valueOf(eval(arg2).toString)
+            val base      = java.lang.Double.valueOf(eval(arg1).toString)
+            DoubleLiteral(scala.math.pow(base,exponent))
+          }
+        }
       }
       case FunctionCall(Lambda(param,body),arg) =>
         // store in a map   param -> arg and eval body
