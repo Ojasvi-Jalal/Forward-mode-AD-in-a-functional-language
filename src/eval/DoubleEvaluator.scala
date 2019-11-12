@@ -29,8 +29,8 @@ object DoubleEvaluator {
       }
       case FunctionCall(FunctionCall(_:DivideDouble, arg2),arg1) => {
         (arg1, arg2) match {
-          case (arg1: Param, _) => Param(arg1 + " / " + arg2)
-          case (_, arg2: Param) => Param(arg1 + " / " + arg2)
+          case (arg1: Param, _) => Param("("+arg1 + " / " + arg2+")")
+          case (_, arg2: Param) => Param("("+arg1 + " / " + arg2+")")
           case (DoubleLiteral(arg1),DoubleLiteral(arg2)) => {
             DoubleLiteral(arg1/arg2)
           }
@@ -38,8 +38,8 @@ object DoubleEvaluator {
         }}
       case FunctionCall(FunctionCall(_:PowerDouble, arg1),arg2) => {
         (arg1, arg2) match {
-          case (arg1: Param, _) => Param(arg1 + " ^ " + arg2)
-          case (_, arg2: Param) => Param(arg1 + " ^ " + arg2)
+          case (arg1: Param, _) => Param("("+arg1 + " ^ " + arg2+")")
+          case (_, arg2: Param) => Param("("+arg1 + " ^ " + arg2+")")
           case (DoubleLiteral(arg1),DoubleLiteral(arg2)) => {
             val exponent  = java.lang.Double.valueOf(arg2)
             val base      = java.lang.Double.valueOf(arg1)
@@ -48,7 +48,7 @@ object DoubleEvaluator {
           case (_, _) => {
             val exponent  = java.lang.Double.valueOf(eval(arg2).toString)
             val base      = java.lang.Double.valueOf(eval(arg1).toString)
-            DoubleLiteral(scala.math.pow(base,exponent))
+            eval((eval(arg1)^eval(arg2)))
           }
         }
       }
