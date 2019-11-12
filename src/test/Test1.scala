@@ -18,7 +18,7 @@ object Test1 extends App{
     println("lambda = "+ DoubleEvaluator.eval(lambda))
     println("var1 = "+ Evaluator.eval(var1))
     println("var2 = "+ Evaluator.eval(var2))
-    println("sum = "+Evaluator.eval(sum))
+    println("sum = "+Evaluator.eval(var1 * (var1 + x)))
     println("product1 = "+Evaluator.eval(product))
     println("product2 = "+Evaluator.eval(var1 * var2))
     println("division = "+Evaluator.eval(division))

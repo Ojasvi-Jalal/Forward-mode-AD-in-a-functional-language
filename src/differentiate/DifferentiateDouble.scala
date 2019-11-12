@@ -30,14 +30,14 @@ object DifferentiateDouble {
     (lhs, rhs) match {
       case (DoubleLiteral(d), exp) => Evaluator.eval(lhs * differentiate(exp, param))
       case (exp, DoubleLiteral(d)) => Evaluator.eval(differentiate(lhs, param) * rhs)
-      case (e1, e2) => (differentiate(e1, param) * e2) + (differentiate(e2, param) * e1)
+      case (e1, e2) => Evaluator.eval((differentiate(e1, param) * e2) + (differentiate(e2, param) * e1))
     }
   }
 
   def differentiatePower(base: Expr, exponent: Expr, withRespectTo: Param): Expr = {
     (base, exponent) match {
       case (e1, DoubleLiteral(0)) => DoubleLiteral(0)
-      case (e1, p1) => (p1 * (e1 ^ (p1 + DoubleLiteral(-1))))
+      case (e1, p1) => Evaluator.eval(p1 * (e1 ^ Evaluator.eval(p1 + DoubleLiteral(-1))))
     }
   }
   def differentiateDivision(numerator: Expr, denominator: Expr, param: Param): Expr = {
