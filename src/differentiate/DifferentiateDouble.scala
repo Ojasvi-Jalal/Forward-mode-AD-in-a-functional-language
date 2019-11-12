@@ -36,6 +36,7 @@ object DifferentiateDouble {
 
   def differentiatePower(base: Expr, exponent: Expr, withRespectTo: Param): Expr = {
     (base, exponent) match {
+      case (DoubleLiteral(base), DoubleLiteral(exponent)) => DoubleLiteral(0)
       case (e1, DoubleLiteral(0)) => DoubleLiteral(0)
       //case (e1, p1) => Evaluator.eval(p1 * (e1 ^ Evaluator.eval(p1 + DoubleLiteral(-1))))
       case (e1, e2) => Evaluator.eval(e2 * Evaluator.eval(e1 ^ Evaluator.eval(e2 + DoubleLiteral(-1))))
