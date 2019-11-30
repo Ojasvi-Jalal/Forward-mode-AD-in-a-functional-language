@@ -27,6 +27,8 @@ trait Expr extends IR {
   def /(that: Expr): Expr = FunctionCall(FunctionCall(DivideDouble(this), this), that)
   def ^(that: Expr): Expr = FunctionCall(FunctionCall(PowerDouble(this), this), that)
   def $(that: Param): Expr = FunctionCall(Lambda(that, this),DoubleLiteral(1)) // func $ arg// x*2 $ x+2 => (x+2)*2 => 2x+ 4 => 2
+  def let(x: Param, body: Expr, value: Expr): Expr = FunctionCall(Lambda(Lambda(x, body), value), x)
+
   // implicit  e.g. : FloatLiteral(2) + FloatLiteral(3.0f)    /// 2 + 3.0f
   // later can write implicit conversions
 }
@@ -50,7 +52,7 @@ trait AnonymousFunction extends Function {
 }
 
 
-case class Lambda(p: Param, b: Expr) extends AnonymousFunction {
+case class Lambda(p: Expr, b: Expr) extends AnonymousFunction {
   override var t: Type = FunctionType(p.t, FunctionType(p.t, p.t))
 
   override def build(newChildren: Seq[IR]): Lambda = Lambda(newChildren(0).asInstanceOf[Param], newChildren(1).asInstanceOf[Expr])

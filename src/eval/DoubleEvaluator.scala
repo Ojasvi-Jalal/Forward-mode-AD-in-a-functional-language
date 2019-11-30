@@ -54,7 +54,7 @@ object DoubleEvaluator {
       }
       case FunctionCall(Lambda(param,body),arg) =>
         // store in a map   param -> arg and eval body
-        paramToArg.put(param, arg)
+        paramToArg.put(param.asInstanceOf[Param], arg)
         eval(body,hm)
       case p:Param =>
         // fish it up from the map and eval the expr

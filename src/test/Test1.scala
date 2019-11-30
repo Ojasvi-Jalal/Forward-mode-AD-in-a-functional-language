@@ -13,9 +13,9 @@ object Test1 extends App{
     var body = x + var1
     val sum  =  var1 + var2
     val power = x ^ var2
-    val lambda = body $ x
+    //val lambda = let(x,body,1)
     println("var = "+Evaluator.eval(x))
-    println("lambda = "+ DoubleEvaluator.eval(lambda))
+    //println("lambda = "+ DoubleEvaluator.eval(lambda))
     println("var1 = "+ Evaluator.eval(var1))
     println("var2 = "+ Evaluator.eval(var2))
     println("sum = "+Evaluator.eval(var1 * (var1 + x)))

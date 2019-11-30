@@ -1,4 +1,4 @@
-package differentiate
+package automaticDifferentiation
 
 import eval.{Evaluator}
 import intermediateRep._
@@ -6,7 +6,7 @@ import intermediateRep._
 import scala.collection.mutable
 import scala.language.implicitConversions
 
-object DifferentiateDouble {
+object AutomaticDifferentiateExpr {
   val paramToArg = mutable.HashMap[Param,Expr]()
 
   def differentiate(e : Expr, withRespectTo : Param, hm : mutable.HashMap[Param, Double] = mutable.HashMap[Param, Double]()) : Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
@@ -18,7 +18,14 @@ object DifferentiateDouble {
       case FunctionCall(FunctionCall(_:PowerDouble, arg1),arg2) => {
         differentiatePower(arg1, arg2, withRespectTo)
       }
-      case FunctionCall(FunctionCall(_:AddDouble, arg2),arg1) =>  differentiate(arg1, withRespectTo) + differentiate(arg2, withRespectTo)
+      case FunctionCall(FunctionCall(_:AddDouble, arg2),arg1) =>  {
+
+        //Forward Tangent (Derivative Trace)
+        val v1 = differentiate(arg1, withRespectTo)
+        var v2 = differentiate(arg2, withRespectTo)
+        var result = v1 + v2
+        result
+      }
       case FunctionCall(FunctionCall(_:MultiplyDouble, arg1),arg2) => {
         differentiateProduct(arg1, arg2, withRespectTo)
       }
