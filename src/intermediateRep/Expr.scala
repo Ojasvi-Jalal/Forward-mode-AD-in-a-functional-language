@@ -10,8 +10,8 @@ package intermediateRep
   *    /        |                     \        \
   *   /         |                     \         \
   *  FuncCall   Function               Param     Values
-  *           /      \                          /   \
-  *       Anonymous    Built-in                 Int   Float
+  *           /      \                             \
+  *       Anonymous    Built-in                 Double
   *       main.Functions    main.Functions
   *         |        /     \
   *       Lambda     Add    Multiply
@@ -27,10 +27,9 @@ trait Expr extends IR {
   def /(that: Expr): Expr = FunctionCall(FunctionCall(DivideDouble(this), this), that)
   def ^(that: Expr): Expr = FunctionCall(FunctionCall(PowerDouble(this), this), that)
   def $(that: Param): Expr = FunctionCall(Lambda(that, this),DoubleLiteral(1)) // func $ arg// x*2 $ x+2 => (x+2)*2 => 2x+ 4 => 2
-  def let(x: Param, body: Expr, value: Expr): Expr = FunctionCall(Lambda(Lambda(x, body), value), x)
+  //def let(x: Param, body: Expr, value: Expr): Expr = FunctionCall(Lambda(x, body), value)
 
-  // implicit  e.g. : FloatLiteral(2) + FloatLiteral(3.0f)    /// 2 + 3.0f
-  // later can write implicit conversions
+  // later: can write implicit conversions
 }
 
 case class FunctionCall(f: Expr, arg: Expr) extends Expr {
@@ -52,14 +51,17 @@ trait AnonymousFunction extends Function {
 }
 
 
-case class Lambda(p: Expr, b: Expr) extends AnonymousFunction {
-  override var t: Type = FunctionType(p.t, FunctionType(p.t, p.t))
+case class Lambda(param: Expr, body: Expr) extends AnonymousFunction {
+  override var t: Type = FunctionType(param.t, FunctionType(param.t, param.t))
 
   override def build(newChildren: Seq[IR]): Lambda = Lambda(newChildren(0).asInstanceOf[Param], newChildren(1).asInstanceOf[Expr])
 
-  override def children: Seq[IR] = Seq(p,b)
+  override def children: Seq[IR] = Seq(param,body)
 }
 
+object Let {
+  def apply(param: Param, body: Expr, value: Expr): Expr = FunctionCall(Lambda(param, body), value)
+}
 
 trait BuiltInFunction extends Function {
 
