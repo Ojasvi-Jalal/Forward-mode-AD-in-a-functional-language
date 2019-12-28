@@ -6,10 +6,10 @@ import intermediateRep._
 import scala.collection.mutable
 import scala.language.implicitConversions
 
-object DifferentiateDouble {
-  val paramToArg = mutable.HashMap[Param,Expr]()
+object DifferentiateExpr {
+  val paramToArg = mutable.HashMap[Expr, Expr]()
 
-  def differentiate(e : Expr, withRespectTo : Param, hm : mutable.HashMap[Param, Double] = mutable.HashMap[Param, Double]()) : Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
+  def differentiate(e : Expr, withRespectTo : Param, hm : mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()) : Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
       case DoubleLiteral(d) => DoubleLiteral(0)
       case p:Param => if(Var(p)=== Var(withRespectTo)) {

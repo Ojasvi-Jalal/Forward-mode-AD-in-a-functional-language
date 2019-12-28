@@ -8,9 +8,9 @@ import scala.collection.mutable
 import scala.language.implicitConversions
 
 object AutomaticDifferentiateExpr {
-  val paramToArg = mutable.HashMap[Param, Expr]()
+  val paramToArg = mutable.HashMap[Expr, Expr]()
 
-  def autoDifferentiate(e: Expr, withRespectTo: Param, hm: mutable.HashMap[Param, Double] = mutable.HashMap[Param, Double]()): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
+  def autoDifferentiate(e: Expr, withRespectTo: Param, hm: mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
       case DoubleLiteral(d) => DoubleLiteral(0)
       case p: Param => if (Var(p) === Var(withRespectTo)) {
@@ -24,24 +24,17 @@ object AutomaticDifferentiateExpr {
       }
       case FunctionCall(FunctionCall(_: AddDouble, arg1), arg2) => {
         //Forward Primal Trace
-        var v_0 = Param("v_0");
-        var v_1 = Param("v_1");
-        var v_2 = Param("v_2");
-        //var z = Param("z");
+        var v_0 = Param("v_0")
+        var v_1 = Param("v_1")
+        var v_2 = Param("v_2")
         var y = Let(v_1 + v_0, v_2, (Let(arg2, v_1, Let(arg1, v_0, e))))
-        //var z = Let(arg1,v_0,(Let(arg2,v_1,(Let(v_1+v_0,v_2,e)))))
-        print("test" + Evaluator.eval(y))
+        var z = Let(arg1, v_0, Let(arg2, v_1, Let(v_1 + v_0, v_2, e)))
+        //take y and write a pass that traverses it. This pass should
+        //produce a new program (again full of Let for the v_i' variables)
+        //which corresponds to the derivative for each variable.
 
-        var deEval = DoubleEvaluator.deEval()
-
-        //Forward Tangent (Derivative Trace)
-
-        val v_0_prime = Differentiate.differentiate(deEval(v_0), withRespectTo)
-        val v_1_prime = Differentiate.differentiate(deEval(v_1), withRespectTo)
-        val v_2_prime = Evaluator.eval(v_0_prime + v_1_prime)
-        val y_prime = v_2_prime
-
-        return y_prime
+        var result = DerivativeTrace.derivativeTrace(z,withRespectTo)
+        result
       }
       case FunctionCall(FunctionCall(_: MultiplyDouble, arg1), arg2) => {
         differentiateProduct(arg1, arg2, withRespectTo)
