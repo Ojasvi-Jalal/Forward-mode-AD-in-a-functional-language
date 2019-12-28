@@ -66,7 +66,7 @@ object DoubleEvaluator {
       }
       case FunctionCall(Lambda(param,body),arg) =>
         // store in a map   param -> arg and eval body
-        paramToArg.put(param.asInstanceOf[Param], arg.asInstanceOf[Expr])
+        paramToArg.put(param, arg.asInstanceOf[Expr])
         eval(body,paramToArg)
       case p:Param =>
         // fish it up from the map and eval the expr
@@ -78,4 +78,14 @@ object DoubleEvaluator {
         }
     }
   }
+
+  def deEval() : mutable.HashMap[Expr, Expr] = {
+    val argToParam = mutable.HashMap[Expr,Expr]()
+  //  e match {
+   //   case FunctionCall(FunctionCall(_: AddDouble, arg2), arg1) => {
+        for ((k, v) <- paramToArg) argToParam.put(v, k)
+        argToParam
+      }
+//    }
+//  }
 }

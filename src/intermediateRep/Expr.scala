@@ -60,7 +60,7 @@ case class Lambda(param: Expr, body: Expr) extends AnonymousFunction {
 }
 
 object Let {
-  def apply(param: Param, body: Expr, value: Expr): Expr = FunctionCall(Lambda(param, body), value)
+  def apply(param: Expr, value: Expr, body: Expr): Expr = FunctionCall(Lambda(param, body), value)
 }
 
 trait BuiltInFunction extends Function {
