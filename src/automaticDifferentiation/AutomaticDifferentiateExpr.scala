@@ -33,8 +33,7 @@ object AutomaticDifferentiateExpr {
         //produce a new program (again full of Let for the v_i' variables)
         //which corresponds to the derivative for each variable.
 
-        var result = DerivativeTrace.derivativeTrace(z,withRespectTo)
-        result
+        DerivativeTrace.derivativeTrace(z,withRespectTo)
       }
       case FunctionCall(FunctionCall(_: MultiplyDouble, arg1), arg2) => {
         differentiateProduct(arg1, arg2, withRespectTo)
