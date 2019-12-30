@@ -12,71 +12,70 @@ object AutomaticDifferentiateExpr {
 
   def autoDifferentiate(e: Expr, withRespectTo: Param, hm: mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
-      case DoubleLiteral(d) => DoubleLiteral(0)
-      case p: Param => if (Var(p) === Var(withRespectTo)) {
-        DoubleLiteral(1)
-      }
-      else {
-        DoubleLiteral(0)
-      }
-      case FunctionCall(FunctionCall(_: PowerDouble, arg1), arg2) => {
-        differentiatePower(arg1, arg2, withRespectTo)
-      }
-      case FunctionCall(FunctionCall(_: AddDouble, arg1), arg2) => {
-        //Forward Primal Trace
+//      case DoubleLiteral(d) => DoubleLiteral(0)
+//      case p: Param => if (Var(p) === Var(withRespectTo))
+//        DoubleLiteral(1)
+//      else
+//        DoubleLiteral(0)
+
+      case FunctionCall(FunctionCall(_: AddDouble, arg1), arg2) =>
+        var z = forwardPrimalTraceAddition(e, arg1, arg2, withRespectTo)
+        DerivativeTrace.derivativeTrace(z,withRespectTo)
+        //autoDifferentiate(e, withRespectTo)
+
+      case FunctionCall(FunctionCall(_: MultiplyDouble, arg1), arg2) =>
+        var z = forwardPrimalTraceProduct(e, arg1, arg2, withRespectTo)
+        DerivativeTrace.derivativeTrace(z,withRespectTo)
+
+      case FunctionCall(FunctionCall(_: DivideDouble, arg1), arg2) =>
+        var z = forwardPrimalTraceDivision(e, arg1, arg2, withRespectTo)
+        DerivativeTrace.derivativeTrace(z,withRespectTo)
+    }
+  }
+
+  //take y and write a pass that traverses it. This pass should
+  //produce a new program (again full of Let for the v_i' variables)
+  //which corresponds to the derivative for each variable.
+
+  def forwardPrimalTraceAddition(e: Expr, arg1: Expr, arg2: Expr, withRespectTo: Param, hm: mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()): Expr = {
+    (arg1, arg2) match {
+      case (_: Param, _: Param) =>
+        var v_0 = Param("v_0")
+        var v_1 = Param("v_1")
+        var v_2 = Param("v_2")
+        //var y = Let(v_1 + v_0, v_2, (Let(arg2, v_1, Let(arg1, v_0, e))))
+        Let(arg1, v_0, Let(arg2, v_1, Let(v_1 + v_0, v_2, e)))
+
+      //case (_,_) => e
+
+    }
+  }
+
+  def forwardPrimalTraceProduct(e: Expr, arg1: Expr, arg2: Expr, withRespectTo: Param, hm: mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()): Expr = {
+    (arg1, arg2) match {
+      case (_: Param, _: Param) =>
+        var v_0 = Param("v_0")
+        var v_1 = Param("v_1")
+        var v_2 = Param("v_2")
+        //var y = Let(v_1 + v_0, v_2, (Let(arg2, v_1, Let(arg1, v_0, e))))
+        Let(arg1, v_0, Let(arg2, v_1, Let(v_1 * v_0, v_2, e)))
+
+      //case (_,_) => e
+
+    }
+  }
+
+  def forwardPrimalTraceDivision(e: Expr, arg1: Expr, arg2: Expr, withRespectTo: Param, hm: mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()): Expr = {
+    (arg1, arg2) match {
+      case (_: Param, _: Param) =>
         var v_0 = Param("v_0")
         var v_1 = Param("v_1")
         var v_2 = Param("v_2")
         var y = Let(v_1 + v_0, v_2, (Let(arg2, v_1, Let(arg1, v_0, e))))
-        var z = Let(arg1, v_0, Let(arg2, v_1, Let(v_1 + v_0, v_2, e)))
-        //take y and write a pass that traverses it. This pass should
-        //produce a new program (again full of Let for the v_i' variables)
-        //which corresponds to the derivative for each variable.
+        Let(arg1, v_0, Let(arg2, v_1, Let(v_1 / v_0, v_2, e)))
 
-        DerivativeTrace.derivativeTrace(z,withRespectTo)
-      }
-      case FunctionCall(FunctionCall(_: MultiplyDouble, arg1), arg2) => {
-        differentiateProduct(arg1, arg2, withRespectTo)
-      }
-      case FunctionCall(FunctionCall(_: DivideDouble, arg1), arg2) => differentiateDivision(arg1, arg2, withRespectTo)
-    }
-  }
+      //case (_,_) => e
 
-  def differentiateProduct(lhs: Expr, rhs: Expr, param: Param): Expr = {
-    (lhs, rhs) match {
-      case (DoubleLiteral(d), exp) => Evaluator.eval(lhs * autoDifferentiate(exp, param))
-      case (exp, DoubleLiteral(d)) => Evaluator.eval(autoDifferentiate(lhs, param) * rhs)
-      case (e1, e2) => Evaluator.eval((autoDifferentiate(e1, param) * e2) + (autoDifferentiate(e2, param) * e1))
-    }
-  }
-
-  def differentiatePower(base: Expr, exponent: Expr, withRespectTo: Param): Expr = {
-    (base, exponent) match {
-      case (DoubleLiteral(base), DoubleLiteral(exponent)) => DoubleLiteral(0)
-
-      case (e1, DoubleLiteral(0)) => DoubleLiteral(0)
-
-      case (e1, DoubleLiteral(d)) => Evaluator.eval(DoubleLiteral(d) * Evaluator.eval(e1 ^ Evaluator.eval(DoubleLiteral(d) + DoubleLiteral(-1))))
-
-      //case (e1, e2) => Evaluator.eval(e2 * Evaluator.eval(e1 ^ Evaluator.eval(e2 + DoubleLiteral(-1))))
-    }
-  }
-
-  def differentiateDivision(numerator: Expr, denominator: Expr, param: Param): Expr = {
-    (numerator, denominator) match {
-      case (DoubleLiteral(d), exp) => var new_numerator = DoubleLiteral(-d) * autoDifferentiate(denominator, param)
-        var new_denominator = denominator ^ DoubleLiteral(2)
-        var result = new_numerator / new_denominator
-        result
-
-      case (exp, DoubleLiteral(d)) => {
-        differentiateProduct(DoubleLiteral(1 / d), exp, param)
-      }
-
-      case (e1, e2) => var new_numerator = ((autoDifferentiate(e1, param) * e2)) + (DoubleLiteral(-1) * autoDifferentiate(e2, param) * e1)
-        var new_denominator = (e2 ^ DoubleLiteral(2))
-        var result = new_numerator / new_denominator
-        Evaluator.eval(result)
     }
   }
 }

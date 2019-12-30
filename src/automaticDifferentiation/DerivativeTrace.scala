@@ -22,7 +22,7 @@ object DerivativeTrace {
         // store in a map   param -> arg and eval body
         paramToArg.put(arg.asInstanceOf[Expr], param)
         derivativeTrace(body, withRespectTo, paramToArg)
-      case FunctionCall(FunctionCall(_, _), _) => {
+      case FunctionCall(FunctionCall(_, _), _) =>
         var v_0       = Param("v_0")
         var v_1       = Param("v_1")
         var v_2       = Param("v_2")
@@ -30,10 +30,13 @@ object DerivativeTrace {
         var v_1_prime = Param("v_1_prime")
         var v_2_prime = Param("v_2_prime")
 
-        var z_prime = Let(v_0,DifferentiateExpr.differentiate(paramToArg(v_0), paramToArg(v_0).asInstanceOf[Param]),Let(v_1,DifferentiateExpr.differentiate(paramToArg(v_1), paramToArg(v_0).asInstanceOf[Param]),Let(v_2,DifferentiateExpr.differentiate(paramToArg(v_2), paramToArg(v_0).asInstanceOf[Param]),paramToArg(v_2))))
+        var z_prime = Let(v_0,DifferentiateExpr.differentiate(paramToArg(v_0), paramToArg(v_0).asInstanceOf[Param]),
+          Let(v_1,DifferentiateExpr.differentiate(paramToArg(v_1), paramToArg(v_0).asInstanceOf[Param]),
+            Let(v_2,DifferentiateExpr.differentiate(paramToArg(v_2), paramToArg(v_0).asInstanceOf[Param]),paramToArg(v_2))))
 
         Evaluator.eval(z_prime)
-      }
+
+      //case FunctionCall(FunctionCall(_: MultiplyDouble, arg1), arg2) =>
     }
   }
 }
