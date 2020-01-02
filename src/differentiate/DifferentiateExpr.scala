@@ -1,6 +1,7 @@
 package differentiate
 
-import eval.{Evaluator}
+import eval.Evaluator
+import eval.DoubleEvaluator.eval
 import intermediateRep._
 
 import scala.collection.mutable
@@ -13,18 +14,53 @@ object DifferentiateExpr {
     e match {
       case DoubleLiteral(d) => DoubleLiteral(0)
 
-      case p:Param => if(Var(p)=== Var(withRespectTo)) {
-          DoubleLiteral(1)}
-                      else{DoubleLiteral(0)}
+      case p:Param =>
+        if(!hm.isEmpty) {
+          var newP = if (hm.contains(p)) Param(hm(p)+"") else p
+          val newWithRespectTo = if (hm.contains(withRespectTo))  Param(hm(withRespectTo)+"") else withRespectTo
 
-      case FunctionCall(FunctionCall(_:PowerDouble, arg1),arg2) => {
-        differentiatePower(arg1, arg2, withRespectTo)
-      }
+          if(Var(newP) === Var(newWithRespectTo)) {
+            DoubleLiteral(1)}
+          else{DoubleLiteral(0)}
+        }
 
-      case FunctionCall(FunctionCall(_:AddDouble, arg2),arg1) =>  differentiate(arg1, withRespectTo) + differentiate(arg2, withRespectTo)
+        else{
+          if (Var(p)=== Var(withRespectTo)) {
+            DoubleLiteral(1)}
+                      else{DoubleLiteral(0)}}
+
+      case FunctionCall(FunctionCall(_:PowerDouble, arg1),arg2) =>
+        if(!hm.isEmpty) {
+          val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
+          val newarg2 = if (hm.contains(arg2)) eval(hm(arg2)) else arg2
+          val newWithRespectTo = if (hm.contains(withRespectTo))  hm(withRespectTo).asInstanceOf[Param] else withRespectTo
+          differentiatePower(newarg1, newarg2, newWithRespectTo)
+        }
+
+        else
+          differentiatePower(arg1, arg2, withRespectTo)
+
+      case FunctionCall(FunctionCall(_:AddDouble, arg2),arg1) =>
+        if(!hm.isEmpty) {
+          val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
+          val newarg2 = if (hm.contains(arg2)) eval(hm(arg2)) else arg2
+          val newWithRespectTo = if (hm.contains(withRespectTo))  hm(withRespectTo).asInstanceOf[Param] else withRespectTo
+          differentiate(newarg1, newWithRespectTo) + differentiate(newarg2, newWithRespectTo)
+        }
+
+        else
+          differentiate(arg1, withRespectTo) + differentiate(arg2, withRespectTo)
 
       case FunctionCall(FunctionCall(_:MultiplyDouble, arg1),arg2) => {
-        differentiateProduct(arg1, arg2, withRespectTo)
+        if(!hm.isEmpty) {
+          val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
+          val newarg2 = if (hm.contains(arg2)) eval(hm(arg2)) else arg2
+          val newWithRespectTo = if (hm.contains(withRespectTo))  hm(withRespectTo).asInstanceOf[Param] else withRespectTo
+          differentiateProduct(newarg1, newarg2, newWithRespectTo)
+        }
+
+        else
+          differentiateProduct(arg1, arg2, withRespectTo)
       }
 
       case FunctionCall(FunctionCall(_:DivideDouble, arg1),arg2) => differentiateDivision(arg1,arg2, withRespectTo)

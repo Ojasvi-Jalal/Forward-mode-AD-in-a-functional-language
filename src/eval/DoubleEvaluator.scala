@@ -32,6 +32,18 @@ object DoubleEvaluator {
         }
       }
       case FunctionCall(FunctionCall(_:MultiplyDouble, arg2),arg1) => {
+        if(!hm.isEmpty){
+          val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
+          val newarg2 = if (hm.contains(arg2)) eval(hm(arg2)) else arg2
+          (newarg1, newarg2) match {
+            case (arg1: Param, _) => Param("("+newarg1 + " * " + newarg2+")") // fix this
+            case (_, arg2: Param) => Param("("+newarg1 + " * " + newarg2+")")
+            case (DoubleLiteral(newarg1),DoubleLiteral(newarg2)) => DoubleLiteral(newarg1 * newarg2)
+            case (_, _) => eval(eval(newarg1) * (eval(newarg2)))
+          }
+        }
+        else
+
         (arg1, arg2) match {
           case (arg1: Param, _) =>Param("("+arg1 + " * " + arg2+")")
           case (_, arg2: Param) => Param("("+arg1 + " * " + arg2+")")
