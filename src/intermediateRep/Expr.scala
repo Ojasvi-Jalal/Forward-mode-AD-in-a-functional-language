@@ -27,7 +27,6 @@ trait Expr extends IR {
   def /(that: Expr): Expr = FunctionCall(FunctionCall(DivideDouble(this), this), that)
   def ^(that: Expr): Expr = FunctionCall(FunctionCall(PowerDouble(this), this), that)
   def $(that: Param): Expr = FunctionCall(Lambda(that, this),DoubleLiteral(1)) // func $ arg// x*2 $ x+2 => (x+2)*2 => 2x+ 4 => 2
-  //def let(x: Param, body: Expr, value: Expr): Expr = FunctionCall(Lambda(x, body), value)
 
   // later: can write implicit conversions
 }
@@ -144,3 +143,12 @@ case class DoubleLiteral(d: Double) extends Values{
   override def children = Seq()
 }
 
+case class Array(a: ArrayType) extends Values{
+  override var t: Type = ArrayType
+
+  override def toString(): String = d.toString
+
+  override def build(newChildren: Seq[IR]) = DoubleLiteral(newChildren.head.asInstanceOf[Double])
+
+  override def children = Seq()
+}

@@ -2,11 +2,11 @@ package intermediateRep
 
 /**
   *   Type
-  *         IR
-  *          \
-  *         Type
-  *         /   \
-  *     Scalar  FuncType (Unary functions)
+  *              IR
+  *              |
+  *             Type
+  *         /     |        \
+  *     Scalar ArrayType  FuncType (Unary functions)
   *     /   \
   * Float   Int
   */
@@ -26,6 +26,18 @@ object DoubleType extends Scalar {
   override def build(newChildren: Seq[IR]) = DoubleType
 
   override def children: Seq[Type] = Seq()
+}
+
+object IntType extends Scalar {
+  override def build(newChildren: Seq[IR]) = IntType
+
+  override def children: Seq[Type] = Seq()
+}
+
+case class ArrayType(in: Type, numberOfElements: Type ) extends Type {
+  override def build(newChildren: Seq[IR]): ArrayType = ArrayType(newChildren.head.asInstanceOf[Type], newChildren(1).asInstanceOf[Type])
+  override def children: Seq[Type] = Seq(in, numberOfElements)
+  override def ===(that: Type): Boolean = ???
 }
 
 case class FunctionType(in: Type, out: Type) extends Type {

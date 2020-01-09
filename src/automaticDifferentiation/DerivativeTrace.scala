@@ -31,24 +31,19 @@ object DerivativeTrace {
   def derivativeTrace(e: Expr, withRespectTo: Param, hm: mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
       case FunctionCall(Lambda(param, body), arg) =>
-        // store in a map   param -> arg and eval body
         paramToArg.put(arg.asInstanceOf[Expr], param)
         derivativeTrace(body, withRespectTo, paramToArg)
+
       case FunctionCall(FunctionCall(_, _), _) =>
         var v_0       = Param("v_0")
         var v_1       = Param("v_1")
         var v_2       = Param("v_2")
-        var v_0_prime = Param("v_0_prime")
-        var v_1_prime = Param("v_1_prime")
-        var v_2_prime = Param("v_2_prime")
 
         var z_prime = Let(v_0,DifferentiateExpr.differentiate(v_0, v_0, hm),
           Let(v_1,DifferentiateExpr.differentiate(v_1, v_0, hm),
             Let(v_2,DifferentiateExpr.differentiate(paramToArg(v_2), v_0, hm),v_2)))
 
         Evaluator.eval(z_prime)
-
-      //case FunctionCall(FunctionCall(_: MultiplyDouble, arg1), arg2) =>
     }
   }
 }

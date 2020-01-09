@@ -30,6 +30,10 @@ object AutomaticDifferentiateExpr {
       case FunctionCall(FunctionCall(_: DivideDouble, arg1), arg2) =>
         var z = forwardPrimalTraceDivision(e, arg1, arg2, withRespectTo)
         DerivativeTrace.derivativeTrace(z,withRespectTo)
+
+      case FunctionCall(FunctionCall(_: PowerDouble, arg1), arg2) =>
+        var z = forwardPrimalTracePower(e, arg1, arg2, withRespectTo)
+        DerivativeTrace.derivativeTrace(z,withRespectTo)
     }
   }
 
@@ -92,9 +96,17 @@ object AutomaticDifferentiateExpr {
         var v_2 = Param("v_2")
         var y = Let(v_1 + v_0, v_2, (Let(arg2, v_1, Let(arg1, v_0, e))))
         Let(arg1, v_0, Let(arg2, v_1, Let(v_1 / v_0, v_2, e)))
+    }
+  }
 
-      //case (_,_) => e
-
+  def forwardPrimalTracePower(e: Expr, arg1: Expr, arg2: Expr, withRespectTo: Param, hm: mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()): Expr = {
+    (arg1) match {
+      case (_: Param) =>
+        var v_0 = Param("v_0")
+        var v_1 = Param("v_1")
+        var v_2 = Param("v_2")
+        var y = Let(v_1 + v_0, v_2, (Let(arg2, v_1, Let(arg1, v_0, e))))
+        Let(arg1, v_0, Let(arg2, v_1, Let(v_0 ^ v_1, v_2, e)))
     }
   }
 }
