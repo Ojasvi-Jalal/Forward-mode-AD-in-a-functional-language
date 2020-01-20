@@ -1,7 +1,7 @@
 package test
 
 import eval.{Evaluator, DoubleEvaluator}
-import intermediateRep.{DoubleLiteral, Param, Let}
+import intermediateRep.{DoubleLiteral, Param, Let, Array, ArrayAccess}
 import typeCheck.TypeChecker
 
 object Test1 extends App{
@@ -14,9 +14,12 @@ object Test1 extends App{
     var body = x + var1
     val sum  =  var1 + var2
     val power = (x ^ var2) + (y ^ var2)
+    var array = Array(Seq(var1, var2), var1.t)
     Let(x,body,y)
     //var v_minus_1 = Let(v_minus_1,v_minus_1, x)
     //println("v_minus_1 = "+Evaluator.eval(v_minus_1))
+    println(Evaluator.evalArrays(array))
+    println(Evaluator.evalArrays(ArrayAccess(array,1 )))
     println("var = "+Evaluator.eval(x))
     println("lambda = "+ DoubleEvaluator.eval(Let(x,body,y)))
     println("var1 = "+ Evaluator.eval(var1))

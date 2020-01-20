@@ -143,12 +143,43 @@ case class DoubleLiteral(d: Double) extends Values{
   override def children = Seq()
 }
 
-case class Array(a: ArrayType) extends Values{
-  override var t: Type = ArrayType
+case class IntLiteral(d: Int) extends Values{
+  override var t: Type = IntType
 
   override def toString(): String = d.toString
 
-  override def build(newChildren: Seq[IR]) = DoubleLiteral(newChildren.head.asInstanceOf[Double])
+  override def build(newChildren: Seq[IR]) = DoubleLiteral(newChildren.head.asInstanceOf[Int])
 
   override def children = Seq()
 }
+
+case class Array(a: Seq[Expr], et: Type) extends Values{
+  override var t: Type = ArrayType(et, a.length)
+
+  override def toString(): String = a.toString
+
+  override def build(newChildren: Seq[IR]) = Array(newChildren(0).asInstanceOf[Seq[Expr]], newChildren(1).asInstanceOf[Type])
+
+  override def children = Seq()
+}
+
+case class ArrayAccess(a: Array, index: Int) extends Values{
+  override var t: Type = a.t
+
+  override def toString(): String = a.toString
+
+  override def build(newChildren: Seq[IR]) = ArrayAccess(newChildren(0).asInstanceOf[Array], newChildren(1).asInstanceOf[Int])
+
+  override def children = Seq()
+}
+
+
+//case class Vector(a: Expr, number: Type) extends Values{
+//  override var t: Type = VectorType(a.t, number)
+//
+//  override def toString(): String = a.toString
+//
+//  override def build(newChildren: Seq[IR]) = Vector(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Type])
+//
+//  override def children = Seq()
+//}

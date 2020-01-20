@@ -11,6 +11,7 @@ object DoubleEvaluator {
   def eval(e:Expr, hm : mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()) : Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
       case DoubleLiteral(d) => DoubleLiteral(d)
+      //case Array(a,b) => a
       case FunctionCall(FunctionCall(_:AddDouble, arg2), arg1) => {
         if(!hm.isEmpty){
           val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
