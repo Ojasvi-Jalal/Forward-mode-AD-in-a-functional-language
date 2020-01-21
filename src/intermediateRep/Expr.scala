@@ -7,7 +7,7 @@ package intermediateRep
   *                        Expression
   *                             |
   *    ----------------------------------------
-  *    /        |                     \        \
+  *    /        |                    \        \
   *   /         |                     \         \
   *  FuncCall   Function               Param     Values
   *           /      \                             \
@@ -163,7 +163,7 @@ case class Array(a: Seq[Expr], et: Type) extends Values{
   override def children = Seq()
 }
 
-case class ArrayAccess(a: Array, index: Int) extends Values{
+case class ArrayAccess(a: Array, index: Int) extends Expr {
   override var t: Type = a.t
 
   override def toString(): String = a.toString
