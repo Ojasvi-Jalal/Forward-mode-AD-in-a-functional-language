@@ -1,6 +1,6 @@
 package eval
 
-import intermediateRep.{ArrayType, DoubleType, Expr, FunctionType}
+import intermediateRep.{ArrayType, DoubleType, Expr, FunctionType, VectorType}
 
 object Evaluator {
   def eval(e:Expr ) : Expr = {
@@ -14,6 +14,7 @@ object Evaluator {
   def evalArrays(e: Expr) : Expr = {
     e.t match {
       case _:ArrayType => ArraysEvaluator.eval(e)
+      case _:VectorType => ArraysEvaluator.eval(e)
     }
   }
 }
