@@ -1,5 +1,7 @@
 package intermediateRep
 
+import eval.DoubleEvaluator
+
 /**
   * the root expression
   *                            IR
@@ -23,12 +25,13 @@ trait Expr extends IR {
   override def build(newChildren: Seq[IR]): Expr
 
   def +(that: Expr): Expr = FunctionCall(FunctionCall(AddDouble(this), this), that)
-  def times2(): Expr = this * IntLiteral(2)
   def *(that: Expr): Expr = FunctionCall(FunctionCall(MultiplyDouble(this), this), that)
   def /(that: Expr): Expr = FunctionCall(FunctionCall(DivideDouble(this), this), that)
   def ^(that: Expr): Expr = FunctionCall(FunctionCall(PowerDouble(this), this), that)
   def $(that: Param): Expr = FunctionCall(Lambda(that, this),DoubleLiteral(1)) // func $ arg// x*2 $ x+2 => (x+2)*2 => 2x+ 4 => 2
 
+
+  def times2(that: Expr): Expr = FunctionCall(FunctionCall(MultiplyDouble(this), this), IntLiteral(2))
   // later: can write implicit conversions
 }
 
@@ -66,83 +69,13 @@ object Let {
 }
 
 object Map {
-  def apply[Expr, Seq[Expr]](f: Expr => Expr, list: Seq[Expr]): Seq[Expr] = {
+  def apply( list: List[Expr]): List[Expr] = {
+    var i = 0
     for {
       x <- list
-    } yield f(x)
+    } yield DoubleEvaluator.eval(FunctionCall(FunctionCall(MultiplyDouble(x), x), DoubleLiteral(2)))
   }
 }
-
-//case class Map private[algo] (f: Expr, input: Expr, fType: Type, inputType: Type, override val t: Type = AnyTypeVar()) extends Expr {
-//  override def children: Seq[IR] = Seq(innerIR, f, input, fType, inputType, t)
-//  override val innerIR: Expr = {
-//    val indtv = AlgoDataTypeVar()
-//    val outdtv = AlgoDataTypeVar()
-//    val ftv = FunTypeVar(indtv, outdtv)
-//    val atv = ArithTypeVar()
-//    val inseqtv = SeqTypeVar(indtv, atv)
-//    val outseqt = SeqType(outdtv, atv)
-//
-//    FunctionCall(TypeFunctionCall(BuiltinTypeFunction(TypeFunType(Seq(ftv, inseqtv), FunType(Seq(ftv, inseqtv), outseqt))), Seq(fType, inputType)), Seq(f, input))
-//  }
-//  override def build(newChildren: Seq[LiftIR]): Map = new Map(newChildren(1).asInstanceOf[Expr], newChildren(2).asInstanceOf[Expr], newChildren(3).asInstanceOf[Type], newChildren(4).asInstanceOf[Type], newChildren(5).asInstanceOf[Type]) {
-//    override val innerIR: Expr = newChildren.head.asInstanceOf[Expr]
-//  }
-//}
-//
-//case class Reduce private[algo] (f: Expr, input: Expr, fType: Type, inputType: Type, override val t: Type = AnyTypeVar()) extends AlgoExpr {
-//  override def children: Seq[LiftIR] = Seq(innerIR, f, input, fType, inputType, t)
-//  override val innerIR: Expr = {
-//    val dtv = AlgoDataTypeVar()
-//    val ftv = FunTypeVar(TupleTypeVar(Seq(dtv, dtv)), dtv)
-//    val inseqtv = SeqTypeVar(dtv, ArithTypeVar())
-//    FunctionCall(TypeFunctionCall(BuiltinTypeFunction(TypeFunType(Seq(ftv, inseqtv), FunType(Seq(ftv, inseqtv), dtv))), Seq(fType, inputType)), Seq(f, input))
-//  }
-//  override def build(newChildren: Seq[LiftIR]): Reduce = new Reduce(newChildren(1).asInstanceOf[Expr], newChildren(2).asInstanceOf[Expr], newChildren(3).asInstanceOf[Type], newChildren(4).asInstanceOf[Type], newChildren(5).asInstanceOf[Type]) {
-//    override val innerIR: Expr = newChildren.head.asInstanceOf[Expr]
-//  }
-//}
-
-//object Iterator {
-//  var i = 0
-//  def foreach(array: Array, ) = {
-//    Let(ArrayAccess.apply())
-//  }
-//
-//  def hasNext() : Boolean = this.hasNext()
-//}
-//
-//class Iterable[T](val node: Array) extends AnyVal {
-//  def iterator = Iterator
-//    .iterate(Option(node))(_.flatMap(_.next))
-//    .takeWhile(_.nonEmpty)
-//    .flatten
-//    .map(_.value)
-//}
-//[2,3]
-//
-//for (int i : arrayOfInt)
-//
-//For(exp option, exp, exp option, statement) // initial expression, condition, post-expression, body
-//| ForDecl(declaration, exp, exp option, statement)
-
-//Evaluate init.
-//Evaluate condition.
-//If it’s false, jump to step 7.
-//Execute statement.
-//Execute post-expression.
-//Jump to step 2.
-//Finish.
-
-//case class For(let:Expr, condition: Expr, postExpr: Expr) extends Expr {
-//  override var t: Type = _
-//
-//  if(Eval(condition))
-//
-//  override def build(newChildren: Seq[IR]): Expr = ???
-//
-//  override def children: Seq[IR] = ???
-//}
 
 trait BuiltInFunction extends Function {
 
@@ -194,7 +127,6 @@ case class Param(x: String) extends Expr {
   override def build(newChildren: Seq[IR]) = ???
 
   override def children = Seq()
-
 }
 
 case class Var(x:Param) extends Expr {
@@ -207,14 +139,6 @@ case class Var(x:Param) extends Expr {
   override def children = Seq()
 
   def ===(that: Var) : Boolean = {
-    this.value == that.value
-  }
-
-  def >==(that: Var) : Boolean = {
-    that.value == this.value
-  }
-
-  def <==(that: Var) : Boolean = {
     this.value == that.value
   }
 }
@@ -251,10 +175,6 @@ case class Vector(a: Seq[Expr], et: Type) extends Values{
   override def build(newChildren: Seq[IR]) = Vector(newChildren(0).asInstanceOf[Seq[Expr]], newChildren(1).asInstanceOf[Type])
 
   override def children = Seq()
-//
-//  def foreach(expr: Expr) ={
-//    this = a.head
-//  }
 }
 
 case class Array(a: Seq[Expr], et: Type) extends Values{
@@ -265,10 +185,6 @@ case class Array(a: Seq[Expr], et: Type) extends Values{
   override def build(newChildren: Seq[IR]) = Array(newChildren(0).asInstanceOf[Seq[Expr]], newChildren(1).asInstanceOf[Type])
 
   override def children = Seq()
-//
-//  def foreach(expr: Expr) ={
-//    this = a.head
-//  }
 }
 
 case class ArrayAccess(a: Array, index: Int) extends Expr {

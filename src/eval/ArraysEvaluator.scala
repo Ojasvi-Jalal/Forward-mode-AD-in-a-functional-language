@@ -1,5 +1,6 @@
 package eval
 
+import eval.DoubleEvaluator.eval
 import intermediateRep._
 
 import scala.collection.mutable
@@ -13,7 +14,7 @@ object ArraysEvaluator {
     e match {
       case Array(a, b) => Array(a, b)
       case Vector(a, b) => Vector(a, b)
-      case ArrayAccess(a, b) => a.a(b)
+      case ArrayAccess(a, b) => a.a(b.asInstanceOf[Int])
     }
   }
 }
