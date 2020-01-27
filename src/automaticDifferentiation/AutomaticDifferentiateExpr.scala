@@ -59,7 +59,6 @@ object AutomaticDifferentiateExpr {
         var v_0 = Param("v_0")
         var v_1 = Param("v_1")
         var v_2 = Param("v_2")
-        //var y = Let(v_1 + v_0, v_2, (Let(arg2, v_1, Let(arg1, v_0, e))))
         Let(arg1, v_0, Let(arg2, v_1, Let(v_1 + v_0, v_2, e)))
 
       case (FunctionCall(FunctionCall(_:PowerDouble, base1),exp1), FunctionCall(FunctionCall(_:PowerDouble, base2),exp2)) =>

@@ -69,11 +69,21 @@ object Let {
 }
 
 object Map {
-  def apply( list: List[Expr]): List[Expr] = {
-    var i = 0
+  def apply( list: Array): Seq[Expr] = {
     for {
-      x <- list
+      x <- list.a
     } yield DoubleEvaluator.eval(FunctionCall(FunctionCall(MultiplyDouble(x), x), DoubleLiteral(2)))
+  }
+}
+
+object Reduce {
+  def apply( list: Array): Expr = {
+    var z = DoubleEvaluator.eval(DoubleLiteral(1))
+    for {
+      x <- list.a //1
+      z = FunctionCall(FunctionCall(MultiplyDouble(x), x), z) //bind this to the next let binding
+    }
+      z
   }
 }
 

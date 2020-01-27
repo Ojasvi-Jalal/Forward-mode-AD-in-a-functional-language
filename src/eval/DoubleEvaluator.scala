@@ -1,5 +1,6 @@
 package eval
 
+import automaticDifferentiation.DerivativeTrace.{derivativeTrace, paramToArg}
 import intermediateRep._
 
 import scala.collection.mutable
@@ -81,6 +82,7 @@ object DoubleEvaluator {
         // store in a map   param -> arg and eval body
         paramToArg.put(param, arg.asInstanceOf[Expr])
         eval(body,paramToArg)
+
       case p:Param =>
         // fish it up from the map and eval the expr
         if (paramToArg.contains(p)){
