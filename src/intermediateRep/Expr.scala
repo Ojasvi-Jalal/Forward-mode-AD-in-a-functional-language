@@ -28,11 +28,10 @@ trait Expr extends IR {
   def *(that: Expr): Expr = FunctionCall(FunctionCall(MultiplyDouble(this), this), that)
   def /(that: Expr): Expr = FunctionCall(FunctionCall(DivideDouble(this), this), that)
   def ^(that: Expr): Expr = FunctionCall(FunctionCall(PowerDouble(this), this), that)
-  def $(that: Param): Expr = FunctionCall(Lambda(that, this),DoubleLiteral(1)) // func $ arg// x*2 $ x+2 => (x+2)*2 => 2x+ 4 => 2
+  def $(that: Param): Expr = FunctionCall(Lambda(that, this),DoubleLiteral(1))
 
 
-  def times2(that: Expr): Expr = FunctionCall(FunctionCall(MultiplyDouble(this), this), IntLiteral(2))
-  // later: can write implicit conversions
+  def times2(): Expr = FunctionCall(FunctionCall(MultiplyDouble(this), this), IntLiteral(2))
 }
 
 case class FunctionCall(f: Expr, arg: Expr) extends Expr {
@@ -69,24 +68,23 @@ object Let {
 }
 
 object Map {
-  def apply( list: Array): Seq[Expr] = {
+  def timesTwo( list: Array): Seq[Expr] = {
     for {
       x <- list.a
     } yield DoubleEvaluator.eval(FunctionCall(FunctionCall(MultiplyDouble(x), x), DoubleLiteral(2)))
   }
 }
 
-object Reduce {
-  def apply( list: Array): Expr = {
-    var z = DoubleEvaluator.eval(DoubleLiteral(1))
-    for {
-      x <- list.a //1
-      z = FunctionCall(FunctionCall(MultiplyDouble(x), x), z) //bind this to the next let binding
+
+object Fold {
+  def foldLeft(list: Seq[Expr], z: Expr): Expr = {
+    list match {
+      case Nil => DoubleLiteral(1)
+      case head :: tail => FunctionCall(FunctionCall(MultiplyDouble(foldLeft(tail, head)), foldLeft(tail, head)), head)
     }
-      z
   }
 }
-
+//
 trait BuiltInFunction extends Function {
 
 }
