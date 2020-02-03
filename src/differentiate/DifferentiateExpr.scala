@@ -42,14 +42,15 @@ object DifferentiateExpr {
 
       case FunctionCall(FunctionCall(_:AddDouble, arg2),arg1) =>
         if(!hm.isEmpty) {
-          val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
-          val newarg2 = if (hm.contains(arg2)) eval(hm(arg2)) else arg2
+          val newarg1 = if (hm.contains(arg1)) (hm(arg1)) else arg1
+          val newarg2 = if (hm.contains(arg2)) (hm(arg2)) else arg2
           val newWithRespectTo = if (hm.contains(withRespectTo))  hm(withRespectTo).asInstanceOf[Param] else withRespectTo
-          differentiate(newarg1, newWithRespectTo) + differentiate(newarg2, newWithRespectTo)
+          differentiate(newarg1, newWithRespectTo, hm) + differentiate(newarg2, newWithRespectTo, hm)
         }
 
-        else
+        else {
           differentiate(arg1, withRespectTo) + differentiate(arg2, withRespectTo)
+        }
 
       case FunctionCall(FunctionCall(_:MultiplyDouble, arg1),arg2) => {
         if(!hm.isEmpty) {

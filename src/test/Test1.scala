@@ -14,11 +14,12 @@ object Test1 extends App {
     var body = x + var1
     val sum  = var1 + var2
     val power = (x ^ var2) + (y ^ var2)
+    val nested = product + var2
     var array = Array(List(var1, var2, var3), var1.t)
     Let(x,body,y)
     println(DoubleEvaluator.eval(Fold.foldLeft(List(var1, var2, var3), var2)))
     //println(Reduce.timesTwo(array))
-    println("var = "+Evaluator.eval(x))
+    println("var = "+Evaluator.eval(nested))
     println("lambda = "+ DoubleEvaluator.eval(Let(x,body,y)))
     println("var1 = "+ Evaluator.eval(var1))
     println("var2 = "+ Evaluator.eval(var2))

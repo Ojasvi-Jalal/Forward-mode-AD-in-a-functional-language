@@ -7,6 +7,7 @@ import intermediateRep._
 import sun.util.resources.cldr.wae.LocaleNames_wae
 
 import scala.collection.mutable
+import scala.collection.mutable.Queue
 import scala.language.implicitConversions
 
 //take y and write a pass that traverses it. This pass should
@@ -28,23 +29,19 @@ import scala.language.implicitConversions
 object DerivativeTrace {
   val paramToArg = mutable.HashMap[Expr, Expr]()
 
-  def derivativeTrace(e: Expr, withRespectTo: Param, hm: mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
+  def derivativeTrace(e: Expr, withRespectTo: Param, queue: Queue[(Expr, Expr)] = Queue[(Expr, Expr)](), hm: mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
       case FunctionCall(Lambda(param, body), arg) =>
-        paramToArg.put(arg.asInstanceOf[Expr], param)
-        derivativeTrace(body, withRespectTo, paramToArg)
+        paramToArg.put(param, arg.asInstanceOf[Expr])
+        derivativeTrace(body, withRespectTo, queue, paramToArg)
 
       case FunctionCall(FunctionCall(_, _), _) =>
-        var v_0       = Param("v_0")
-        var v_1       = Param("v_1")
-        var v_2       = Param("v_2")
 
-        var z_prime = Let(v_0,DifferentiateExpr.differentiate(v_0, v_0, hm),
-          Let(v_1,DifferentiateExpr.differentiate(v_1, v_0, hm),
-            Let(v_2,DifferentiateExpr.differentiate(paramToArg(v_2), v_0, hm),v_2)))
-
+        var z_prime: Expr = queue.apply(0)._1
+        queue.foreach(x => z_prime = Let(x._1, DifferentiateExpr.differentiate(paramToArg(x._1), withRespectTo, hm), z_prime))
         Evaluator.eval(z_prime)
     }
+
   }
 }
 

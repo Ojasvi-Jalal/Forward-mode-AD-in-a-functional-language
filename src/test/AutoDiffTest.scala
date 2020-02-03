@@ -6,9 +6,10 @@ import intermediateRep.{DoubleLiteral, Param}
 object AutoDiffTest extends App{
   var x = Param("x")
   var y = Param("y")
-  //println("differentiate_sum_0 = "+ AutomaticDifferentiate.autodifferentiate(x+y, x))
-  println("differentiate_Product_0 = "+ AutomaticDifferentiate.autodifferentiate(x*y, x))
-//  println("differentiate_sum_1 fv    = "+ AutomaticDifferentiate.autodifferentiate(x+x, x))
+  var z = Param("z")
+  println("differentiate_sum_0 = "+ AutomaticDifferentiate.autodifferentiate(x+y, x))
+  println("differentiate_Product_0 = "+ AutomaticDifferentiate.autodifferentiate(x+y+z, x))
+  println("differentiate_sum_1 fv    = "+ AutomaticDifferentiate.autodifferentiate(x+x, x))
 //  println("differentiate_Product_1 = "+ AutomaticDifferentiate.autodifferentiate(x*x, x))
 //  println("differentiate_Powers_1 = "+ AutomaticDifferentiate.autodifferentiate(x^DoubleLiteral(2), x))
   //println("differentiate_Sum_of_Powers = "+ AutomaticDifferentiate.autodifferentiate((x^DoubleLiteral(2)) + (y^DoubleLiteral(2)), x))
