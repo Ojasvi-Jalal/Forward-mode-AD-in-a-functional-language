@@ -35,7 +35,7 @@ object DerivativeTrace {
         paramToArg.put(param, arg.asInstanceOf[Expr])
         derivativeTrace(body, withRespectTo, queue, paramToArg)
 
-      case FunctionCall(FunctionCall(_, _), _) =>
+      case _ =>
 
         var z_prime: Expr = queue.apply(0)._1
         queue.foreach(x => z_prime = Let(x._1, DifferentiateExpr.differentiate(paramToArg(x._1), withRespectTo, hm), z_prime))

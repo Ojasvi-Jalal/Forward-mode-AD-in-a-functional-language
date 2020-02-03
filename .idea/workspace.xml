@@ -2,45 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="875e1bb2-411c-40e2-89c4-5de9469a7c9a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/automaticDifferentiation/PrimalTrace.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/automaticDifferentiation/PrimalTrace2.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/automaticDifferentiation/AutomaticDifferentiate$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/automaticDifferentiation/AutomaticDifferentiate$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/automaticDifferentiation/AutomaticDifferentiateExpr$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/automaticDifferentiation/AutomaticDifferentiateExpr$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/automaticDifferentiation/AutomaticDifferentiateExpr.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/automaticDifferentiation/AutomaticDifferentiateExpr.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/AddDouble$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/AddDouble$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/AddDouble.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/AddDouble.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Array$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Array$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Array.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Array.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/ArrayAccess$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/ArrayAccess$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/ArrayAccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/ArrayAccess.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/DivideDouble$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/DivideDouble$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/DivideDouble.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/DivideDouble.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/DoubleLiteral$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/DoubleLiteral$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/DoubleLiteral.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/DoubleLiteral.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Fold$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Fold$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/IntLiteral$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/IntLiteral$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/IntLiteral.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/IntLiteral.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/MultiplyDouble$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/MultiplyDouble$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/MultiplyDouble.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/MultiplyDouble.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Param$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Param$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Param.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Param.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/PowerDouble$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/PowerDouble$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/PowerDouble.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/PowerDouble.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Var$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Var$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Var.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Var.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Vector$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Vector$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Vector.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/intermediateRep/Vector.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/test/AutoDiffTest$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/test/AutoDiffTest$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/test/AutoDiffTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/test/AutoDiffTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/test/Test1$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/test/Test1$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/test/Test1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/test/Test1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiate.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiate.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/automaticDifferentiation/DerivativeTrace.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/automaticDifferentiation/DerivativeTrace.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/differentiate/DifferentiateExpr.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/differentiate/DifferentiateExpr.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/AutoDiffTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/AutoDiffTest.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/Test1.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/Test1.scala" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -100,27 +65,27 @@
           <entry key="iml" value="4" />
           <entry key="log" value="6" />
           <entry key="sc" value="8" />
-          <entry key="scala" value="165" />
+          <entry key="scala" value="169" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="IDEA_MODULE" value="4" />
           <entry key="PLAIN_TEXT" value="7" />
-          <entry key="Scala" value="173" />
+          <entry key="Scala" value="177" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="18" />
           <entry key="sc" value="505" />
-          <entry key="scala" value="15624" />
+          <entry key="scala" value="15879" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="18" />
-          <entry key="Scala" value="16129" />
+          <entry key="Scala" value="16384" />
         </counts>
       </usages-collector>
     </session>
@@ -130,8 +95,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/intermediateRep/Expr.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="26" column="28" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
+            <state relative-caret-position="150">
+              <caret line="157" column="11" selection-start-line="157" selection-start-column="11" selection-end-line="157" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -151,8 +116,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="163">
-              <caret line="49" selection-start-line="49" selection-end-line="49" />
+            <state relative-caret-position="165">
+              <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
               <folding>
                 <element signature="e#34#58#0" expanded="true" />
               </folding>
@@ -160,50 +125,41 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/differentiate/DifferentiateExpr.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="508">
-              <caret line="43" column="25" lean-forward="true" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/PrimalTrace2.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
+            <state relative-caret-position="-358">
+              <caret line="35" column="63" selection-start-line="35" selection-start-column="63" selection-end-line="35" selection-end-column="63" />
               <folding>
-                <element signature="e#34#58#0" expanded="true" />
+                <element signature="e#23#44#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/PrimalTrace.scala">
+        <entry file="file://$PROJECT_DIR$/src/eval/Evaluator.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="64">
-              <caret line="13" column="7" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
+            <state relative-caret-position="225">
+              <caret line="15" column="37" lean-forward="true" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/eval/DoubleEvaluator.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="23" column="64" lean-forward="true" selection-start-line="23" selection-start-column="64" selection-end-line="23" selection-end-column="64" />
               <folding>
-                <element signature="e#68#108#0" expanded="true" />
+                <element signature="e#14#91#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiate.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" selection-start-line="9" selection-end-line="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/AutoDiffTest.scala">
+        <entry file="file://$PROJECT_DIR$/src/test/DiffTest.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="135">
               <caret line="10" column="2" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
@@ -212,10 +168,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/intermediateRep/Type.scala">
+        <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiate.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="45" column="45" selection-start-line="45" selection-start-column="45" selection-end-line="45" selection-end-column="45" />
+            <state relative-caret-position="135">
+              <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/AutoDiffTest.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="18" column="127" selection-start-line="18" selection-start-column="127" selection-end-line="18" selection-end-column="127" />
             </state>
           </provider>
         </entry>
@@ -223,8 +188,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/DerivativeTrace.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="467">
-              <caret line="37" column="11" selection-start-line="37" selection-start-column="11" selection-end-line="37" selection-end-column="11" />
+            <state relative-caret-position="242">
+              <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="8" />
               <folding>
                 <element signature="e#34#89#0" expanded="true" />
               </folding>
@@ -298,9 +263,9 @@
         <option value="$PROJECT_DIR$/src/automaticDifferentiation/PrimalTrace2.scala" />
         <option value="$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiate.scala" />
         <option value="$PROJECT_DIR$/src/automaticDifferentiation/DerivativeTrace.scala" />
-        <option value="$PROJECT_DIR$/src/test/AutoDiffTest.scala" />
-        <option value="$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala" />
         <option value="$PROJECT_DIR$/src/differentiate/DifferentiateExpr.scala" />
+        <option value="$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala" />
+        <option value="$PROJECT_DIR$/src/test/AutoDiffTest.scala" />
       </list>
     </option>
   </component>
@@ -311,10 +276,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-240" />
-    <option name="y" value="-1057" />
-    <option name="width" value="1920" />
-    <option name="height" value="1057" />
+    <option name="y" value="23" />
+    <option name="width" value="1415" />
+    <option name="height" value="806" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -381,7 +345,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1580731992657" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1580772626661" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -530,7 +494,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="262080000" />
+    <option name="totallyTimeSpent" value="268704000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -542,9 +506,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-240" y="-1057" width="1920" height="1057" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="808" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14164004" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19027181" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -553,8 +518,8 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3282123" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.23316061" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.18756476" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.31424582" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3058659" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32891566" />
@@ -562,7 +527,7 @@
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32891566" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.2777202" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.27653632" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.03275109" />
@@ -635,12 +600,6 @@
           <option name="timeStamp" value="92" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="scala-line">
-          <url>file://$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala</url>
-          <line>139</line>
-          <properties />
-          <option name="timeStamp" value="102" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="scala-line">
           <url>file://$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiate.scala</url>
           <line>10</line>
           <properties />
@@ -659,22 +618,28 @@
           <option name="timeStamp" value="122" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="scala-line">
-          <url>file://$PROJECT_DIR$/src/test/AutoDiffTest.scala</url>
-          <line>10</line>
+          <url>file://$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala</url>
+          <line>89</line>
           <properties />
-          <option name="timeStamp" value="130" />
+          <option name="timeStamp" value="143" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="scala-line">
           <url>file://$PROJECT_DIR$/src/automaticDifferentiation/DerivativeTrace.scala</url>
-          <line>37</line>
+          <line>39</line>
           <properties />
-          <option name="timeStamp" value="133" />
+          <option name="timeStamp" value="144" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="scala-line">
-          <url>file://$PROJECT_DIR$/src/differentiate/DifferentiateExpr.scala</url>
-          <line>43</line>
+          <url>file://$PROJECT_DIR$/src/test/AutoDiffTest.scala</url>
+          <line>16</line>
           <properties />
-          <option name="timeStamp" value="134" />
+          <option name="timeStamp" value="147" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala</url>
+          <line>123</line>
+          <properties />
+          <option name="timeStamp" value="148" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -822,13 +787,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/DiffTest.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="10" column="2" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/intermediateRep/Root.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -846,46 +804,12 @@
     <entry file="file://$PROJECT_DIR$/HonoursProject-OJalal-2019-2020.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/eval/Evaluator.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="37" lean-forward="true" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/eval/ArraysEvaluator.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="13" column="13" lean-forward="true" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
           <folding>
             <element signature="e#14#46#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/eval/DoubleEvaluator.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="64" lean-forward="true" selection-start-line="23" selection-start-column="64" selection-end-line="23" selection-end-column="64" />
-          <folding>
-            <element signature="e#14#91#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/intermediateRep/Expr.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="26" column="28" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/Test1.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
-          <folding>
-            <element signature="e#14#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -897,6 +821,13 @@
           <folding>
             <element signature="e#68#108#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/intermediateRep/Type.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="603">
+          <caret line="45" column="45" selection-start-line="45" selection-start-column="45" selection-end-line="45" selection-end-column="45" />
         </state>
       </provider>
     </entry>
@@ -920,41 +851,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/intermediateRep/Type.scala">
+    <entry file="file://$PROJECT_DIR$/src/test/Test1.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="45" column="45" selection-start-line="45" selection-start-column="45" selection-end-line="45" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiate.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="49" selection-start-line="49" selection-end-line="49" />
+        <state relative-caret-position="240">
+          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
           <folding>
-            <element signature="e#34#58#0" expanded="true" />
+            <element signature="e#14#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/AutoDiffTest.scala">
+    <entry file="file://$PROJECT_DIR$/src/test/DiffTest.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="10" column="2" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/eval/Evaluator.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="37" lean-forward="true" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/eval/DoubleEvaluator.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="64" lean-forward="true" selection-start-line="23" selection-start-column="64" selection-end-line="23" selection-end-column="64" />
+          <folding>
+            <element signature="e#14#91#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/intermediateRep/Expr.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="157" column="11" selection-start-line="157" selection-start-column="11" selection-end-line="157" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiate.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/DerivativeTrace.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="37" column="11" selection-start-line="37" selection-start-column="11" selection-end-line="37" selection-end-column="11" />
+        <state relative-caret-position="242">
+          <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="8" />
           <folding>
             <element signature="e#34#89#0" expanded="true" />
           </folding>
@@ -963,8 +911,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/differentiate/DifferentiateExpr.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="508">
-          <caret line="43" column="25" lean-forward="true" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
+        <state relative-caret-position="-358">
+          <caret line="35" column="63" selection-start-line="35" selection-start-column="63" selection-end-line="35" selection-end-column="63" />
+          <folding>
+            <element signature="e#23#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <folding>
+            <element signature="e#34#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/AutoDiffTest.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="18" column="127" selection-start-line="18" selection-start-column="127" selection-end-line="18" selection-end-column="127" />
         </state>
       </provider>
     </entry>

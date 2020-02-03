@@ -1,7 +1,7 @@
 package differentiate
 
 import eval.Evaluator
-import eval.DoubleEvaluator.eval
+import eval.DoubleEvaluator
 import intermediateRep._
 
 import scala.collection.mutable
@@ -32,9 +32,9 @@ object DifferentiateExpr {
       case FunctionCall(FunctionCall(_:PowerDouble, arg1),arg2) =>
         if(!hm.isEmpty) {
           val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
-          val newarg2 = if (hm.contains(arg2)) eval(hm(arg2)) else arg2
+          val newarg2 = if (hm.contains(arg2)) hm(arg2) else arg2
           val newWithRespectTo = if (hm.contains(withRespectTo))  hm(withRespectTo).asInstanceOf[Param] else withRespectTo
-          differentiatePower(newarg1, newarg2, newWithRespectTo)
+          differentiatePower(newarg1, newarg2, newWithRespectTo, hm)
         }
 
         else
@@ -55,37 +55,37 @@ object DifferentiateExpr {
       case FunctionCall(FunctionCall(_:MultiplyDouble, arg1),arg2) => {
         if(!hm.isEmpty) {
           val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
-          val newarg2 = if (hm.contains(arg2)) eval(hm(arg2)) else arg2
+          val newarg2 = if (hm.contains(arg2)) hm(arg2) else arg2
           val newWithRespectTo = if (hm.contains(withRespectTo))  hm(withRespectTo).asInstanceOf[Param] else withRespectTo
-          differentiateProduct(newarg1, newarg2, newWithRespectTo)
+          differentiateProduct(newarg1, newarg2, newWithRespectTo, hm)
         }
 
         else
-          differentiateProduct(arg1, arg2, withRespectTo)
+          differentiateProduct(arg1, arg2, withRespectTo, hm)
       }
 
       case FunctionCall(FunctionCall(_:DivideDouble, arg1),arg2) => differentiateDivision(arg1,arg2, withRespectTo)
     }
   }
 
-  def differentiateProduct(lhs: Expr, rhs: Expr, param: Param): Expr = {
+  def differentiateProduct(lhs: Expr, rhs: Expr, param: Param, hm : mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()) : Expr = {
     (lhs, rhs) match {
-      case (DoubleLiteral(d), exp) => Evaluator.eval(lhs * differentiate(exp, param))
+      case (DoubleLiteral(d), exp) => Evaluator.eval(lhs * differentiate(exp, param, hm))
 
-      case (exp, DoubleLiteral(d)) => Evaluator.eval(differentiate(lhs, param) * rhs)
+      case (exp, DoubleLiteral(d)) => Evaluator.eval(differentiate(lhs, param, hm) * rhs)
 
-      case (e1, e2) => Evaluator.eval((differentiate(e1, param) * e2) + (differentiate(e2, param) * e1))
+      case (e1, e2) => DoubleEvaluator.eval(((differentiate(e1, param, hm) * DoubleEvaluator.eval(e2, hm)) + (DoubleEvaluator.eval(differentiate(e2, param, hm)) * DoubleEvaluator.eval(e1, hm))))
     }
   }
 
-  def differentiatePower(base: Expr, exponent: Expr, withRespectTo: Param): Expr = {
+  def differentiatePower(base: Expr, exponent: Expr, withRespectTo: Param, hm : mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()) : Expr = {
     (base, exponent) match {
 
       case (DoubleLiteral(base), DoubleLiteral(exponent)) => DoubleLiteral(0)
 
       case (e1, DoubleLiteral(0)) => DoubleLiteral(0)
 
-      case (e1, DoubleLiteral(d)) => Evaluator.eval(DoubleLiteral(d) * Evaluator.eval(e1 ^ Evaluator.eval(DoubleLiteral(d) + DoubleLiteral(-1))))
+      case (e1, DoubleLiteral(d)) => DoubleEvaluator.eval((DoubleLiteral(d) * DoubleEvaluator.eval(e1 ^ DoubleEvaluator.eval((DoubleLiteral(d) + DoubleLiteral(-1)), hm), hm)), hm)
 
       //case (e1, e2) => Evaluator.eval(e2 * Evaluator.eval(e1 ^ Evaluator.eval(e2 + DoubleLiteral(-1))))
     }
