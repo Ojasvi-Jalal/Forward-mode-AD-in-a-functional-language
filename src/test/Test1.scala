@@ -10,13 +10,15 @@ object Test1 extends App {
     var x = Param("x")
     var y = Param("y")
     val division = x / x
-    val product = x * y
+    val product = x * x
     var body = x + var1
     val sum  = var1 + var2
     val power = (x ^ var2) + (y ^ var2)
     val nested = product + var2
     var array = Array(List(var1, var2, var3), var1.t)
     Let(x,body,y)
+
+    println(DoubleEvaluator.eval(Map(x, product, array)))
     println(DoubleEvaluator.eval(Fold.foldLeft(List(var1, var2, var3), var2)))
     //println(Reduce.timesTwo(array))
     println("var = "+Evaluator.eval(nested))

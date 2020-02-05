@@ -1,12 +1,19 @@
 package test
 
-import automaticDifferentiation.AutomaticDifferentiate
-import intermediateRep.{DoubleLiteral, Param}
+import automaticDifferentiation.{AutomaticDifferentiate, AutomaticDifferentiateExpr}
+import intermediateRep._
 
 object AutoDiffTest extends App{
   var x = Param("x")
   var y = Param("y")
   var z = Param("z")
+  var array = Array(List(x, x, x), x.t)
+  var body = x * x
+
+
+  var m = Map(x, AutomaticDifferentiateExpr.autoDifferentiate(x * x, x), array)
+
+  //println(m)
   println("differentiate_param_0 = "+ AutomaticDifferentiate.autodifferentiate(x, x))
   println("differentiate_param_1 = "+ AutomaticDifferentiate.autodifferentiate(y, x))
   println("differentiate_sum_0 = "+ AutomaticDifferentiate.autodifferentiate(x+y, x))

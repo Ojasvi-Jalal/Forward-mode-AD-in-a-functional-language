@@ -12,7 +12,7 @@ object AutomaticDifferentiateExpr {
   var counter = 0
   val x = Queue[(Expr, Expr)]()
 
-  def autoDifferentiate(e: Expr, withRespectTo: Param, hm: mutable.HashMap[String, String] = mutable.HashMap[String, String]()): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
+  def autoDifferentiate(e: Expr, withRespectTo: Param): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     forwardPrimalTrace(e)
 
     var reverseQueue = x.reverse
@@ -23,7 +23,40 @@ object AutomaticDifferentiateExpr {
     counter = 0
     z
   }
-
+//
+//  def autoDifferentiateVector(e: Seq[Expr], withRespectTo: Expr): Seq[Expr] = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
+////    forwardPrimalTrace(e)
+////
+////    var reverseQueue = x.reverse
+////    var z = e
+////    reverseQueue.foreach(x => z = Let(x._1, x._2, z))
+////    z = DerivativeTrace.derivativeTrace(z,withRespectTo,x.reverse)
+////    x.removeAll()
+////    counter = 0
+////    z
+//
+//    e match {
+//
+//      case Map(param, body, vector) => {
+//        forwardPrimalTrace(body)
+//
+//        var reverseQueue = x.reverse
+//        var z = e
+//        reverseQueue.foreach(x => z = Let(x._1, x._2, z))
+//        x.removeAll()
+//        //z = map(param, forwardPrimalTrace(body), vector)
+//        counter = vector.a.length - 1
+//        while(counter < 0) {
+//          x.addOne((Param("v_".concat(counter.toString)), ArrayAccess(vector, counter)))
+//          counter = counter - 1
+//        }
+//        //var z = e
+//        //x.foreach(x => z = Let(x._1, x._2, z))
+//        vector.a
+//      }
+//    }
+//
+//  }
   //take y and write a pass that traverses it. This pass should
   //produce a new program (again full of Let for the v_i' variables)
   //which corresponds to the derivative for each variable.
@@ -153,6 +186,8 @@ object AutomaticDifferentiateExpr {
           case (_, _) =>
             forwardPrimalTrace(arg1)
             forwardPrimalTrace(arg2)
+
+          //case for map and
         }
       }
     }

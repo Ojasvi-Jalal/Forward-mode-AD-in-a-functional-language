@@ -76,8 +76,19 @@ object DoubleEvaluator {
             val base      = java.lang.Double.valueOf(eval(arg1).toString)
             eval((eval(arg1)^eval(arg2)))
           }
+
         }
       }
+
+      case Map(param, body, vector) =>
+        var array : Seq[Expr] = Seq()
+        for (x <- vector.a) {
+
+          array = array:+(DoubleEvaluator.eval(FunctionCall((Lambda(param, body)), x)))
+        }
+        println(array)
+        Array(array, vector.t)
+
       case FunctionCall(Lambda(param,body),arg) =>
         // store in a map   param -> arg and eval body
         paramToArg.put(param, arg.asInstanceOf[Expr])

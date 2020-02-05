@@ -65,6 +65,10 @@ object DifferentiateExpr {
       }
 
       case FunctionCall(FunctionCall(_:DivideDouble, arg1),arg2) => differentiateDivision(arg1,arg2, withRespectTo)
+
+      case (Lambda(param,body)) =>  Lambda(param, differentiate(body, withRespectTo))
+
+      case Map(param, body, vector) => Map(param, differentiate(body, withRespectTo), vector)
     }
   }
 

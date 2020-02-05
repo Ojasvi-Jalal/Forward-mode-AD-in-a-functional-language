@@ -58,22 +58,36 @@ trait AnonymousFunction extends Function {
 case class Lambda(param: Expr, body: Expr) extends AnonymousFunction {
   override var t: Type = FunctionType(param.t, FunctionType(param.t, param.t))
 
-  override def build(newChildren: Seq[IR]): Lambda = Lambda(newChildren(0).asInstanceOf[Param], newChildren(1).asInstanceOf[Expr])
+  override def build(newChildren: Seq[IR]): Lambda = Lambda(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr])
 
   override def children: Seq[IR] = Seq(param,body)
 }
 
+
 object Let {
   def apply(param: Expr, value: Expr, body: Expr): Expr = FunctionCall(Lambda(param, body), value)
+
+  //def apply(param: Expr, value: Expr, body: Array): Expr = FunctionCall(Lambda(param, body), value)
 }
 
-object Map {
-  def timesTwo( list: Array): Seq[Expr] = {
-    for {
-      x <- list.a
-    } yield DoubleEvaluator.eval(FunctionCall(FunctionCall(MultiplyDouble(x), x), DoubleLiteral(2)))
-  }
+case class Map(param: Expr, body: Expr, vector: Array) extends AnonymousFunction {
+  override var t: Type = vector.t
+
+  override def build(newChildren: Seq[IR]): Map = Map(newChildren(0).asInstanceOf[Param], newChildren(1).asInstanceOf[Expr], newChildren(2).asInstanceOf[Array] )
+
+  override def children: Seq[IR] = Seq(param,body, vector)
+
+//  def apply : Expr = {
+//      var array : Seq[Expr] = Seq()
+//      for (x <- vector.a) {
+//
+//        array = array:+(DoubleEvaluator.eval(FunctionCall((Lambda(param, body)), x)))
+//      }
+//      println(array)
+//      Array(array, vector.t)
+//    }
 }
+
 
 
 object Fold {
@@ -84,7 +98,7 @@ object Fold {
     }
   }
 }
-//
+
 trait BuiltInFunction extends Function {
 
 }
@@ -185,7 +199,7 @@ case class Vector(a: Seq[Expr], et: Type) extends Values{
   override def children = Seq()
 }
 
-case class Array(a: Seq[Expr], et: Type) extends Values{
+case class Array(a: Seq[Expr], et: Type) extends Expr{
   override var t: Type = ArrayType(et, a.length)
 
   override def toString(): String = a.toString
