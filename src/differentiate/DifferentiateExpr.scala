@@ -68,7 +68,7 @@ object DifferentiateExpr {
 
       case (Lambda(param,body)) =>  Lambda(param, differentiate(body, withRespectTo))
 
-      case Map(param, body, vector) => Map(param, differentiate(body, withRespectTo), vector)
+      case Map(param, body, vector) => DoubleEvaluator.eval(Map(param, differentiate(body, withRespectTo), vector))
     }
   }
 

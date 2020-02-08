@@ -12,6 +12,7 @@ object DoubleEvaluator {
   def eval(e:Expr, hm : mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()) : Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
       case DoubleLiteral(d) => DoubleLiteral(d)
+      case Pair(x,y) => Pair(x,y)
       //case Array(a,b) => a
       case FunctionCall(FunctionCall(_:AddDouble, arg2), arg1) => {
         if(!hm.isEmpty){
@@ -33,6 +34,7 @@ object DoubleEvaluator {
           }
         }
       }
+
       case FunctionCall(FunctionCall(_:MultiplyDouble, arg2),arg1) => {
         if(!hm.isEmpty){
           val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
@@ -53,6 +55,7 @@ object DoubleEvaluator {
           case (_, _) => eval(eval(arg1) * (eval(arg2)))
         }
       }
+
       case FunctionCall(FunctionCall(_:DivideDouble, arg2),arg1) => {
         (arg1, arg2) match {
           case (arg1: Param, _) => Param("("+arg1 + " / " + arg2+")")
@@ -62,6 +65,7 @@ object DoubleEvaluator {
           }
           case (_, _) => eval((eval(arg1)) / (eval(arg2)))
         }}
+
       case FunctionCall(FunctionCall(_:PowerDouble, arg1),arg2) => {
         (arg1, arg2) match {
           case (arg1: Param, _) => Param("("+arg1 + " ^ " + arg2+")")
@@ -82,12 +86,35 @@ object DoubleEvaluator {
 
       case Map(param, body, vector) =>
         var array : Seq[Expr] = Seq()
-        for (x <- vector.a) {
-
-          array = array:+(DoubleEvaluator.eval(FunctionCall((Lambda(param, body)), x)))
+        for (z <- vector.a) {
+          array = array:+(eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), z)))
         }
-        println(array)
         Array(array, vector.t)
+
+//      case Fold(param, body, initial, vector) =>
+//        vector.a match {
+//          case Nil => initial
+//          case head :: tail =>
+//            body match {
+//              case FunctionCall(FunctionCall(_:MultiplyDouble, arg2),arg1) => FunctionCall(FunctionCall(MultiplyDouble(Fold(tail, head)), Fold(tail, head)), head)
+//            }
+//        }
+
+      case Zip(vector1, vector2) =>
+          var array : Seq[(Expr, Expr)] = Seq()
+          ArrayPairs(vector1.a zip vector2.a, vector1.t)
+////        for ((x,y) <- vector1.a zip vector2.a) {
+////          array:+(Pair(x,y))
+////        }
+////        Array(array, vector1.t)
+//
+//        (vector1.a, vector2.a) match {
+//          case (Nil, _) => Nil
+//          case (_, Nil) => Nil
+//            case (x :: xs, y :: ys) =>
+//              array:+(Pair(x, y))
+//          }
+//          Array(array, vector1.t)
 
       case FunctionCall(Lambda(param,body),arg) =>
         // store in a map   param -> arg and eval body

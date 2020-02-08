@@ -19,7 +19,9 @@ object Test1 extends App {
     Let(x,body,y)
 
     println(DoubleEvaluator.eval(Map(x, product, array)))
-    println(DoubleEvaluator.eval(Fold.foldLeft(List(var1, var2, var3), var2)))
+    println(DoubleEvaluator.eval(Pair(var2, var1)))
+    println(DoubleEvaluator.eval(Zip(array, array)))
+    //println(DoubleEvaluator.eval(Fold.foldLeft(List(var1, var2, var3), var2)))
     //println(Reduce.timesTwo(array))
     println("var = "+Evaluator.eval(nested))
     println("lambda = "+ DoubleEvaluator.eval(Let(x,body,y)))

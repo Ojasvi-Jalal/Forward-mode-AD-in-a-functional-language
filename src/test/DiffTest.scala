@@ -9,8 +9,8 @@ object DiffTest extends App{
   var y = Param("y")
 
   var z = Param("z")
-  var array = Array(List(x, y, x), x.t)
-  println("differentiate__x = "+ Differentiate.differentiate(Lambda(x, x*x), x))
+  var array = Array(List(x, y), x.t)
+  println("differentiate_x = "+ Differentiate.differentiate(Lambda(x, x*x), x))
 
   var m = DifferentiateExpr.differentiate(Map(x, (x * x), array), x)
   println(m) //investigate

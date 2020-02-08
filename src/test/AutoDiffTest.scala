@@ -7,11 +7,11 @@ object AutoDiffTest extends App{
   var x = Param("x")
   var y = Param("y")
   var z = Param("z")
-  var array = Array(List(x, x, x), x.t)
+  var array = Array(List(x^DoubleLiteral(2)), x.t)
   var body = x * x
 
 
-  var m = Map(x, AutomaticDifferentiateExpr.autoDifferentiate(x * x, x), array)
+  var m = AutomaticDifferentiate.autodifferentiate(Map(x, x * x, array), x)
 
   //println(m)
   println("differentiate_param_0 = "+ AutomaticDifferentiate.autodifferentiate(x, x))
