@@ -17,10 +17,18 @@ object Test1 extends App {
     val nested = product + var2
     var array = Array(List(var1, var2, var3), var1.t)
     Let(x,body,y)
+    var x_1 = Param("x_1")
+    var x_2 = Param("x_2")
+    var x_3 = Param("x_3")
+
+    var z = Param("z")
+    var x_vector = Array(List(x_1, x_2, x_3), x.t)
 
     println(DoubleEvaluator.eval(Map(x, product, array)))
     println(DoubleEvaluator.eval(Pair(var2, var1)))
-    println(DoubleEvaluator.eval(Zip(array, array)))
+    println(DoubleEvaluator.eval(Zip(x_vector, x_1)))
+    println(DoubleEvaluator.eval(Zip(x_1, x_vector)))
+    println(DoubleEvaluator.eval(Zip(x_vector, x_vector)))
     //println(DoubleEvaluator.eval(Fold.foldLeft(List(var1, var2, var3), var2)))
     //println(Reduce.timesTwo(array))
     println("var = "+Evaluator.eval(nested))

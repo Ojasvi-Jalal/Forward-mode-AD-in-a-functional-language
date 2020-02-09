@@ -2,15 +2,17 @@ package differentiate
 
 import eval.Evaluator
 import eval.DoubleEvaluator
+import eval.DoubleEvaluator.eval
 import intermediateRep._
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 import scala.language.implicitConversions
 
 object DifferentiateExpr {
   val paramToArg = mutable.HashMap[Expr, Expr]()
 
-  def differentiate(e : Expr, withRespectTo : Param, hm : mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()) : Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
+  def differentiate(e : Expr, withRespectTo : Expr, hm : mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()) : Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
       case DoubleLiteral(d) => DoubleLiteral(0)
 
@@ -68,11 +70,44 @@ object DifferentiateExpr {
 
       case (Lambda(param,body)) =>  Lambda(param, differentiate(body, withRespectTo))
 
-      case Map(param, body, vector) => DoubleEvaluator.eval(Map(param, differentiate(body, withRespectTo), vector))
+      case Map(param, body, vector) =>
+        withRespectTo match {
+        case param: Param => var array : Seq[Expr] = Seq()
+          var y = eval(Map(param, body, vector)).asInstanceOf[Array].a
+          for( z <- y) {
+            array = array:+(differentiate(z,withRespectTo))
+          }
+          Array(array, vector.t)
+
+        case array: Array =>
+          //var array : Seq[Expr] = Seq()
+          //scala.collection.mutable.ListBuffer[(Expr, Expr)] = ListBuffer()
+          var matrix : Seq[Seq[Pair]] = Seq()
+          var result_matrix : Seq[Seq[Expr]] = Seq()
+          var y = eval(Map(param, body, vector)).asInstanceOf[Array].list
+            for(ely <- y) {
+              var small_array : Seq[Pair] =Seq()
+              for(x <- array.a) {
+                small_array = small_array:+eval(Zip(ely.asInstanceOf[Param], x.asInstanceOf[Param])).asInstanceOf[Pair]
+              }
+              matrix = matrix:+small_array
+            }
+
+          for(list <- matrix) {
+            var y_i : Seq[Expr] =Seq()
+            for(pair <- list) {
+              y_i = y_i:+(differentiate(pair.first, pair.second))
+            }
+            result_matrix = result_matrix:+y_i
+          }
+            Matrix(result_matrix, array.t)
+
+      }
+
     }
   }
 
-  def differentiateProduct(lhs: Expr, rhs: Expr, param: Param, hm : mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()) : Expr = {
+  def differentiateProduct(lhs: Expr, rhs: Expr, param: Expr, hm : mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()) : Expr = {
     (lhs, rhs) match {
       case (DoubleLiteral(d), exp) => Evaluator.eval(lhs * differentiate(exp, param, hm))
 
@@ -82,7 +117,7 @@ object DifferentiateExpr {
     }
   }
 
-  def differentiatePower(base: Expr, exponent: Expr, withRespectTo: Param, hm : mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()) : Expr = {
+  def differentiatePower(base: Expr, exponent: Expr, withRespectTo: Expr, hm : mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()) : Expr = {
     (base, exponent) match {
 
       case (DoubleLiteral(base), DoubleLiteral(exponent)) => DoubleLiteral(0)
@@ -94,7 +129,7 @@ object DifferentiateExpr {
       //case (e1, e2) => Evaluator.eval(e2 * Evaluator.eval(e1 ^ Evaluator.eval(e2 + DoubleLiteral(-1))))
     }
   }
-  def differentiateDivision(numerator: Expr, denominator: Expr, param: Param): Expr = {
+  def differentiateDivision(numerator: Expr, denominator: Expr, param: Expr): Expr = {
     (numerator, denominator) match {
       case (DoubleLiteral(d), exp) => var new_numerator = DoubleLiteral(-d) * differentiate(denominator, param)
         var new_denominator = denominator ^ DoubleLiteral(2)

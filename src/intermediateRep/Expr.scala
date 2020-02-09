@@ -71,7 +71,7 @@ object Let {
 }
 
 case class Map(param: Expr, body: Expr, vector: Array) extends AnonymousFunction {
-  override var t: Type = vector.t
+  override var t: Type = ArrayType(vector.t, vector.a.size)
 
   override def build(newChildren: Seq[IR]): Map = Map(newChildren(0).asInstanceOf[Param], newChildren(1).asInstanceOf[Expr], newChildren(2).asInstanceOf[Array] )
 
@@ -87,10 +87,10 @@ case class Fold(param: Expr, body: Expr, initial : Expr, vector: Array) extends 
   override def children: Seq[IR] = Seq(param,body, vector)
 }
 
-case class Zip(vector1: Array, vector2: Array) extends AnonymousFunction {
+case class Zip(vector1: Expr, vector2: Expr) extends AnonymousFunction {
   override var t: Type = vector1.t
 
-  override def build(newChildren: Seq[IR]): Zip = Zip(newChildren(0).asInstanceOf[Array], newChildren(1).asInstanceOf[Array])
+  override def build(newChildren: Seq[IR]): Zip = Zip(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr])
 
   override def children: Seq[IR] = Seq(vector1, vector2)
 }
@@ -140,15 +140,15 @@ case class Param(x: String) extends Expr {
 
   override var t: Type = DoubleType
 
-  override def toString(): String = x
+  override def toString(): String = x.toString
 
   override def build(newChildren: Seq[IR]) = ???
 
   override def children = Seq()
 }
 
-case class Var(x:Param) extends Expr {
-  val value : Param = x
+case class Var(x:Expr) extends Expr {
+  val value : Param = Param(x.toString)
 
   override var t: Type = DoubleType
 
@@ -187,6 +187,8 @@ case class IntLiteral(d: Int) extends Values{
 
 case class Pair(a: Expr, b: Expr) extends Expr{
   override var t: Type = a.t
+  var first = a
+  var second = b
   override def build(newChildren: Seq[IR]) = Pair(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr])
   override def children = Seq()
 }
@@ -204,6 +206,8 @@ case class Vector(a: Seq[Expr], et: Type) extends Values{
 case class Array(a: Seq[Expr], et: Type) extends Expr{
   override var t: Type = ArrayType(et, a.length)
 
+  var list: Seq[Expr] =  a
+
   override def toString(): String = a.toString
 
   override def build(newChildren: Seq[IR]) = Array(newChildren(0).asInstanceOf[Seq[Expr]], newChildren(1).asInstanceOf[Type])
@@ -211,16 +215,27 @@ case class Array(a: Seq[Expr], et: Type) extends Expr{
   override def children = Seq()
 }
 
-case class ArrayPairs(a: Seq[(Expr, Expr)], et: Type) extends Expr{
+case class ArrayPairs(a: Seq[Pair], et: Type) extends Expr{
   override var t: Type = ArrayType(et, a.length)
 
   override def toString(): String = a.toString
 
-  override def build(newChildren: Seq[IR]) = ArrayPairs(newChildren(0).asInstanceOf[Seq[(Expr, Expr)]], newChildren(1).asInstanceOf[Type])
+  override def build(newChildren: Seq[IR]) = ArrayPairs(newChildren(0).asInstanceOf[Seq[Pair]], newChildren(1).asInstanceOf[Type])
 
   override def children = Seq()
 }
 
+case class Matrix(a: Seq[Seq[_]], et: Type) extends Expr{
+  override var t: Type = ArrayType(et, a.length)
+
+  var matrix: Seq[Seq[_]] =  a
+
+  override def toString(): String = a.toString
+
+  override def build(newChildren: Seq[IR]) = Matrix(newChildren(0).asInstanceOf[Seq[Seq[Expr]]], newChildren(1).asInstanceOf[Type])
+
+  override def children = Seq()
+}
 
 case class ArrayAccess(a: Array, index: Int) extends Expr {
   override var t: Type = a.t

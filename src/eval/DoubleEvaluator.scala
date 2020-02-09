@@ -42,15 +42,21 @@ object DoubleEvaluator {
           (newarg1, newarg2) match {
             case (arg1: Param, _) => Param("("+newarg1 + " * " + newarg2+")") // fix this
             case (_, arg2: Param) => Param("("+newarg1 + " * " + newarg2+")")
+//
+//            case (arg1: Param, _) => newarg1  * newarg2 // fix this
+//            case (_, arg2: Param) => newarg1 *  newarg2
             case (DoubleLiteral(newarg1),DoubleLiteral(newarg2)) => DoubleLiteral(newarg1 * newarg2)
             case (_, _) => eval(eval(newarg1) * (eval(newarg2)))
           }
-        }
+      }
         else
 
         (arg1, arg2) match {
           case (arg1: Param, _) =>Param("("+arg1 + " * " + arg2+")")
-          case (_, arg2: Param) => Param("("+arg1 + " * " + arg2+")")
+                    case (_, arg2: Param) => Param("("+arg1 + " * " + arg2+")")
+//
+//          case (arg1: Param, _) => arg1  * arg2 // fix this
+//          case (_, arg2: Param) => arg1 *  arg2
           case (DoubleLiteral(arg1),DoubleLiteral(arg2)) => DoubleLiteral(arg1 * arg2)
           case (_, _) => eval(eval(arg1) * (eval(arg2)))
         }
@@ -86,10 +92,10 @@ object DoubleEvaluator {
 
       case Map(param, body, vector) =>
         var array : Seq[Expr] = Seq()
-        for (z <- vector.a) {
-          array = array:+(eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), z)))
-        }
-        Array(array, vector.t)
+        for (z <- vector.list) {
+        array = array:+(eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), z)))
+      }
+        return Array(array, vector.t)
 
 //      case Fold(param, body, initial, vector) =>
 //        vector.a match {
@@ -100,21 +106,28 @@ object DoubleEvaluator {
 //            }
 //        }
 
-      case Zip(vector1, vector2) =>
-          var array : Seq[(Expr, Expr)] = Seq()
-          ArrayPairs(vector1.a zip vector2.a, vector1.t)
-////        for ((x,y) <- vector1.a zip vector2.a) {
-////          array:+(Pair(x,y))
-////        }
-////        Array(array, vector1.t)
+      case Zip(arg1, arg2) =>
+        (arg1, arg2) match {
+          case(_:Param, _:Param) => Pair(arg1, arg2)
+
+          case (_:Param, _: Array) =>
+            var array : Seq[Pair] = Seq()
+            for (z <- arg2.asInstanceOf[Array].list) {
+              array = array:+(Pair(arg1, z))
+            }
+            ArrayPairs(array, arg2.asInstanceOf[Array].t)
+
+          case (_:Array, _:Param) =>
+            var array : Seq[Pair] = Seq()
+            for (z <- arg1.asInstanceOf[Array].list) {
+              array = array:+(Pair(z, arg2))
+            }
+            ArrayPairs(array, arg1.asInstanceOf[Array].t)
 //
-//        (vector1.a, vector2.a) match {
-//          case (Nil, _) => Nil
-//          case (_, Nil) => Nil
-//            case (x :: xs, y :: ys) =>
-//              array:+(Pair(x, y))
-//          }
-//          Array(array, vector1.t)
+//          case(vector1: Array, vector2: Array) =>
+//            var array: Seq[(Expr, Expr)] = Seq ()
+//            ArrayPairs(vector1.a zip vector2.a, vector1.t)
+        }
 
       case FunctionCall(Lambda(param,body),arg) =>
         // store in a map   param -> arg and eval body
@@ -127,7 +140,7 @@ object DoubleEvaluator {
           eval(paramToArg(p))
         }
         else{
-          Var(p).value
+          p
         }
     }
   }
@@ -139,6 +152,4 @@ object DoubleEvaluator {
         for ((k, v) <- paramToArg) argToParam.put(v, k)
         argToParam
       }
-//    }
-//  }
 }
