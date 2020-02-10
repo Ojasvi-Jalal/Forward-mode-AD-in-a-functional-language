@@ -72,37 +72,71 @@ object DifferentiateExpr {
 
       case Map(param, body, vector) =>
         withRespectTo match {
-        case param: Param => var array : Seq[Expr] = Seq()
-          var y = eval(Map(param, body, vector)).asInstanceOf[Array].a
-          for( z <- y) {
-            array = array:+(differentiate(z,withRespectTo))
-          }
-          Array(array, vector.t)
+          case param: Param => var array: Seq[Expr] = Seq()
+            var y = eval(Map(param, body, vector)).asInstanceOf[Array].a
+            for (z <- y) {
+              array = array :+ (differentiate(z, withRespectTo))
+            }
+            Array(array, vector.t)
 
-        case array: Array =>
-          //var array : Seq[Expr] = Seq()
-          //scala.collection.mutable.ListBuffer[(Expr, Expr)] = ListBuffer()
-          var matrix : Seq[Seq[Pair]] = Seq()
-          var result_matrix : Seq[Seq[Expr]] = Seq()
-          var y = eval(Map(param, body, vector)).asInstanceOf[Array].list
-            for(ely <- y) {
-              var small_array : Seq[Pair] =Seq()
-              for(x <- array.a) {
-                small_array = small_array:+eval(Zip(ely.asInstanceOf[Param], x.asInstanceOf[Param])).asInstanceOf[Pair]
+          case array: Array =>
+            //var array : Seq[Expr] = Seq()
+            //scala.collection.mutable.ListBuffer[(Expr, Expr)] = ListBuffer()
+            var matrix: Seq[Seq[Pair]] = Seq()
+            var result_matrix: Seq[Seq[Expr]] = Seq()
+            var y = eval(Map(param, body, vector)).asInstanceOf[Array].list
+            for (ely <- y) {
+              var small_array: Seq[Pair] = Seq()
+              for (x <- array.a) {
+                small_array = small_array :+ eval(Zip(ely.asInstanceOf[Param], x.asInstanceOf[Param])).asInstanceOf[Pair]
               }
-              matrix = matrix:+small_array
+              matrix = matrix :+ small_array
             }
 
-          for(list <- matrix) {
-            var y_i : Seq[Expr] =Seq()
-            for(pair <- list) {
-              y_i = y_i:+(differentiate(pair.first, pair.second))
+            for (list <- matrix) {
+              var y_i: Seq[Expr] = Seq()
+              for (pair <- list) {
+                y_i = y_i :+ (differentiate(pair.first, pair.second))
+              }
+              result_matrix = result_matrix :+ y_i
             }
-            result_matrix = result_matrix:+y_i
-          }
             Matrix(result_matrix, array.t)
 
-      }
+          case array: Array => {
+            withRespectTo match {
+              case param: Param => var array: Seq[Expr] = Seq()
+                var y = eval(Map(param, body, vector)).asInstanceOf[Array].a
+                for (z <- y) {
+                  array = array :+ (differentiate(z, withRespectTo))
+                }
+                Array(array, vector.t)
+
+              case array: Array =>
+                //var array : Seq[Expr] = Seq()
+                //scala.collection.mutable.ListBuffer[(Expr, Expr)] = ListBuffer()
+                var matrix: Seq[Seq[Pair]] = Seq()
+                var result_matrix: Seq[Seq[Expr]] = Seq()
+                var y = eval(Map(param, body, vector)).asInstanceOf[Array].list
+                for (ely <- y) {
+                  var small_array: Seq[Pair] = Seq()
+                  for (x <- array.a) {
+                    small_array = small_array :+ eval(Zip(ely.asInstanceOf[Param], x.asInstanceOf[Param])).asInstanceOf[Pair]
+                  }
+                  matrix = matrix :+ small_array
+                }
+
+                for (list <- matrix) {
+                  var y_i: Seq[Expr] = Seq()
+                  for (pair <- list) {
+                    y_i = y_i :+ (differentiate(pair.first, pair.second))
+                  }
+                  result_matrix = result_matrix :+ y_i
+                }
+                Matrix(result_matrix, array.t)
+            }
+
+          }
+        }
 
     }
   }
@@ -140,7 +174,7 @@ object DifferentiateExpr {
         differentiateProduct(DoubleLiteral(1/d),exp,param)
       }
 
-      case (e1, e2) => var new_numerator = ((differentiate(e1, param) * e2)) + (DoubleLiteral(-1)*differentiate(e2, param) * e1)
+      case (e1, e2) => var new_numerator = ((differentiate(e1, param) * e2)) + (DoubleLiteral(-1) * differentiate(e2, param) * e1)
         var new_denominator = (e2 ^ DoubleLiteral(2))
         var result = new_numerator / new_denominator
         Evaluator.eval(result)

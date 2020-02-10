@@ -5,13 +5,17 @@ import intermediateRep._
 
 object AutoDiffTest extends App{
   var x = Param("x")
+  var x_1 = Param("x_1")
+  var x_2 = Param("x_2")
+  var x_3 = Param("x_3")
   var y = Param("y")
+
   var z = Param("z")
-  var array = Array(List(x^DoubleLiteral(2)), x.t)
-  var body = x * x
+  var x_vector = Array(List(x_1, x_2, x_3), x.t)
+  var y_vector = Map(x, (x * x), x_vector)
 
 
-  var m = AutomaticDifferentiate.autodifferentiate(Map(x, x * x, array), x)
+  var m = AutomaticDifferentiate.autodifferentiate(Map(x, x, x_vector), x_vector)
 
   //println(m)
   println("differentiate_param_0 = "+ AutomaticDifferentiate.autodifferentiate(x, x))

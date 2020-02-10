@@ -1,5 +1,6 @@
 package automaticDifferentiation
 
+import eval.{DoubleEvaluator, Evaluator}
 import intermediateRep._
 
 import scala.collection.mutable
@@ -13,28 +14,34 @@ object AutomaticDifferentiateExpr {
   var arrayCounter = 0
   val x = Queue[(Expr, Expr)]()
 
-  def autoDifferentiate(e: Expr, withRespectTo: Param): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
+  def autoDifferentiate(e: Expr, withRespectTo: Expr): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
       case Map(param: Expr, body: Expr, vector: Array) =>
+        val y_vector = DoubleEvaluator.eval(Map(param, body, vector)).asInstanceOf[Array]
+
         val vectorQueue = Queue[(Expr, Expr)]()
-        for(x <- vector.a) {
-          vectorQueue.addOne((Param("a_".concat(counter.toString)), x))
+        for(x <- y_vector.a) {
+          vectorQueue.addOne((Param("a_".concat(arrayCounter.toString)), x))
           arrayCounter = arrayCounter + 1
         }
-        val transformedSeq = Seq()
-        vectorQueue.foreach(x => transformedSeq:+x._1)
+        var transformedSeq: Seq[Expr] = Seq()
+        for(x <- vectorQueue){
+          transformedSeq = transformedSeq:+x._1
+        }
         val array = Array(transformedSeq, vector.t)
         vectorQueue.addOne((Param("a_".concat(arrayCounter.toString)), array))
         arrayCounter = arrayCounter + 1
-        var letMapBody  = forwardPrimalTrace(body)
-        var z = body
-        var reverseQueue = x.reverse
-        reverseQueue.foreach (x => z = Let (x._1, x._2, z) )
-        var d = Map(param, z, array)
 
-        vectorQueue.reverse.foreach (x => z = Let (x._1, x._2, d) )
-        z = DerivativeTrace.derivativeTrace (z, withRespectTo, x.reverse)
-        e
+//        var letMapBody  = forwardPrimalTrace(body)
+//        var z = body
+//        var reverseQueue = x.reverse
+//        reverseQueue.foreach (x => z = Let (x._1, x._2, z) )
+//        var d = Map(param, z, array)
+        var size = vectorQueue.knownSize
+        var z = vectorQueue.apply(size-1)._1
+        vectorQueue.reverse.foreach (x => z = Let (x._1, x._2, z) )
+        z = DerivativeTrace.derivativeTrace (z, withRespectTo, vectorQueue.reverse)
+        z
 
       case _ =>
 
