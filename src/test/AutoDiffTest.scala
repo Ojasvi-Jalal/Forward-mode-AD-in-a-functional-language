@@ -17,7 +17,7 @@ object AutoDiffTest extends App{
 
   var m = AutomaticDifferentiate.autodifferentiate(Map(x, x, x_vector), x_vector)
 
-  //println(m)
+  println(m)
   println("differentiate_param_0 = "+ AutomaticDifferentiate.autodifferentiate(x, x))
   println("differentiate_param_1 = "+ AutomaticDifferentiate.autodifferentiate(y, x))
   println("differentiate_sum_0 = "+ AutomaticDifferentiate.autodifferentiate(x+y, x))

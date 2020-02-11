@@ -17,19 +17,47 @@ object DifferentiateExpr {
       case DoubleLiteral(d) => DoubleLiteral(0)
 
       case p:Param =>
-        if(!hm.isEmpty) {
-          var newP = if (hm.contains(p)) Param(hm(p)+"") else p
-          val newWithRespectTo = if (hm.contains(withRespectTo))  Param(hm(withRespectTo)+"") else withRespectTo
+        withRespectTo match {
+          case param: Param => var array: Seq[Expr] = Seq()
+            //var y = eval(Map(param, body, vector)).asInstanceOf[Array].a
+            if (!hm.isEmpty) {
+              var newP = if (hm.contains(p)) Param(hm(p) + "") else p
+              val newWithRespectTo = if (hm.contains(withRespectTo)) Param(hm(withRespectTo) + "") else withRespectTo
 
-          if(Var(newP) === Var(newWithRespectTo)) {
-            DoubleLiteral(1)}
-          else{DoubleLiteral(0)}
-        }
+              if (Var(newP) === Var(newWithRespectTo)) {
+                DoubleLiteral(1)
+              }
+              else {
+                DoubleLiteral(0)
+              }
+            }
 
-        else{
-          if (Var(p)=== Var(withRespectTo)) {
-            DoubleLiteral(1)}
-                      else{DoubleLiteral(0)}}
+            else {
+              if (Var(p) === Var(withRespectTo)) {
+                DoubleLiteral(1)
+              }
+              else {
+                DoubleLiteral(0)
+              }
+            }
+
+          case array: Array =>
+            //var array : Seq[Expr] = Seq()
+            //scala.collection.mutable.ListBuffer[(Expr, Expr)] = ListBuffer()
+            val elem = if (hm.contains(p)) hm(p) else p
+            var small_array: Seq[Pair] = Seq()
+            for (x <- array.a) {
+              small_array = small_array :+ eval(Zip(elem, x.asInstanceOf[Param])).asInstanceOf[Pair]
+            }
+
+            var y_i: Seq[Expr] = Seq()
+            for (pair <- small_array) {
+              y_i = y_i :+ (differentiate(pair.first, pair.second))
+            }
+
+            Array(y_i, array.t)
+      }
+
 
       case FunctionCall(FunctionCall(_:PowerDouble, arg1),arg2) =>
         if(!hm.isEmpty) {
@@ -101,42 +129,42 @@ object DifferentiateExpr {
               result_matrix = result_matrix :+ y_i
             }
             Matrix(result_matrix, array.t)
+        }
 
-          case array: Array => {
-            withRespectTo match {
-              case param: Param => var array: Seq[Expr] = Seq()
-                var y = eval(Map(param, body, vector)).asInstanceOf[Array].a
-                for (z <- y) {
-                  array = array :+ (differentiate(z, withRespectTo))
-                }
-                Array(array, vector.t)
+      case y: Array => {
+        withRespectTo match {
+          case param: Param => var array: Seq[Expr] = Seq()
+            //var y = eval(Map(param, body, vector)).asInstanceOf[Array].a
+            for (z <- y.list) {
+              array = array :+ (differentiate(z.asInstanceOf[Expr], withRespectTo))
+            }
+            Array(array, y.t)
 
-              case array: Array =>
-                //var array : Seq[Expr] = Seq()
-                //scala.collection.mutable.ListBuffer[(Expr, Expr)] = ListBuffer()
-                var matrix: Seq[Seq[Pair]] = Seq()
-                var result_matrix: Seq[Seq[Expr]] = Seq()
-                var y = eval(Map(param, body, vector)).asInstanceOf[Array].list
-                for (ely <- y) {
-                  var small_array: Seq[Pair] = Seq()
-                  for (x <- array.a) {
-                    small_array = small_array :+ eval(Zip(ely.asInstanceOf[Param], x.asInstanceOf[Param])).asInstanceOf[Pair]
-                  }
-                  matrix = matrix :+ small_array
-                }
-
-                for (list <- matrix) {
-                  var y_i: Seq[Expr] = Seq()
-                  for (pair <- list) {
-                    y_i = y_i :+ (differentiate(pair.first, pair.second))
-                  }
-                  result_matrix = result_matrix :+ y_i
-                }
-                Matrix(result_matrix, array.t)
+          case array: Array =>
+            //var array : Seq[Expr] = Seq()
+            //scala.collection.mutable.ListBuffer[(Expr, Expr)] = ListBuffer()
+            var matrix: Seq[Seq[Pair]] = Seq()
+            var result_matrix: Seq[Seq[Expr]] = Seq()
+            for (ely <- y.list) {
+              val elem = if (hm.contains(ely)) hm(ely) else ely
+              var small_array: Seq[Pair] = Seq()
+              for (x <- array.a) {
+                small_array = small_array :+ eval(Zip(elem, x.asInstanceOf[Param])).asInstanceOf[Pair]
+              }
+              matrix = matrix :+ small_array
             }
 
-          }
+            for (list <- matrix) {
+              var y_i: Seq[Expr] = Seq()
+              for (pair <- list) {
+                y_i = y_i :+ (differentiate(pair.first, pair.second))
+              }
+              result_matrix = result_matrix :+ y_i
+            }
+            Matrix(result_matrix, array.t)
         }
+
+      }
 
     }
   }

@@ -142,6 +142,8 @@ object DoubleEvaluator {
         else{
           p
         }
+
+      case p: Matrix => p
     }
   }
 
