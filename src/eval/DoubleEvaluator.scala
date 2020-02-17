@@ -22,6 +22,12 @@ object DoubleEvaluator {
             case (arg1: Param, _) => Param("("+newarg1 + " + " + newarg2+")") // fix this
             case (_, arg2: Param) => Param("("+newarg1 + " + " + newarg2+")")
             case (DoubleLiteral(newarg1),DoubleLiteral(newarg2)) => DoubleLiteral(newarg1 + newarg2)
+            case (_:Array, _:Array) =>
+              var array: Expr = eval(Zip(newarg1, newarg2))
+              var x = Param("x")
+              var y = Param("y")
+              array = eval(Map(Pair(x, y), x+y, array.asInstanceOf[ArrayPairs]))
+              array
             case (_, _) => eval(eval(newarg1) + (eval(newarg2)))
           }
         }
@@ -30,6 +36,36 @@ object DoubleEvaluator {
             case (arg1: Param, _) => Param("(" + arg1 + " + " + arg2 + ")")
             case (_, arg2: Param) => Param("(" + arg1 + " + " + arg2 + ")")
             case (DoubleLiteral(arg1), DoubleLiteral(arg2)) => DoubleLiteral(arg1 + arg2)
+            case (_:Array, _:Array) =>
+              var array: Expr = eval(Zip(arg1, arg2))
+              var x = Param("x")
+              var y = Param("y")
+              array = eval(Map(Pair(x, y), x+y, array.asInstanceOf[ArrayPairs]))
+              array
+            case (_:Array, _:Param) =>
+              var array: Expr = eval(Zip(arg1, arg2))
+              var x = Param("x")
+              var y = Param("y")
+              array = eval(Map(Pair(x, y), x+y, array.asInstanceOf[ArrayPairs]))
+              array
+            case (_:Array, _:DoubleLiteral) =>
+              var array: Expr = eval(Zip(arg1, arg2))
+              var x = Param("x")
+              var y = Param("y")
+              array = eval(Map(Pair(x, y), x+y, array.asInstanceOf[ArrayPairs]))
+              array
+            case (_:Param, _:Array) =>
+              var array: Expr = eval(Zip(arg1, arg2))
+              var x = Param("x")
+              var y = Param("y")
+              array = eval(Map(Pair(x, y), x+y, array.asInstanceOf[ArrayPairs]))
+              array
+            case (_:DoubleLiteral, _:Array) =>
+              var array: Expr = eval(Zip(arg1, arg2))
+              var x = Param("x")
+              var y = Param("y")
+              array = eval(Map(Pair(x, y), x+y, array.asInstanceOf[ArrayPairs]))
+              array
             case (_, _) => eval(eval(arg1) + (eval(arg2)))
           }
         }
@@ -46,6 +82,36 @@ object DoubleEvaluator {
 //            case (arg1: Param, _) => newarg1  * newarg2 // fix this
 //            case (_, arg2: Param) => newarg1 *  newarg2
             case (DoubleLiteral(newarg1),DoubleLiteral(newarg2)) => DoubleLiteral(newarg1 * newarg2)
+            case (_:Array, _:Array) =>
+              var array: Expr = eval(Zip(newarg1, newarg2))
+              var x = Param("x")
+              var y = Param("y")
+              array = eval(Map(Pair(x, y), x*y, array.asInstanceOf[ArrayPairs]))
+              array
+            case (_:Array, _:Param) =>
+              var array: Expr = eval(Zip(newarg1, newarg2))
+              var x = Param("x")
+              var y = Param("y")
+              array = eval(Map(Pair(x, y), x*y, array.asInstanceOf[ArrayPairs]))
+              array
+            case (_:Array, _:DoubleLiteral) =>
+              var array: Expr = eval(Zip(newarg1, newarg2))
+              var x = Param("x")
+              var y = Param("y")
+              array = eval(Map(Pair(x, y), x*y, array.asInstanceOf[ArrayPairs]))
+              array
+            case (_:Param, _:Array) =>
+              var array: Expr = eval(Zip(newarg1, newarg2))
+              var x = Param("x")
+              var y = Param("y")
+              array = eval(Map(Pair(x, y), x*y, array.asInstanceOf[ArrayPairs]))
+              array
+            case (_:DoubleLiteral, _:Array) =>
+              var array: Expr = eval(Zip(newarg1, newarg2))
+              var x = Param("x")
+              var y = Param("y")
+              array = eval(Map(Pair(x, y), x*y, array.asInstanceOf[ArrayPairs]))
+              array
             case (_, _) => eval(eval(newarg1) * (eval(newarg2)))
           }
       }
@@ -54,10 +120,37 @@ object DoubleEvaluator {
         (arg1, arg2) match {
           case (arg1: Param, _) =>Param("("+arg1 + " * " + arg2+")")
                     case (_, arg2: Param) => Param("("+arg1 + " * " + arg2+")")
-//
-//          case (arg1: Param, _) => arg1  * arg2 // fix this
-//          case (_, arg2: Param) => arg1 *  arg2
           case (DoubleLiteral(arg1),DoubleLiteral(arg2)) => DoubleLiteral(arg1 * arg2)
+          case (_:Array, _:Array) =>
+            var array: Expr = eval(Zip(arg1, arg2))
+            var x = Param("x")
+            var y = Param("y")
+            array = eval(Map(Pair(x, y), x*y, array.asInstanceOf[ArrayPairs]))
+            array
+          case (_:Array, _:Param) =>
+            var array: Expr = eval(Zip(arg1, arg2))
+            var x = Param("x")
+            var y = Param("y")
+            array = eval(Map(Pair(x, y), x*y, array.asInstanceOf[ArrayPairs]))
+            array
+          case (_:Array, _:DoubleLiteral) =>
+            var array: Expr = eval(Zip(arg1, arg2))
+            var x = Param("x")
+            var y = Param("y")
+            array = eval(Map(Pair(x, y), x*y, array.asInstanceOf[ArrayPairs]))
+            array
+          case (_:Param, _:Array) =>
+            var array: Expr = eval(Zip(arg1, arg2))
+            var x = Param("x")
+            var y = Param("y")
+            array = eval(Map(Pair(x, y), x*y, array.asInstanceOf[ArrayPairs]))
+            array
+          case (_:DoubleLiteral, _:Array) =>
+            var array: Expr = eval(Zip(arg1, arg2))
+            var x = Param("x")
+            var y = Param("y")
+            array = eval(Map(Pair(x, y), x*y, array.asInstanceOf[ArrayPairs]))
+            array
           case (_, _) => eval(eval(arg1) * (eval(arg2)))
         }
       }
@@ -90,21 +183,40 @@ object DoubleEvaluator {
         }
       }
 
-      case Map(param, body, vector) =>
-        var array : Seq[Expr] = Seq()
-        for (z <- vector.list) {
-        array = array:+(eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), z)))
-      }
-        return Array(array, vector.t)
+      case Map(param, body, vector) => vector match {
+        case vector: Array =>
+          var array: Seq[Expr] = Seq()
+          for (z <- vector.asInstanceOf[Array].list) {
+            array = array :+ (eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), z)))
+          }
+          return Array(array, vector.t)
 
-//      case Fold(param, body, initial, vector) =>
-//        vector.a match {
-//          case Nil => initial
-//          case head :: tail =>
-//            body match {
-//              case FunctionCall(FunctionCall(_:MultiplyDouble, arg2),arg1) => FunctionCall(FunctionCall(MultiplyDouble(Fold(tail, head)), Fold(tail, head)), head)
-//            }
-//        }
+        case vector: ArrayPairs =>
+          var array: Seq[Expr] = Seq()
+          for (z <- vector.asInstanceOf[ArrayPairs].a) {
+            array = array :+ (eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), z)))
+          }
+          return Array(array, vector.t)
+      }
+
+
+//        def foldLeft(list: Seq[Expr], z: Expr): Expr = {
+//          list match {
+//            case Nil => DoubleLiteral(1)
+//            case head :: tail => FunctionCall(FunctionCall(MultiplyDouble(foldLeft(tail, head)), foldLeft(tail, head)), head)
+//          }
+//          z
+
+      case Fold( body, initial, vector) =>
+        vector.a match {
+          case Nil => initial
+          case head :: tail =>
+            body match {
+              case FunctionCall(FunctionCall(_:MultiplyDouble, arg2),arg1) => eval(FunctionCall(FunctionCall(MultiplyDouble(Fold(body, initial, Array(tail, vector.t))), Fold(body, initial, Array(tail, vector.t))), head))
+              case FunctionCall(FunctionCall(_:AddDouble, arg2),arg1) => eval(FunctionCall(FunctionCall(AddDouble(eval(Fold(body, initial, Array(tail, vector.t)))), eval(Fold(body, initial, Array(tail, vector.t)))), head))
+                //FunctionCall(FunctionCall(MultiplyDouble(Fold(param, body, head, Array(tail, vector.t))), Fold(param, body, head, Array(tail, vector.t)), head))
+            }
+        }
 
       case Zip(arg1, arg2) =>
         (arg1, arg2) match {
@@ -117,22 +229,53 @@ object DoubleEvaluator {
             }
             ArrayPairs(array, arg2.asInstanceOf[Array].t)
 
+          case (_:Array, _:DoubleLiteral) =>
+            var array : Seq[Pair] = Seq()
+            for (z <- arg1.asInstanceOf[Array].list) {
+              array = array:+(Pair(z, arg2))
+            }
+            ArrayPairs(array, arg1.asInstanceOf[Array].t)
+
+          case (_:DoubleLiteral, _: Array) =>
+            var array : Seq[Pair] = Seq()
+            for (z <- arg2.asInstanceOf[Array].list) {
+              array = array:+(Pair(arg1, z))
+            }
+            ArrayPairs(array, arg2.asInstanceOf[Array].t)
+
           case (_:Array, _:Param) =>
             var array : Seq[Pair] = Seq()
             for (z <- arg1.asInstanceOf[Array].list) {
               array = array:+(Pair(z, arg2))
             }
             ArrayPairs(array, arg1.asInstanceOf[Array].t)
-//
-//          case(vector1: Array, vector2: Array) =>
-//            var array: Seq[(Expr, Expr)] = Seq ()
-//            ArrayPairs(vector1.a zip vector2.a, vector1.t)
+
+          case(_: Array, _: Array) =>
+            var array : Seq[Pair] = Seq()
+            for (x <- arg1.asInstanceOf[Array].list zip arg2.asInstanceOf[Array].list) {
+              array = array:+(Pair(x._1, x._2))
+            }
+           ArrayPairs(array, arg1.asInstanceOf[Array].t)
         }
+
+      case DotProduct(array1, array2) =>
+        var array: Expr = eval(Zip(array1, array2))
+        var x = Param("x")
+        var y = Param("y")
+        array = eval(Map(Pair(x, y), x*y, array.asInstanceOf[ArrayPairs]))
+        eval(Fold(x+x, intermediateRep.DoubleLiteral(0), array.asInstanceOf[Array]))
 
       case FunctionCall(Lambda(param,body),arg) =>
         // store in a map   param -> arg and eval body
-        paramToArg.put(param, arg.asInstanceOf[Expr])
-        eval(body,paramToArg)
+        (param, arg) match {
+        case (_:Pair, _: Pair) =>
+          paramToArg.put (param.asInstanceOf[Pair].first, arg.asInstanceOf[Pair].first )
+          paramToArg.put (param.asInstanceOf[Pair].second, arg.asInstanceOf[Pair].second)
+          eval (body, paramToArg)
+        case (_,_) =>
+          paramToArg.put (param, arg.asInstanceOf[Expr] )
+        eval (body, paramToArg)
+    }
 
       case p:Param =>
         // fish it up from the map and eval the expr

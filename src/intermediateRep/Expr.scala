@@ -70,27 +70,40 @@ object Let {
   //def apply(param: Expr, value: Expr, body: Array): Expr = FunctionCall(Lambda(param, body), value)
 }
 
-case class Map(param: Expr, body: Expr, vector: Array) extends AnonymousFunction {
-  override var t: Type = ArrayType(vector.t, vector.a.size)
+case class Map(param: Expr, body: Expr, vector: Expr) extends AnonymousFunction {
+  var size = 0
+  vector match {
+    case _: Array => size =  vector.asInstanceOf[Array].a.size
+    case _: ArrayPairs => size =  vector.asInstanceOf[ArrayPairs].a.size
+  }
+  override var t: Type = ArrayType(vector.t, size)
 
-  override def build(newChildren: Seq[IR]): Map = Map(newChildren(0).asInstanceOf[Param], newChildren(1).asInstanceOf[Expr], newChildren(2).asInstanceOf[Array] )
+  override def build(newChildren: Seq[IR]): Map = Map(newChildren(0).asInstanceOf[Param], newChildren(1).asInstanceOf[Expr], newChildren(2).asInstanceOf[Expr] )
 
   override def children: Seq[IR] = Seq(param,body, vector)
 
 }
 
-case class Fold(param: Expr, body: Expr, initial : Expr, vector: Array) extends AnonymousFunction {
+case class Fold(body: Expr, initial : Expr, vector: Array) extends AnonymousFunction {
   override var t: Type = vector.t
 
-  override def build(newChildren: Seq[IR]): Fold = Fold(newChildren(0).asInstanceOf[Param], newChildren(1).asInstanceOf[Expr], newChildren(2).asInstanceOf[Expr], newChildren(3).asInstanceOf[Array] )
+  override def build(newChildren: Seq[IR]): Fold = Fold(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr], newChildren(2).asInstanceOf[Array] )
 
-  override def children: Seq[IR] = Seq(param,body, vector)
+  override def children: Seq[IR] = Seq(body, vector)
 }
 
 case class Zip(vector1: Expr, vector2: Expr) extends AnonymousFunction {
   override var t: Type = vector1.t
 
   override def build(newChildren: Seq[IR]): Zip = Zip(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr])
+
+  override def children: Seq[IR] = Seq(vector1, vector2)
+}
+
+case class DotProduct(vector1: Expr, vector2: Expr) extends AnonymousFunction {
+  override var t: Type = vector1.t
+
+  override def build(newChildren: Seq[IR]): DotProduct = DotProduct(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr])
 
   override def children: Seq[IR] = Seq(vector1, vector2)
 }

@@ -10,7 +10,8 @@ object Test1 extends App {
     var x = Param("x")
     var y = Param("y")
     val division = x / x
-    val product = x * x
+
+    val product = var1 * (var2 + var3)
     var body = x + var1
     val sum  = var1 + var2
     val power = (x ^ var2) + (y ^ var2)
@@ -22,20 +23,28 @@ object Test1 extends App {
     var x_3 = Param("x_3")
 
     var z = Param("z")
+    val product2 = x * y
     var x_vector = Array(List(x_1, x_2, x_3), x.t)
-
+//    var dot = DoubleEvaluator.eval(DotProduct(x_vector, x_vector))
+//
+//    println(dot)
+    println(DoubleEvaluator.eval(x_vector + x_vector))
+    println(DoubleEvaluator.eval(x_vector + var2))
+    println(DoubleEvaluator.eval(x_vector * var2))
+    println(DoubleEvaluator.eval(array * var2))
+    println(DoubleEvaluator.eval(var1 + x_vector))
     println(DoubleEvaluator.eval(Map(x, product, array)))
     println(DoubleEvaluator.eval(Pair(var2, var1)))
     println(DoubleEvaluator.eval(Zip(x_vector, x_1)))
-    println(DoubleEvaluator.eval(Zip(x_1, x_vector)))
+//    println(DoubleEvaluator.eval(Zip(x_1, x_vector)))
     println(DoubleEvaluator.eval(Zip(x_vector, x_vector)))
-    //println(DoubleEvaluator.eval(Fold.foldLeft(List(var1, var2, var3), var2)))
+    println(DoubleEvaluator.eval(Fold(x*x, DoubleLiteral(1), array)))
     //println(Reduce.timesTwo(array))
     println("var = "+Evaluator.eval(nested))
     println("lambda = "+ DoubleEvaluator.eval(Let(x,body,y)))
     println("var1 = "+ Evaluator.eval(var1))
     println("var2 = "+ Evaluator.eval(var2))
-    println("product1 = "+Evaluator.eval(product))
+    println("product1 = "+(product))
     println("product2 = "+Evaluator.eval(var1 * var2))
     println("division = "+Evaluator.eval(division))
     println("power = "+Evaluator.eval(power))
