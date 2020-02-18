@@ -238,7 +238,7 @@ case class ArrayPairs(a: Seq[Pair], et: Type) extends Expr{
   override def children = Seq()
 }
 
-case class Matrix(a: Seq[Seq[_]], et: Type) extends Expr{
+case class Matrix(a: Seq[Seq[_]], et: Type) extends Expr {
   override var t: Type = ArrayType(et, a.length)
 
   var matrix: Seq[Seq[_]] =  a

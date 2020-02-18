@@ -11,6 +11,9 @@ object Evaluator {
     }
   }
 
+  def printString(e:Expr)  : Expr = {
+    Print.printString(e)
+  }
   def evalArrays(e: Expr) : Expr = {
     e.t match {
       case _:ArrayType => ArraysEvaluator.eval(e)

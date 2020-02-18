@@ -2,7 +2,7 @@ package test
 
 import automaticDifferentiation.AutomaticDifferentiateExpr
 import differentiate._
-import eval.DoubleEvaluator
+import eval.{DoubleEvaluator, Evaluator}
 import intermediateRep._
 import test.Test1.{x, x_1, x_2, x_3}
 object DiffTest extends App{
@@ -17,13 +17,20 @@ object DiffTest extends App{
   var y_vector = Map(x, (x * x), x_vector)
 
   var dot = DoubleEvaluator.eval(DotProduct(x_vector, x_vector))
+  var additionVectors = DoubleEvaluator.eval(x_vector + x_vector)
+  var productVectors = DoubleEvaluator.eval(x_vector * x_1)
+  println(Evaluator.printString(dot))
+  println(Evaluator.printString(additionVectors))
   var diffDot = DifferentiateExpr.differentiate(dot, x_vector)
 
  // println("differentiate_x = "+ Differentiate.differentiate(y_vector, x_vector))
   //println("differentiate_x = "+ Differentiate.differentiate(Lambda(x, x*x), x))
 
-  var m = DifferentiateExpr.differentiate(Map(x, (x), x_vector), x_vector)
-  println(diffDot) //investigate
+  //var m = DifferentiateExpr.differentiate(Map(x, (x), x_vector), x_vector)
+  println((Evaluator.printString(diffDot))) //investigate
+  println((Evaluator.printString(DifferentiateExpr.differentiate(additionVectors, x_vector))))
+
+  println((Evaluator.printString(DifferentiateExpr.differentiate(productVectors, x_1))))
 //println("differentiate_Constant = "+ Differentiate.differentiate(DoubleLiteral(9), x))
 //println("differentiate_Product = "+ Differentiate.differentiate(DoubleLiteral(3)*x*x*DoubleLiteral(3), x))
 //println("differentiate_Quotient_Constants= "+ Differentiate.differentiate(DoubleLiteral(3)^DoubleLiteral(3), x))

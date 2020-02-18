@@ -6,7 +6,6 @@ import eval.DoubleEvaluator.eval
 import intermediateRep._
 
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
 import scala.language.implicitConversions
 
 object DifferentiateExpr {
@@ -16,9 +15,9 @@ object DifferentiateExpr {
     e match {
       case DoubleLiteral(d) => DoubleLiteral(0)
 
-      case p:Param =>
+      case p: Param =>
         withRespectTo match {
-          case param: Param => var array: Seq[Expr] = Seq()
+          case param: Param =>
             //var y = eval(Map(param, body, vector)).asInstanceOf[Array].a
             if (!hm.isEmpty) {
               var newP = if (hm.contains(p)) Param(hm(p) + "") else p
@@ -56,42 +55,104 @@ object DifferentiateExpr {
             }
 
             Array(y_i, array.t)
-      }
-
-
-      case FunctionCall(FunctionCall(_:PowerDouble, arg1),arg2) =>
-        if(!hm.isEmpty) {
-          val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
-          val newarg2 = if (hm.contains(arg2)) hm(arg2) else arg2
-          val newWithRespectTo = if (hm.contains(withRespectTo))  hm(withRespectTo).asInstanceOf[Param] else withRespectTo
-          differentiatePower(newarg1, newarg2, newWithRespectTo, hm)
         }
 
-        else
-          differentiatePower(arg1, arg2, withRespectTo)
+
+      case FunctionCall(FunctionCall(_: PowerDouble, arg1), arg2) =>
+        withRespectTo match {
+          case param: Param => if (!hm.isEmpty) {
+            val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
+            val newarg2 = if (hm.contains(arg2)) hm(arg2) else arg2
+            val newWithRespectTo = if (hm.contains(withRespectTo)) hm(withRespectTo).asInstanceOf[Param] else withRespectTo
+            differentiatePower(newarg1, newarg2, newWithRespectTo, hm)
+          }
+
+          else
+            differentiatePower(arg1, arg2, withRespectTo)
+
+      case array: Array =>
+        if (!hm.isEmpty) {
+          val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
+          val newarg2 = if (hm.contains(arg2)) hm(arg2) else arg2
+          var small_array: Seq[Expr] = Seq()
+          for (x <- array.a) {
+            small_array = small_array :+ differentiatePower(arg1, arg2, x)
+          }
+          Array(small_array, array.t)
+        }
+          else{
+            var small_array: Seq[Expr] = Seq()
+            for (x <- array.a) {
+              small_array = small_array :+ differentiatePower(arg1, arg2, x)
+            }
+            Array(small_array, array.t)
+          }
+
+        }
 
       case FunctionCall(FunctionCall(_:AddDouble, arg2),arg1) =>
-        if(!hm.isEmpty) {
-          val newarg1 = if (hm.contains(arg1)) (hm(arg1)) else arg1
-          val newarg2 = if (hm.contains(arg2)) (hm(arg2)) else arg2
-          val newWithRespectTo = if (hm.contains(withRespectTo))  hm(withRespectTo).asInstanceOf[Param] else withRespectTo
-          differentiate(newarg1, newWithRespectTo, hm) + differentiate(newarg2, newWithRespectTo, hm)
+        withRespectTo match {
+          case param: Param =>
+          if(!hm.isEmpty) {
+            val newarg1 = if (hm.contains(arg1)) (hm(arg1)) else arg1
+            val newarg2 = if (hm.contains(arg2)) (hm(arg2)) else arg2
+            val newWithRespectTo = if (hm.contains(withRespectTo))  hm(withRespectTo).asInstanceOf[Param] else withRespectTo
+            differentiate(newarg1, newWithRespectTo, hm) + differentiate(newarg2, newWithRespectTo, hm)
+          }
+
+          else {
+            differentiate(arg1, withRespectTo) + differentiate(arg2, withRespectTo)
+          }
+
+          case array: Array =>
+            if (!hm.isEmpty) {
+              val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
+              val newarg2 = if (hm.contains(arg2)) hm(arg2) else arg2
+              var small_array: Seq[Expr] = Seq()
+              for (x <- array.a) {
+                small_array = small_array :+ (differentiate(newarg1, x) + differentiate(newarg2, x))
+              }
+              Array(small_array, array.t)
+            }
+            else{
+              var small_array: Seq[Expr] = Seq()
+              for (x <- array.a) {
+                small_array = small_array :+(differentiate(arg1, x) + differentiate(arg2, x))
+              }
+              Array(small_array, array.t)
+            }
+
         }
 
-        else {
-          differentiate(arg1, withRespectTo) + differentiate(arg2, withRespectTo)
-        }
+      case FunctionCall(FunctionCall(_:MultiplyDouble, arg1),arg2) => withRespectTo match {
+        case param: Param =>
+          if(!hm.isEmpty) {
+            val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
+            val newarg2 = if (hm.contains(arg2)) hm(arg2) else arg2
+            val newWithRespectTo = if (hm.contains(withRespectTo))  hm(withRespectTo).asInstanceOf[Param] else withRespectTo
+            differentiateProduct(newarg1, newarg2, newWithRespectTo, hm)
+          }
 
-      case FunctionCall(FunctionCall(_:MultiplyDouble, arg1),arg2) => {
-        if(!hm.isEmpty) {
-          val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
-          val newarg2 = if (hm.contains(arg2)) hm(arg2) else arg2
-          val newWithRespectTo = if (hm.contains(withRespectTo))  hm(withRespectTo).asInstanceOf[Param] else withRespectTo
-          differentiateProduct(newarg1, newarg2, newWithRespectTo, hm)
-        }
+          else
+            differentiateProduct(arg1, arg2, withRespectTo, hm)
 
-        else
-          differentiateProduct(arg1, arg2, withRespectTo, hm)
+        case array: Array =>
+          if (!hm.isEmpty) {
+            val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
+            val newarg2 = if (hm.contains(arg2)) hm(arg2) else arg2
+            var small_array: Seq[Expr] = Seq()
+            for (x <- array.a) {
+              small_array = small_array :+ (differentiateProduct(newarg1, newarg2, x, hm))
+            }
+            Array(small_array, array.t)
+          }
+          else{
+            var small_array: Seq[Expr] = Seq()
+            for (x <- array.a) {
+              small_array = small_array :+(differentiateProduct(arg1, arg2, x, hm))
+            }
+            Array(small_array, array.t)
+          }
       }
 
       case FunctionCall(FunctionCall(_:DivideDouble, arg1),arg2) => differentiateDivision(arg1,arg2, withRespectTo)
@@ -163,9 +224,7 @@ object DifferentiateExpr {
             }
             Matrix(result_matrix, array.t)
         }
-
       }
-
     }
   }
 

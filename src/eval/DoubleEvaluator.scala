@@ -19,8 +19,8 @@ object DoubleEvaluator {
           val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
           val newarg2 = if (hm.contains(arg2)) eval(hm(arg2)) else arg2
           (newarg1, newarg2) match {
-            case (arg1: Param, _) => Param("("+newarg1 + " + " + newarg2+")") // fix this
-            case (_, arg2: Param) => Param("("+newarg1 + " + " + newarg2+")")
+            case (arg1: Param, _) => newarg1  + newarg2 // fix this
+            case (_, arg2: Param) => newarg1 + newarg2
             case (DoubleLiteral(newarg1),DoubleLiteral(newarg2)) => DoubleLiteral(newarg1 + newarg2)
             case (_:Array, _:Array) =>
               var array: Expr = eval(Zip(newarg1, newarg2))
@@ -28,13 +28,13 @@ object DoubleEvaluator {
               var y = Param("y")
               array = eval(Map(Pair(x, y), x+y, array.asInstanceOf[ArrayPairs]))
               array
-            case (_, _) => eval(eval(newarg1) + (eval(newarg2)))
+            case (_, _) => (eval(newarg1) + (eval(newarg2)))
           }
         }
         else {
           (arg1, arg2) match {
-            case (arg1: Param, _) => Param("(" + arg1 + " + " + arg2 + ")")
-            case (_, arg2: Param) => Param("(" + arg1 + " + " + arg2 + ")")
+            case (arg1: Param, _) => arg1 + arg2
+            case (_, arg2: Param) => arg1 + arg2
             case (DoubleLiteral(arg1), DoubleLiteral(arg2)) => DoubleLiteral(arg1 + arg2)
             case (_:Array, _:Array) =>
               var array: Expr = eval(Zip(arg1, arg2))
@@ -66,7 +66,7 @@ object DoubleEvaluator {
               var y = Param("y")
               array = eval(Map(Pair(x, y), x+y, array.asInstanceOf[ArrayPairs]))
               array
-            case (_, _) => eval(eval(arg1) + (eval(arg2)))
+            case (_, _) => (eval(arg1) + (eval(arg2)))
           }
         }
       }
@@ -76,11 +76,8 @@ object DoubleEvaluator {
           val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
           val newarg2 = if (hm.contains(arg2)) eval(hm(arg2)) else arg2
           (newarg1, newarg2) match {
-            case (arg1: Param, _) => Param("("+newarg1 + " * " + newarg2+")") // fix this
-            case (_, arg2: Param) => Param("("+newarg1 + " * " + newarg2+")")
-//
-//            case (arg1: Param, _) => newarg1  * newarg2 // fix this
-//            case (_, arg2: Param) => newarg1 *  newarg2
+            case (arg1: Param, _) => newarg1  * newarg2 // fix this
+            case (_, arg2: Param) => newarg1 * newarg2
             case (DoubleLiteral(newarg1),DoubleLiteral(newarg2)) => DoubleLiteral(newarg1 * newarg2)
             case (_:Array, _:Array) =>
               var array: Expr = eval(Zip(newarg1, newarg2))
@@ -112,14 +109,12 @@ object DoubleEvaluator {
               var y = Param("y")
               array = eval(Map(Pair(x, y), x*y, array.asInstanceOf[ArrayPairs]))
               array
-            case (_, _) => eval(eval(newarg1) * (eval(newarg2)))
+            case (_, _) => (eval(newarg1) * (eval(newarg2)))
           }
       }
         else
 
         (arg1, arg2) match {
-          case (arg1: Param, _) =>Param("("+arg1 + " * " + arg2+")")
-                    case (_, arg2: Param) => Param("("+arg1 + " * " + arg2+")")
           case (DoubleLiteral(arg1),DoubleLiteral(arg2)) => DoubleLiteral(arg1 * arg2)
           case (_:Array, _:Array) =>
             var array: Expr = eval(Zip(arg1, arg2))
@@ -151,24 +146,26 @@ object DoubleEvaluator {
             var y = Param("y")
             array = eval(Map(Pair(x, y), x*y, array.asInstanceOf[ArrayPairs]))
             array
-          case (_, _) => eval(eval(arg1) * (eval(arg2)))
+          case (arg1: Param, _) => arg1 * arg2
+          case (_, arg2: Param) => arg1 * arg2
+          case (_, _) => (eval(arg1) * (eval(arg2)))
         }
       }
 
       case FunctionCall(FunctionCall(_:DivideDouble, arg2),arg1) => {
         (arg1, arg2) match {
-          case (arg1: Param, _) => Param("("+arg1 + " / " + arg2+")")
-          case (_, arg2: Param) => Param("("+arg1 + " / " + arg2+")")
+          case (arg1: Param, _) => arg1 / arg2
+          case (_, arg2: Param) => arg1 / arg2
           case (DoubleLiteral(arg1),DoubleLiteral(arg2)) => {
             DoubleLiteral(arg1/arg2)
           }
-          case (_, _) => eval((eval(arg1)) / (eval(arg2)))
+          case (_, _) => ((eval(arg1)) / (eval(arg2)))
         }}
 
       case FunctionCall(FunctionCall(_:PowerDouble, arg1),arg2) => {
         (arg1, arg2) match {
-          case (arg1: Param, _) => Param("("+arg1 + " ^ " + arg2+")")
-          case (_, arg2: Param) => Param("("+arg1 + " ^ " + arg2+")")
+          case (arg1: Param, _) => arg1 ^ arg2
+          case (_, arg2: Param) => arg1 ^ arg2
           case (DoubleLiteral(arg1),DoubleLiteral(arg2)) => {
             val exponent  = java.lang.Double.valueOf(arg2)
             val base      = java.lang.Double.valueOf(arg1)
@@ -177,7 +174,7 @@ object DoubleEvaluator {
           case (_, _) => {
             val exponent  = java.lang.Double.valueOf(eval(arg2).toString)
             val base      = java.lang.Double.valueOf(eval(arg1).toString)
-            eval((eval(arg1)^eval(arg2)))
+            ((eval(arg1)^eval(arg2)))
           }
 
         }
@@ -256,6 +253,8 @@ object DoubleEvaluator {
               array = array:+(Pair(x._1, x._2))
             }
            ArrayPairs(array, arg1.asInstanceOf[Array].t)
+
+          case(_, _) => Pair(arg1, arg2)
         }
 
       case DotProduct(array1, array2) =>
