@@ -110,7 +110,7 @@ object DifferentiateExpr {
               val newarg2 = if (hm.contains(arg2)) hm(arg2) else arg2
               var small_array: Seq[Expr] = Seq()
               for (x <- array.a) {
-                small_array = small_array :+ (differentiate(newarg1, x) + differentiate(newarg2, x))
+                small_array = small_array :+ (differentiate(newarg1, x, hm) + differentiate(newarg2, x, hm))
               }
               Array(small_array, array.t)
             }
@@ -197,9 +197,8 @@ object DifferentiateExpr {
           case param: Param => var array: Seq[Expr] = Seq()
             //var y = eval(Map(param, body, vector)).asInstanceOf[Array].a
             for (z <- y.list) {
-
               val elem = if (hm.contains(z)) hm(z) else z
-              array = array :+ (differentiate(elem.asInstanceOf[Expr], withRespectTo))
+              array = array :+ (differentiate(elem.asInstanceOf[Expr], withRespectTo, hm))
             }
             Array(array, y.t)
 
@@ -220,7 +219,7 @@ object DifferentiateExpr {
             for (list <- matrix) {
               var y_i: Seq[Expr] = Seq()
               for (pair <- list) {
-                y_i = y_i :+ (differentiate(pair.first, pair.second))
+                y_i = y_i :+ (differentiate(pair.first, pair.second, hm))
               }
               result_matrix = result_matrix :+ y_i
             }
@@ -247,7 +246,8 @@ object DifferentiateExpr {
 
       case (e1, DoubleLiteral(0)) => DoubleLiteral(0)
 
-      case (e1, DoubleLiteral(d)) => DoubleEvaluator.eval((DoubleLiteral(d) * DoubleEvaluator.eval(e1 ^ DoubleEvaluator.eval((DoubleLiteral(d) + DoubleLiteral(-1)), hm), hm)), hm)
+      case (e1, DoubleLiteral(d)) =>
+        DoubleEvaluator.eval((DoubleLiteral(d) * DoubleEvaluator.eval((e1 ^ DoubleEvaluator.eval((DoubleLiteral(d) + DoubleLiteral(-1)), hm)) * DoubleEvaluator.eval(differentiate(e1, withRespectTo, hm)), hm)), hm)
 
       //case (e1, e2) => Evaluator.eval(e2 * Evaluator.eval(e1 ^ Evaluator.eval(e2 + DoubleLiteral(-1))))
     }

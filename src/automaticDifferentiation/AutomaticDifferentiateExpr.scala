@@ -1,7 +1,7 @@
 package automaticDifferentiation
 
 import eval.{DoubleEvaluator, Evaluator}
-import intermediateRep._
+import intermediateRep.{Expr, _}
 
 import scala.collection.mutable
 import scala.collection.mutable.Queue
@@ -13,6 +13,7 @@ object AutomaticDifferentiateExpr {
   var counter = 0
   var arrayCounter = 0
   val x = Queue[(Expr, Expr)]()
+  var hm: mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()
 
   def autoDifferentiate(e: Expr, withRespectTo: Expr): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
@@ -43,6 +44,7 @@ object AutomaticDifferentiateExpr {
         z = DerivativeTrace.derivativeTrace (z, withRespectTo, vectorQueue.reverse)
         arrayCounter = 0
         vectorQueue.removeAll()
+        hm.clear()
         z
 
       case _ =>
@@ -53,6 +55,7 @@ object AutomaticDifferentiateExpr {
       reverseQueue.foreach (x => z = Let (x._1, x._2, z) )
       z = DerivativeTrace.derivativeTrace (z, withRespectTo, x.reverse)
       x.removeAll ()
+      hm.clear()
       counter = 0
       z
     }
@@ -110,10 +113,12 @@ object AutomaticDifferentiateExpr {
   def forwardPrimalTrace(e: Expr): Unit = {
     e match {
       case DoubleLiteral(d) => x.addOne((Param("v_".concat(counter.toString)), e))
+                                hm.put(e, Param("v_".concat(counter.toString)))
                                 counter = counter + 1
 
       case p: Param =>
         x.addOne((Param("v_".concat(counter.toString)), p))
+        hm.put(p, Param("v_".concat(counter.toString)))
         counter = counter + 1
         x.addOne((Param("v_".concat(counter.toString)), ( x.apply(x.knownSize-1)._1)))
         counter = counter + 1
@@ -124,30 +129,46 @@ object AutomaticDifferentiateExpr {
           case (_: Param, _: Param) =>
             //z = Let(Param("v_".concat((counter++).toString)), arg1, z)
             //hm.put(arg1.toString, Param("v_".concat(counter.toString)).toString())
-            x.addOne((Param("v_".concat(counter.toString)), arg1))
+            x.addOne((Param("v_".concat(counter.toString))), arg1)
+            hm.put(arg1, Param("v_".concat(counter.toString)))
             counter = counter + 1
-            x.addOne((Param("v_".concat(counter.toString)), arg2))
+            x.addOne((Param("v_".concat(counter.toString))), arg2)
+            hm.put(arg2, Param("v_".concat(counter.toString)))
             //hm.put(arg2.toString, Param("v_".concat(counter.toString)).toString())
             counter = counter + 1
             x.addOne(Param("v_".concat(counter.toString)), ((x.apply(x.knownSize-1)._1) + (( x.apply(x.knownSize-2)._1))))
+            hm.put(((x.apply(x.knownSize-1)._2) + (( x.apply(x.knownSize-2)._2))), (Param("v_".concat(counter.toString))))
             //hm.put(hm(arg1.toString).concat(" + ").concat(hm(arg2.toString)), "v_".concat(counter.toString))
             counter = counter + 1
 
           case (_: Param, _) =>
             x.addOne((Param("v_".concat(counter.toString)), arg1))
+            hm.put(arg1, Param("v_".concat(counter.toString)))
             counter = counter + 1
             forwardPrimalTrace(arg2)
+            //x.addOne(Param("v_".concat(counter.toString)), hm(arg1) + hm(arg2))
+            counter = counter + 1
 
           case (_, _: Param) =>
             forwardPrimalTrace(arg1)
             x.addOne((Param("v_".concat(counter.toString)), arg2))
+            hm.put(arg2, Param("v_".concat(counter.toString)))
             counter = counter + 1
             x.addOne(Param("v_".concat(counter.toString)), ((x.apply(x.knownSize-1)._1) + (( x.apply(x.knownSize-2)._1))))
+            hm.put(((x.apply(x.knownSize-1)._2) + (( x.apply(x.knownSize-2)._2))), (Param("v_".concat(counter.toString))))
+            counter = counter + 1
+            //x.addOne(Param("v_".concat(counter.toString)), hm(arg1) + hm(arg2))
             counter = counter + 1
 
           case (_, _) =>
             forwardPrimalTrace(arg1)
             forwardPrimalTrace(arg2)
+            var add = hm(arg1) + hm(arg2)
+            x.addOne(Param("v_".concat(counter.toString)), add)
+            hm.put(arg1 + arg2, Param("v_".concat(counter.toString)))
+            counter = counter + 1
+
+
         }
       }
 
@@ -155,35 +176,42 @@ object AutomaticDifferentiateExpr {
         (arg1, arg2) match {
 
           case (_: Param, _: Param) =>
-            //z = Let(Param("v_".concat((counter++).toString)), arg1, z)
-            //hm.put(arg1.toString, Param("v_".concat(counter.toString)).toString())
-            x.addOne((Param("v_".concat(counter.toString)), arg1))
+            x.addOne((Param("v_".concat(counter.toString))), arg1)
+            hm.put(arg1, Param("v_".concat(counter.toString)))
             counter = counter + 1
-            x.addOne((Param("v_".concat(counter.toString)), arg2))
-            //hm.put(arg2.toString, Param("v_".concat(counter.toString)).toString())
+            x.addOne((Param("v_".concat(counter.toString))), arg2)
+            hm.put(arg2, Param("v_".concat(counter.toString)))
             counter = counter + 1
             x.addOne(Param("v_".concat(counter.toString)), ((x.apply(x.knownSize-1)._1) * (( x.apply(x.knownSize-2)._1))))
-            //hm.put(hm(arg1.toString).concat(" + ").concat(hm(arg2.toString)), "v_".concat(counter.toString))
+            hm.put(((x.apply(x.knownSize-3)._2) * (( x.apply(x.knownSize-2)._2))), (Param("v_".concat(counter.toString))))
             counter = counter + 1
 
           case (_: Param, _) =>
             x.addOne((Param("v_".concat(counter.toString)), arg1))
+            hm.put(arg1, Param("v_".concat(counter.toString)))
             var position = counter
             counter = counter + 1
             forwardPrimalTrace(arg2)
             x.addOne(Param("v_".concat(counter.toString)), ((x.apply(position)._1) * (( x.apply(x.knownSize-1)._1))))
+            hm.put(((x.apply(x.knownSize-3)._2) * (( x.apply(x.knownSize-2)._2))), (Param("v_".concat(counter.toString))))
             counter = counter + 1
 
           case (_, _: Param) =>
             forwardPrimalTrace(arg1)
             x.addOne((Param("v_".concat(counter.toString)), arg2))
+            hm.put(arg2, Param("v_".concat(counter.toString)))
             counter = counter + 1
             x.addOne(Param("v_".concat(counter.toString)), ((x.apply(x.knownSize-1)._1) * (( x.apply(x.knownSize-2)._1))))
+            hm.put(((x.apply(x.knownSize-3)._2) * (( x.apply(x.knownSize-2)._2))), (Param("v_".concat(counter.toString))))
             counter = counter + 1
 
           case (_, _) =>
             forwardPrimalTrace(arg1)
             forwardPrimalTrace(arg2)
+            x.addOne(Param("v_".concat(counter.toString)), hm(arg1)*hm(arg2))
+
+            hm.put(arg1 * arg2, Param("v_".concat(counter.toString)))
+            counter = counter + 1
         }
       }
 
@@ -191,35 +219,54 @@ object AutomaticDifferentiateExpr {
         (arg1, arg2) match {
 
           case (_: Param, _: Param) =>
-            //z = Let(Param("v_".concat((counter++).toString)), arg1, z)
-            //hm.put(arg1.toString, Param("v_".concat(counter.toString)).toString())
-            x.addOne((Param("v_".concat(counter.toString)), arg1))
+            x.addOne((Param("v_".concat(counter.toString))), arg1)
+            hm.put(arg1, Param("v_".concat(counter.toString)))
             counter = counter + 1
-            x.addOne((Param("v_".concat(counter.toString)), arg2))
-            //hm.put(arg2.toString, Param("v_".concat(counter.toString)).toString())
+            x.addOne((Param("v_".concat(counter.toString))), arg2)
+            hm.put(arg2, Param("v_".concat(counter.toString)))
             counter = counter + 1
             x.addOne(Param("v_".concat(counter.toString)), ((x.apply(x.knownSize-1)._1) ^ (( x.apply(x.knownSize-2)._1))))
-            //hm.put(hm(arg1.toString).concat(" + ").concat(hm(arg2.toString)), "v_".concat(counter.toString))
+            hm.put(((x.apply(x.knownSize-3)._2) ^ (( x.apply(x.knownSize-2)._2))), (Param("v_".concat(counter.toString))))
             counter = counter + 1
 
           case (_: Param, _) =>
             x.addOne((Param("v_".concat(counter.toString)), arg1))
+            hm.put(arg1, Param("v_".concat(counter.toString)))
             var position = counter
             counter = counter + 1
             forwardPrimalTrace(arg2)
             x.addOne(Param("v_".concat(counter.toString)), ((x.apply(position)._1) ^ (( x.apply(x.knownSize-1)._1))))
+            hm.put(((x.apply(x.knownSize-3)._2) ^ (( x.apply(x.knownSize-2)._2))), (Param("v_".concat(counter.toString))))
             counter = counter + 1
+
+//            x.addOne((Param("v_".concat(counter.toString)), arg1))
+//            var position = counter
+//            counter = counter + 1
+//            forwardPrimalTrace(arg2)
+//            x.addOne(Param("v_".concat(counter.toString)), ((x.apply(position)._1) ^ (( x.apply(x.knownSize-1)._1))))
+//            counter = counter + 1
 
           case (_, _: Param) =>
             forwardPrimalTrace(arg1)
             x.addOne((Param("v_".concat(counter.toString)), arg2))
+            hm.put(arg2, Param("v_".concat(counter.toString)))
             counter = counter + 1
             x.addOne(Param("v_".concat(counter.toString)), ((x.apply(x.knownSize-1)._1) ^ (( x.apply(x.knownSize-2)._1))))
+            hm.put(((x.apply(x.knownSize-3)._2) * (( x.apply(x.knownSize-2)._2))), (Param("v_".concat(counter.toString))))
             counter = counter + 1
+//
+//            forwardPrimalTrace(arg1)
+//            x.addOne((Param("v_".concat(counter.toString)), arg2))
+//            counter = counter + 1
+//            x.addOne(Param("v_".concat(counter.toString)), ((x.apply(x.knownSize-1)._1) ^ (( x.apply(x.knownSize-2)._1))))
+//            counter = counter + 1
 
           case (_, _) =>
             forwardPrimalTrace(arg1)
             forwardPrimalTrace(arg2)
+            x.addOne(Param("v_".concat(counter.toString)), hm(arg1)^hm(arg2))
+            hm.put(arg1 ^ arg2, Param("v_".concat(counter.toString)))
+            counter = counter + 1
         }
 
         }

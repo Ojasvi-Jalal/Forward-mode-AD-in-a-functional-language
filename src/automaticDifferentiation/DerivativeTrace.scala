@@ -39,7 +39,11 @@ object DerivativeTrace {
 
         var z_prime: Expr = queue.apply(0)._1
         queue.foreach(x => z_prime = Let(x._1, DifferentiateExpr.differentiate(paramToArg(x._1), withRespectTo, hm), z_prime))
+        paramToArg.clear()
+        hm.clear()
         Evaluator.printString(z_prime)
+
+
     }
 
   }
