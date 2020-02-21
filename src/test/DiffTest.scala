@@ -26,6 +26,7 @@ object DiffTest extends App{
  // println("differentiate_x = "+ Differentiate.differentiate(y_vector, x_vector))
   //println("differentiate_x = "+ Differentiate.differentiate(Lambda(x, x*x), x))
 
+
   //var m = DifferentiateExpr.differentiate(Map(x, (x), x_vector), x_vector)
   println((Evaluator.printString(diffDot))) //investigate
   println((Evaluator.printString(DifferentiateExpr.differentiate(additionVectors, x_vector))))
