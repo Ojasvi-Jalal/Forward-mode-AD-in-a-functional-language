@@ -1,7 +1,7 @@
 package test
 
 import automaticDifferentiation.{AutomaticDifferentiate, AutomaticDifferentiateExpr}
-import eval.DoubleEvaluator
+import eval.{DoubleEvaluator, Evaluator}
 import intermediateRep._
 
 object AutoDiffTest extends App{
@@ -19,12 +19,13 @@ object AutoDiffTest extends App{
   var additionVectors = DoubleEvaluator.eval(x_vector + x_vector)
   var productVectorScalar = DoubleEvaluator.eval(x_vector * x_1)
 
-  var m = AutomaticDifferentiate.autodifferentiate(y_vector, x_vector)
+  //var m = AutomaticDifferentiate.autodifferentiate(y_vector, x_vector)
 
-  println(m)
+  println(Evaluator.printString(productVectorScalar))
+
+  println("differentiate_vector_scalar_multiplication ="+ AutomaticDifferentiate.autodifferentiate(productVectorScalar, x_1))
   println("differentiate_vector_product = "+ AutomaticDifferentiate.autodifferentiate(dot, x_vector))
   println("differentiate_vector_addition = "+ AutomaticDifferentiate.autodifferentiate(additionVectors, x_vector))
-  println("differentiate_vector_scalar_multiplication ="+ AutomaticDifferentiate.autodifferentiate(productVectorScalar, x_1))
   println("differentiate_param_1 = "+ AutomaticDifferentiate.autodifferentiate(y, x))
 //  println("differentiate_param_0 = "+ AutomaticDifferentiate.autodifferentiate(x, x))
 //  println("differentiate_param_1 = "+ AutomaticDifferentiate.autodifferentiate(y, x))

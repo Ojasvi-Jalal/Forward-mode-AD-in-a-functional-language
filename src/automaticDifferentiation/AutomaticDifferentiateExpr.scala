@@ -41,6 +41,8 @@ object AutomaticDifferentiateExpr {
         var z = vectorQueue.apply(size-1)._1
         vectorQueue.reverse.foreach (x => z = Let (x._1, x._2, z) )
         z = DerivativeTrace.derivativeTrace (z, withRespectTo, vectorQueue.reverse)
+        arrayCounter = 0
+        vectorQueue.removeAll()
         z
 
       case _ =>

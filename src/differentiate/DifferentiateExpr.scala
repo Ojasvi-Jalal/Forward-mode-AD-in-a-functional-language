@@ -197,7 +197,9 @@ object DifferentiateExpr {
           case param: Param => var array: Seq[Expr] = Seq()
             //var y = eval(Map(param, body, vector)).asInstanceOf[Array].a
             for (z <- y.list) {
-              array = array :+ (differentiate(z.asInstanceOf[Expr], withRespectTo))
+
+              val elem = if (hm.contains(z)) hm(z) else z
+              array = array :+ (differentiate(elem.asInstanceOf[Expr], withRespectTo))
             }
             Array(array, y.t)
 

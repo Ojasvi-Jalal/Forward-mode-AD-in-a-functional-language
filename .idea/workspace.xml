@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="875e1bb2-411c-40e2-89c4-5de9469a7c9a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/automaticDifferentiation/AutomaticDifferentiateExpr$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/automaticDifferentiation/AutomaticDifferentiateExpr$.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/test/AutoDiffTest$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HonoursProject-OJalal-2019-2020/test/AutoDiffTest$.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/automaticDifferentiation/DerivativeTrace.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/automaticDifferentiation/DerivativeTrace.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/differentiate/DifferentiateExpr.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/differentiate/DifferentiateExpr.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/AutoDiffTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/AutoDiffTest.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/DiffTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/DiffTest.scala" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -83,24 +85,24 @@
         <counts>
           <entry key="dummy" value="18" />
           <entry key="sc" value="505" />
-          <entry key="scala" value="21917" />
+          <entry key="scala" value="21977" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="18" />
-          <entry key="Scala" value="22422" />
+          <entry key="Scala" value="22482" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/differentiate/DifferentiateExpr.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="59">
-              <caret line="204" column="6" selection-start-line="204" selection-start-column="6" selection-end-line="204" selection-end-column="6" />
+            <state relative-caret-position="111">
+              <caret line="199" lean-forward="true" selection-start-line="199" selection-end-line="199" />
               <folding>
                 <element signature="e#23#44#0" expanded="true" />
               </folding>
@@ -111,8 +113,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/AutoDiffTest.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
-              <caret line="26" column="2" selection-start-line="26" selection-start-column="2" selection-end-line="26" selection-end-column="2" />
+            <state relative-caret-position="304">
+              <caret line="25" column="2" selection-start-line="25" selection-start-column="2" selection-end-line="25" selection-end-column="2" />
               <folding>
                 <element signature="e#14#98#0" expanded="true" />
               </folding>
@@ -141,11 +143,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="163">
-              <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
+            <state relative-caret-position="148">
+              <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="8" />
               <folding>
                 <element signature="e#34#74#0" expanded="true" />
               </folding>
@@ -156,8 +158,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/DerivativeTrace.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="32" column="4" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
+            <state relative-caret-position="307">
+              <caret line="41" column="8" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="8" />
               <folding>
                 <element signature="e#34#89#0" expanded="true" />
               </folding>
@@ -271,13 +273,13 @@
         <option value="$PROJECT_DIR$/src/eval/package.scala" />
         <option value="$PROJECT_DIR$/src/test/Test1.scala" />
         <option value="$PROJECT_DIR$/src/eval/DoubleEvaluator.scala" />
-        <option value="$PROJECT_DIR$/src/differentiate/DifferentiateExpr.scala" />
         <option value="$PROJECT_DIR$/src/intermediateRep/Expr.scala" />
         <option value="$PROJECT_DIR$/src/eval/Print.scala" />
         <option value="$PROJECT_DIR$/src/test/DiffTest.scala" />
         <option value="$PROJECT_DIR$/src/automaticDifferentiation/DerivativeTrace.scala" />
         <option value="$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala" />
         <option value="$PROJECT_DIR$/src/test/AutoDiffTest.scala" />
+        <option value="$PROJECT_DIR$/src/differentiate/DifferentiateExpr.scala" />
       </list>
     </option>
   </component>
@@ -351,7 +353,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1582141899118" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1582310496556" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -499,12 +501,12 @@
       <workItem from="1580940722167" duration="14269000" />
       <workItem from="1581253780685" duration="6218000" />
       <workItem from="1581260363578" duration="21999000" />
-      <workItem from="1581517900455" duration="40181000" />
+      <workItem from="1581517900455" duration="41182000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="369134000" />
+    <option name="totallyTimeSpent" value="370135000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -517,9 +519,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="795" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18597998" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49898168" visible="true" weight="0.18597998" />
+      <window_info id="Structure" order="1" sideWeight="0.50101835" side_tool="true" visible="true" weight="0.18597998" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -528,7 +531,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3282123" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.314367" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.30156472" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.30156472" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32891566" />
@@ -616,7 +619,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="scala-line">
           <url>file://$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala</url>
-          <line>188</line>
+          <line>190</line>
           <properties />
           <option name="timeStamp" value="148" />
         </line-breakpoint>
@@ -645,16 +648,34 @@
           <option name="timeStamp" value="270" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="scala-line">
-          <url>file://$PROJECT_DIR$/src/test/AutoDiffTest.scala</url>
-          <line>26</line>
+          <url>file://$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala</url>
+          <line>42</line>
           <properties />
-          <option name="timeStamp" value="283" />
+          <option name="timeStamp" value="288" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="scala-line">
           <url>file://$PROJECT_DIR$/src/automaticDifferentiation/DerivativeTrace.scala</url>
-          <line>37</line>
+          <line>39</line>
           <properties />
-          <option name="timeStamp" value="284" />
+          <option name="timeStamp" value="291" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/src/test/AutoDiffTest.scala</url>
+          <line>25</line>
+          <properties />
+          <option name="timeStamp" value="292" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/src/automaticDifferentiation/DerivativeTrace.scala</url>
+          <line>41</line>
+          <properties />
+          <option name="timeStamp" value="294" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/src/automaticDifferentiation/DerivativeTrace.scala</url>
+          <line>40</line>
+          <properties />
+          <option name="timeStamp" value="295" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -871,16 +892,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/differentiate/DifferentiateExpr.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="59">
-          <caret line="204" column="6" selection-start-line="204" selection-start-column="6" selection-end-line="204" selection-end-column="6" />
-          <folding>
-            <element signature="e#23#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/PrimalTrace.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="64">
@@ -908,32 +919,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/DerivativeTrace.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="32" column="4" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
-          <folding>
-            <element signature="e#34#89#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/DiffTest.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="291">
           <caret line="31" column="3" lean-forward="true" selection-start-line="31" selection-start-column="3" selection-end-line="31" selection-end-column="3" />
           <folding>
             <element signature="e#14#72#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/AutoDiffTest.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="26" column="2" selection-start-line="26" selection-start-column="2" selection-end-line="26" selection-end-column="2" />
-          <folding>
-            <element signature="e#14#98#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -945,12 +936,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/AutoDiffTest.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="25" column="2" selection-start-line="25" selection-start-column="2" selection-end-line="25" selection-end-column="2" />
+          <folding>
+            <element signature="e#14#98#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/AutomaticDifferentiateExpr.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
+        <state relative-caret-position="148">
+          <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="8" />
           <folding>
             <element signature="e#34#74#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/automaticDifferentiation/DerivativeTrace.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="41" column="8" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="8" />
+          <folding>
+            <element signature="e#34#89#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/differentiate/DifferentiateExpr.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="199" lean-forward="true" selection-start-line="199" selection-end-line="199" />
+          <folding>
+            <element signature="e#23#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
