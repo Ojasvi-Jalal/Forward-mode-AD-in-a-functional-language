@@ -311,6 +311,10 @@ object Print {
         }
 
         Matrix(result_matrix, p.t)
+
+      case If_Else(cond, stmt1, stmt2) => If_Else(printString(cond), printString(stmt1), printString(stmt2))
+
+      case GreaterThan(arg1, arg2) => GreaterThan(printString(arg1), printString(arg2))
     }
   }
 

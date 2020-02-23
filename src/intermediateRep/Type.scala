@@ -34,6 +34,12 @@ object IntType extends Scalar {
   override def children: Seq[Type] = Seq()
 }
 
+object BooleanType extends Scalar {
+  override def build(newChildren: Seq[IR]) = BooleanType
+
+  override def children: Seq[Type] = Seq()
+}
+
 case class ArrayType(et: Type, len: Int ) extends Type {
   override def build(newChildren: Seq[IR]): ArrayType = ArrayType(newChildren.head.asInstanceOf[Type], newChildren(1).asInstanceOf[Int])
   override def children: Seq[Type] = Seq()

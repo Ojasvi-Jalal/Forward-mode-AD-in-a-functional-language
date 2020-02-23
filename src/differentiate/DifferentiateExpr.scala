@@ -226,6 +226,20 @@ object DifferentiateExpr {
             Matrix(result_matrix, array.t)
         }
       }
+
+      case max:Max =>
+        val result = DoubleEvaluator.eval(max, hm)
+        differentiate(result, withRespectTo)
+
+      case If_Else(cond, stmt1, stmt2) =>
+        withRespectTo  match {
+        case param: Param => If_Else(cond, differentiate(stmt1, withRespectTo), differentiate(stmt2, withRespectTo))
+        case array: Array => var result: Seq[Expr] = Seq()
+            for(x <- array.list) {
+              result = result:+ (If_Else(cond, differentiate(stmt1, x), differentiate(stmt2, x)))
+            }
+            Array(result, stmt1.t)
+      }
     }
   }
 

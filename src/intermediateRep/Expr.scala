@@ -28,9 +28,8 @@ trait Expr extends IR {
   def *(that: Expr): Expr = FunctionCall(FunctionCall(MultiplyDouble(this), this), that)
   def /(that: Expr): Expr = FunctionCall(FunctionCall(DivideDouble(this), this), that)
   def ^(that: Expr): Expr = FunctionCall(FunctionCall(PowerDouble(this), this), that)
+  def >(that: Expr): Expr = this > that
   def $(that: Param): Expr = FunctionCall(Lambda(that, this),DoubleLiteral(1))
-
-
   def times2(): Expr = FunctionCall(FunctionCall(MultiplyDouble(this), this), IntLiteral(2))
 }
 
@@ -106,6 +105,14 @@ case class DotProduct(vector1: Expr, vector2: Expr) extends AnonymousFunction {
   override def build(newChildren: Seq[IR]): DotProduct = DotProduct(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr])
 
   override def children: Seq[IR] = Seq(vector1, vector2)
+}
+
+case class GreaterThan(arg1: Expr, arg2: Expr) extends Expr {
+  override  var t: Type = BooleanType
+
+  override def build(newChildren: Seq[IR]): GreaterThan = GreaterThan(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr])
+
+  override def children: Seq[IR] = Seq()
 }
 
 trait BuiltInFunction extends Function {
@@ -198,6 +205,16 @@ case class IntLiteral(d: Int) extends Values{
   override def children = Seq()
 }
 
+case class Bool(d: Boolean) extends Values{
+  override var t: Type = BooleanType
+
+  override def toString(): String = d.toString
+
+  override def build(newChildren: Seq[IR]) = Bool(newChildren.head.asInstanceOf[Boolean])
+
+  override def children = Seq()
+}
+
 case class Pair(a: Expr, b: Expr) extends Expr{
   override var t: Type = a.t
   var first = a
@@ -260,6 +277,33 @@ case class ArrayAccess(a: Array, index: Int) extends Expr {
   override def children = Seq()
 }
 
+case class Max(arg1: Expr, arg2: Expr) extends Expr {
+  override var t: Type = arg1.t
+
+  override def build(newChildren: Seq[IR]) = Max(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr])
+
+  override def children = Seq(arg1, arg2)
+}
+
+case class If_Else(condition: Expr, stmt1: Expr, stmt2: Expr) extends Expr {
+  override var t: Type = stmt1.t
+
+  //override def toString(): String = a.toString
+
+  override def build(newChildren: Seq[IR]) = If_Else(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr], newChildren(2).asInstanceOf[Expr])
+
+  override def children = Seq()
+}
+
+case class If(condition: Expr, stmt1: Expr) extends Expr {
+  override var t: Type = stmt1.t
+
+  //override def toString(): String = a.toString
+
+  override def build(newChildren: Seq[IR]) = If(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr])
+
+  override def children = Seq()
+}
 
 //case class Vector(a: Expr, number: Type) extends Values{
 //  override var t: Type = VectorType(a.t, number)
