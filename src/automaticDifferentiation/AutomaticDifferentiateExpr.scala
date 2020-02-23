@@ -271,6 +271,12 @@ object AutomaticDifferentiateExpr {
 
         }
 
+      case If_Else(cond, stmt1, stmt2) =>
+        forwardPrimalTrace(stmt1)
+        forwardPrimalTrace(stmt2)
+        x.addOne(Param("v_".concat(counter.toString)), If_Else(cond, hm(stmt1), hm(stmt2)))
+        hm.put(If_Else(cond, stmt1, stmt2), Param("v_".concat(counter.toString)))
+        counter = counter + 1
     }
   }
 }

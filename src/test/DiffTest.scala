@@ -25,7 +25,7 @@ object DiffTest extends App{
 
   var maxVector = (DoubleEvaluator.eval(Fold(GreaterThan(x,y), x_vector.list.head, x_vector )))
   println("Max([x]) wrt x_vector = " + Differentiate.differentiate(maxVector, x_vector))
-//
+
 //  var dot = DoubleEvaluator.eval(DotProduct(x_vector, x_vector))
 //  var additionVectors = DoubleEvaluator.eval(x_vector + x_vector)
 //  var productVectors = DoubleEvaluator.eval(x_vector * x_1)

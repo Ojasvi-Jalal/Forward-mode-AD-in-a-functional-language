@@ -233,12 +233,33 @@ object DifferentiateExpr {
 
       case If_Else(cond, stmt1, stmt2) =>
         withRespectTo  match {
-        case param: Param => If_Else(cond, differentiate(stmt1, withRespectTo), differentiate(stmt2, withRespectTo))
+        case param: Param =>
+
+          if(!hm.isEmpty) {
+            val newarg1 = if (hm.contains(stmt1)) hm(stmt1) else stmt1
+            val newarg2 = if (hm.contains(stmt2)) hm(stmt2) else stmt2
+            If_Else(cond, differentiate(newarg1, withRespectTo, hm), differentiate(newarg2, withRespectTo, hm))
+          }
+
+          else
+            If_Else(cond, differentiate(stmt1, withRespectTo, hm), differentiate(stmt2, withRespectTo, hm))
+
         case array: Array => var result: Seq[Expr] = Seq()
+          if(!hm.isEmpty) {
+            val newarg1 = if (hm.contains(stmt1)) hm(stmt1) else stmt1
+            val newarg2 = if (hm.contains(stmt2)) hm(stmt2) else stmt2
             for(x <- array.list) {
-              result = result:+ (If_Else(cond, differentiate(stmt1, x), differentiate(stmt2, x)))
+              result = result:+ (If_Else(cond, differentiate(newarg1, x, hm), differentiate(newarg2, x, hm)))
             }
             Array(result, stmt1.t)
+          }
+
+          else {
+            for (x <- array.list) {
+              result = result :+ (If_Else(cond, differentiate(stmt1, x), differentiate(stmt2, x)))
+            }
+            Array(result, stmt1.t)
+          }
       }
     }
   }
