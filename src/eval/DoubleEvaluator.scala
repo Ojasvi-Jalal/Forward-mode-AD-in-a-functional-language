@@ -320,8 +320,8 @@ object DoubleEvaluator {
         else {
           p
         }
-
       case p: Matrix => p
+      case a: Array => a
       }
     }
 

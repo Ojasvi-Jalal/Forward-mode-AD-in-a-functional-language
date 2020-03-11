@@ -7,27 +7,62 @@ import intermediateRep._
 import test.DiffTest.{x, x_1, x_vector, y}
 
 object AutoDiffTest extends App{
-  var x = Param("x")
+
+
+  var x_0 = Param("x_0")
   var x_1 = Param("x_1")
   var x_2 = Param("x_2")
-  var x_3 = Param("x_3")
-  var y = Param("y")
+//  var x_3 = Param("x_3")
+//  var x_vector = Array(List(x_1, x_2, x_3), x.t)
 
-  var z = Param("z")
-  var x_vector = Array(List(x_1, x_2, x_3), x.t)
-  var y_vector = DoubleEvaluator.eval(Map(x, (x * x), x_vector))
+  var exp = List(x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2, x_1, x_0, x_0, x_0, x_0,
+                x_1, x_1, x_0, x_2, x_2, x_1, x_2, x_2, x_0, x_2, x_0, x_1, x_0,
+                x_1, x_1, x_2, x_0, x_0, x_1, x_0, x_0, x_0, x_2, x_0, x_2, x_2,
+                x_1, x_1, x_1, x_1, x_1, x_1, x_0, x_2, x_1, x_2, x_0, x_2, x_0,
+                x_1, x_0, x_1, x_2, x_0, x_1, x_1, x_2, x_0, x_0, x_0, x_2, x_2,
+                x_2, x_1, x_2, x_1, x_0, x_1, x_2, x_1, x_2, x_0, x_0, x_0, x_1,
+                x_2, x_2, x_1, x_0, x_2, x_1, x_2, x_1, x_0, x_1, x_2, x_2, x_1,
+                x_2, x_0, x_0, x_2, x_1, x_1, x_0, x_2, x_1, x_2, x_2, x_0, x_2,
+                x_1, x_2, x_1, x_0, x_0, x_1, x_2, x_0, x_2, x_1, x_2, x_2, x_2,
+                x_2, x_2, x_1, x_0, x_0, x_2, x_1, x_2, x_1, x_0, x_0, x_2, x_2,
+                x_2, x_0, x_0, x_1, x_2, x_2, x_2, x_0, x_1, x_2, x_0, x_1, x_1,
+                x_1, x_1, x_2, x_2, x_2, x_0, x_0, x_2, x_1, x_2, x_0, x_1, x_1,
+                x_2, x_0, x_2, x_1, x_2, x_1, x_2, x_2, x_2, x_0, x_1, x_2, x_2,
+                x_1, x_2, x_2, x_0, x_2, x_0, x_1, x_0, x_0, x_0, x_2, x_2, x_2,
+                x_2, x_1, x_2, x_2, x_0, x_2, x_1, x_1, x_0, x_2, x_2, x_0, x_2,
+                x_0, x_1, x_1, x_1, x_2, x_1, x_1, x_1, x_2, x_0, x_2, x_0, x_1,
+                x_0, x_0, x_2, x_2, x_2, x_2, x_0, x_1, x_2, x_2, x_0, x_0, x_1,
+                x_1, x_2, x_1, x_2, x_0, x_2, x_1, x_2, x_2, x_0, x_2, x_0, x_0,
+                x_1, x_1, x_1, x_1, x_2, x_0, x_0, x_2, x_1, x_1, x_2, x_2, x_0,
+                x_2, x_0, x_2, x_2, x_2, x_1, x_0, x_2, x_0, x_2, x_2, x_1, x_0,
+                x_2, x_0, x_2, x_0, x_1, x_1, x_2, x_2, x_1, x_2, x_2, x_2, x_1
+            )
+  //result
 
+  //println(exp.length)
+  //print(List(0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0).length)
+  //var y = Param("y")
+  var vector_expr = Array(exp, x.t)
+//
+//  var z = Param("z")
+//  var y_vector = DoubleEvaluator.eval(Map(x, (x * x), x_vector))
 
-  var max = DoubleEvaluator.eval(Max(x, y))
-  var max2 = DoubleEvaluator.eval(Max(x*x, y*y))
+ // println("differentiate_param_1 = "+ AutomaticDifferentiate.autodifferentiate(vector_expr, x_0)) //0
 
-  println("Max(x, y) wrt x = " + AutomaticDifferentiate.autodifferentiate(max, x))
-  println("Max(x*x, y*y) wrt x = " + Evaluator.printString(AutomaticDifferentiate.autodifferentiate(max2, x)))
-  var maxWrtVector = DoubleEvaluator.eval(Max(x_1, y))
-  println("Max(x, y) wrt x_vector = " + AutomaticDifferentiate.autodifferentiate(maxWrtVector, x_vector))
-
-  var maxVector = (DoubleEvaluator.eval(Fold(GreaterThan(x,y), x_vector.list.head, x_vector )))
-  println("Max([x]) wrt x_vector = " + AutomaticDifferentiate.autodifferentiate(maxVector, x_vector))
+  val t0 = System.nanoTime()
+  val result = AutomaticDifferentiate.autodifferentiate(vector_expr, x_0)  // call-by-name
+  val t1 = System.nanoTime()
+  println("Elapsed time: " + (t1 - t0) + "ns")
+//  var max = DoubleEvaluator.eval(Max(x, y))
+//  var max2 = DoubleEvaluator.eval(Max(x*x, y*y))
+//
+//  println("Max(x, y) wrt x = " + AutomaticDifferentiate.autodifferentiate(max, x))
+//  println("Max(x*x, y*y) wrt x = " + Evaluator.printString(AutomaticDifferentiate.autodifferentiate(max2, x)))
+//  var maxWrtVector = DoubleEvaluator.eval(Max(x_1, y))
+//  println("Max(x, y) wrt x_vector = " + AutomaticDifferentiate.autodifferentiate(maxWrtVector, x_vector))
+//
+//  var maxVector = (DoubleEvaluator.eval(Fold(GreaterThan(x,y), x_vector.list.head, x_vector )))
+//  println("Max([x]) wrt x_vector = " + AutomaticDifferentiate.autodifferentiate(maxVector, x_vector))
 
 //  var dot = DoubleEvaluator.eval(DotProduct(x_vector, x_vector))
 //  var additionVectors = DoubleEvaluator.eval(x_vector + x_vector)

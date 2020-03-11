@@ -40,7 +40,7 @@ case class FunctionCall(f: Expr, arg: Expr) extends Expr {
 
   override def build(newChildren: Seq[IR]): Expr = ???
 
-  //override def toString(): String = arg.toString
+  override def toString(): String = arg.toString
 
   override def children: Seq[IR] = Seq(f,arg)
 }
@@ -52,6 +52,7 @@ trait Function extends Expr {
 trait AnonymousFunction extends Function {
 
 }
+
 
 
 case class Lambda(param: Expr, body: Expr) extends AnonymousFunction {
