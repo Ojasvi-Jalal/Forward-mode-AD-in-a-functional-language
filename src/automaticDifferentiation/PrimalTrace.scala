@@ -58,56 +58,56 @@ object PrimalTrace {
   //
   //which can be easily represented with a lot of nested Let.
 
-//  def forwardPrimalTrace(e: Expr, hm: mutable.HashMap[String, String] = mutable.HashMap[String, String]()): Unit = {
-//    e match {
-//      //      case DoubleLiteral(d) => DoubleLiteral(0)
-//      //      case p: Param => if (Var(p) === Var(withRespectTo))
-//      //        DoubleLiteral(1)
-//      //      else
-//      //        DoubleLiteral(0)
-//      case FunctionCall(FunctionCall(_: AddDouble, arg1), arg2) => {
-//        (arg1, arg2) match {
-//
-//          case (_: Param, _: Param) =>
-//            hm.put(arg1.toString, Param("v_".concat(counter.toString)).toString())
-//            counter = counter + 1
-//            hm.put(arg2.toString, Param("v_".concat(counter.toString)).toString())
-//            counter = counter + 1
-//            hm.put(hm(arg1.toString).concat(" + ").concat(hm(arg2.toString)), "v_".concat(counter.toString))
-//            counter = counter + 1
-//
-//          case (_: Param, _) =>
-//            hm.put(arg1.toString, Param("v_".concat(counter.toString)).toString())
-//            counter = counter + 1
-//            forwardPrimalTrace(arg2,  hm)
-//
-//          case (_, _: Param) =>
-//            forwardPrimalTrace(arg1,  hm)
-//            hm.put(arg2.toString, Param("v_".concat(counter.toString)).toString())
-//            counter = counter + 1
-//
-//
-//          case (_, _) =>
-//            forwardPrimalTrace(arg1, hm)
-//            forwardPrimalTrace(arg2, hm)
-//
-//        }
-//      }
-//
-//      //      case FunctionCall(FunctionCall(_: MultiplyDouble, arg1), arg2) =>
-//      //        var z = forwardPrimalTraceProduct(e, arg1, arg2, withRespectTo)
-//      //        DerivativeTrace.derivativeTrace(z, withRespectTo)
-//      //
-//      //      case FunctionCall(FunctionCall(_: DivideDouble, arg1), arg2) =>
-//      //        var z = forwardPrimalTraceDivision(e, arg1, arg2, withRespectTo)
-//      //        DerivativeTrace.derivativeTrace(z, withRespectTo)
-//      //
-//      //      case FunctionCall(FunctionCall(_: PowerDouble, arg1), arg2) =>
-//      //        var z = forwardPrimalTracePower(e, arg1, arg2, withRespectTo)
-//      //        DerivativeTrace.derivativeTrace(z, withRespectTo)
-//    }
-//  }
-//}
+  //  def forwardPrimalTrace(e: Expr, hm: mutable.HashMap[String, String] = mutable.HashMap[String, String]()): Unit = {
+  //    e match {
+  //      //      case DoubleLiteral(d) => DoubleLiteral(0)
+  //      //      case p: Param => if (Var(p) === Var(withRespectTo))
+  //      //        DoubleLiteral(1)
+  //      //      else
+  //      //        DoubleLiteral(0)
+  //      case FunctionCall(FunctionCall(_: AddDouble, arg1), arg2) => {
+  //        (arg1, arg2) match {
+  //
+  //          case (_: Param, _: Param) =>
+  //            hm.put(arg1.toString, Param("v_".concat(counter.toString)).toString())
+  //            counter = counter + 1
+  //            hm.put(arg2.toString, Param("v_".concat(counter.toString)).toString())
+  //            counter = counter + 1
+  //            hm.put(hm(arg1.toString).concat(" + ").concat(hm(arg2.toString)), "v_".concat(counter.toString))
+  //            counter = counter + 1
+  //
+  //          case (_: Param, _) =>
+  //            hm.put(arg1.toString, Param("v_".concat(counter.toString)).toString())
+  //            counter = counter + 1
+  //            forwardPrimalTrace(arg2,  hm)
+  //
+  //          case (_, _: Param) =>
+  //            forwardPrimalTrace(arg1,  hm)
+  //            hm.put(arg2.toString, Param("v_".concat(counter.toString)).toString())
+  //            counter = counter + 1
+  //
+  //
+  //          case (_, _) =>
+  //            forwardPrimalTrace(arg1, hm)
+  //            forwardPrimalTrace(arg2, hm)
+  //
+  //        }
+  //      }
+  //
+  //      //      case FunctionCall(FunctionCall(_: MultiplyDouble, arg1), arg2) =>
+  //      //        var z = forwardPrimalTraceProduct(e, arg1, arg2, withRespectTo)
+  //      //        DerivativeTrace.derivativeTrace(z, withRespectTo)
+  //      //
+  //      //      case FunctionCall(FunctionCall(_: DivideDouble, arg1), arg2) =>
+  //      //        var z = forwardPrimalTraceDivision(e, arg1, arg2, withRespectTo)
+  //      //        DerivativeTrace.derivativeTrace(z, withRespectTo)
+  //      //
+  //      //      case FunctionCall(FunctionCall(_: PowerDouble, arg1), arg2) =>
+  //      //        var z = forwardPrimalTracePower(e, arg1, arg2, withRespectTo)
+  //      //        DerivativeTrace.derivativeTrace(z, withRespectTo)
+  //    }
+  //  }
+  //}
 
   def forwardPrimalTraceAddition(e: Expr, arg1: Expr, arg2: Expr, withRespectTo: Param, hm: mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()): Expr = {
     (arg1, arg2) match {
@@ -166,4 +166,3 @@ object PrimalTrace {
     }
   }
 }
-

@@ -1,53 +1,56 @@
-package evaluation
+package evaluation.vectorAddition
 
 import automaticDifferentiation.AutomaticDifferentiate
 import eval.{DoubleEvaluator, Evaluator}
 import intermediateRep.{Array, Param}
 
-object VectorScalarMulti10 extends App{
+object VectorAddition10 extends App{
   //10
 
-  //differentiate
-  //0.044870091s
-  //0.044587953s
-  //0.044340127s
-  //0.043589421s
-  //0.04193243s
-  //0.041471051s
-  //0.040260221s
-  //0.037301059s
-  //0.039572533s
-  //0.03945043s
+  //differentiate:   0.0477253235  ********************
 
-  //evaluate: 0.0506
-  //0.081835291s
-  //0.057670379s
-  //0.054763567s
-  //0.053742828s
-  //0.053684518s
-  //0.0475018s
-  //0.04725439s
-  //0.04651905s
-  //0.044127847s
-  //0.040360791s
+  //0.043413563s
+  //0.044506488s
+  //0.045015294s
+  //0.046368854s
+  //0.047022496s
+  //0.048428151s
+  //0.052018646s
+  //0.063460512s
+  //0.065698363s
+  //0.084169797s
 
+  //evaluate : 0.0537612345     *********************
+
+  //0.067924556s
+  //0.057293287s
+  //0.055228302s
+  //0.052677013s
+  //0.055237632s
+  //0.052284837s
+  //0.052284837s
+  //0.048462913s
+  //0.048320081s
+  //0.047667573s
+  //
   var x = Param("x")
 
 
   var x_0 = Param("x_0")
   var x_1 = Param("x_1")
   var x_2 = Param("x_2")
-  var elemtype1 = DoubleEvaluator.eval((x_1 * x_2))
+  var elemtype1 = x_0
 
-  var elemtype2 = DoubleEvaluator.eval(x_0 + (x_1 + x_2))
-  var elemtype3 = DoubleEvaluator.eval(x_0 * (x_1 / x_2))
+  var elemtype2 = x_1
+  var elemtype3 = x_2
 
-  var exp = List(
+  var exp1 = List(
     elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype3)
   //println(exp.length)
-  var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
+  var vector = Array(exp1, x.t)
+  var addition = DoubleEvaluator.eval(vector + vector)
   val t0 = System.nanoTime()
-  val result = Evaluator.eval(AutomaticDifferentiate.autodifferentiate(vector, x)) // call-by-name
+  Evaluator.eval(AutomaticDifferentiate.autodifferentiate(addition, vector)) // call-by-name
   val t1 = System.nanoTime()
 
   println("Elapsed time: " + (t1 - t0)/(1e+9) + "s")

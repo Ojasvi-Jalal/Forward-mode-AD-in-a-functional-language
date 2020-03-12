@@ -4,35 +4,35 @@ import automaticDifferentiation.AutomaticDifferentiate
 import eval.{DoubleEvaluator, Evaluator}
 import intermediateRep.{Array, Param}
 
-object VectorAddition71 extends App{
-  //10
+object VectorAddition100 extends App{
+  //100
 
-  //differentiate:   0.0477253235  ********************
+  //differentiate: 0.2146066665
 
-  //0.043413563s
-  //0.044506488s
-  //0.045015294s
-  //0.046368854s
-  //0.047022496s
-  //0.048428151s
-  //0.052018646s
-  //0.063460512s
-  //0.065698363s
-  //0.084169797s
+  //0.16885861s
+  //0.185609204s
+  //0.197609782s
+  //0.202886131s
+  //0.210018302s
+  //0.219195031s
+  //0.21946991s
+  //0.223005492s
+  //0.243662002s
+  //0.308342863s
 
-  //evaluate : 0.0537612345     *********************
 
-  //0.067924556s
-  //0.057293287s
-  //0.055228302s
-  //0.052677013s
-  //0.055237632s
-  //0.052284837s
-  //0.052284837s
-  //0.048462913s
-  //0.048320081s
-  //0.047667573s
-  //
+  //evaluate : 0.2416849535
+  //0.173170669s
+  //0.180696202s
+  //0.189410332s
+  //0.222277559s
+  //0.224933854s
+  //0.258436053s
+  //0.271928693s
+  //0.277088067s
+  //0.31932402s
+  //0.35267143s
+
   var x = Param("x")
 
 
@@ -44,16 +44,18 @@ object VectorAddition71 extends App{
   var elemtype2 = x_1
   var elemtype3 = x_2
 
-  var exp1 = List('x_1' 'x_2' 'x_0' 'x_1' 'x_1' 'x_1' 'x_2' 'x_1' 'x_1' x_0 'x_1' 'x_2'
-  'x_2' 'x_0' 'x_2' 'x_0' 'x_2' 'x_2' 'x_0' 'x_0' 'x_1' 'x_1' 'x_1' 'x_1'
-  'x_2' 'x_0' 'x_0' 'x_1' 'x_2' 'x_1' 'x_0' 'x_1' 'x_0' 'x_0' 'x_0' 'x_0'
-  'x_1' 'x_1' 'x_1' 'x_1' 'x_1' 'x_1' 'x_1' 'x_0' 'x_1' 'x_2' 'x_2' 'x_0'
-  'x_0' 'x_0' 'x_1' 'x_1' 'x_0' 'x_1' 'x_2' 'x_1' 'x_1' 'x_0' 'x_1' 'x_2'
-  'x_1' 'x_0' 'x_2' 'x_0' 'x_2' 'x_1' 'x_2' 'x_2' 'x_1' 'x_0' 'x_2' 'x_0'
-  'x_0' 'x_0' 'x_0' 'x_2' 'x_0' 'x_1' 'x_2' 'x_2' 'x_2' 'x_0' 'x_2' 'x_2'
-  'x_1' 'x_1' 'x_1' 'x_2' 'x_2' 'x_2' 'x_0' 'x_0' 'x_2' 'x_0' 'x_1' 'x_2'
-  'x_0' 'x_1' 'x_2' 'x_0')
-  //println(exp.length)
+  var exp1 = List(x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
+  x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
+  x_1, x_2, x_0, x_1, x_0, x_1, x_2, x_1, x_1,
+  x_0, x_0, x_0, x_1, x_2, x_0, x_2, x_2, x_1,
+  x_0, x_1, x_0, x_1, x_2, x_2, x_1, x_2, x_1,
+  x_2, x_1, x_2, x_2, x_2, x_0, x_1, x_0, x_1,
+  x_0, x_2, x_2, x_2, x_1, x_1, x_1, x_0, x_2,
+  x_2, x_2, x_2, x_1, x_1, x_1, x_2, x_1, x_0,
+  x_2, x_2, x_1, x_0, x_1, x_1, x_2, x_2, x_1,
+  x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_1, x_2,
+  x_0, x_0, x_2, x_0, x_0, x_0, x_1, x_0, x_2, x_0)
+
   var vector = Array(exp1, x.t)
   var addition = DoubleEvaluator.eval(vector + vector)
   val t0 = System.nanoTime()
@@ -62,7 +64,7 @@ object VectorAddition71 extends App{
 
   println("Elapsed time: " + (t1 - t0)/(1e+9) + "s")
 
-  // println(exp.length)
+ //  println(exp1.length)
   //println(Evaluator.printString(DoubleEvaluator.eval(x * Array(exp, x.t))))
  // println(Evaluator.printString(result))
 //  //println(result.t)

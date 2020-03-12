@@ -1,4 +1,4 @@
-package evaluation.VectorScalaMult.maxVector
+package evaluation.maxVector
 
 import automaticDifferentiation.AutomaticDifferentiate
 import eval.DoubleEvaluator

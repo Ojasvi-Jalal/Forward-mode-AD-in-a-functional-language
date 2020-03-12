@@ -4,36 +4,23 @@ import automaticDifferentiation.AutomaticDifferentiate
 import eval.{DoubleEvaluator, Evaluator}
 import intermediateRep.{Array, Param}
 
-object VectorAddition100 extends App{
-  //100
+object VectorAddition500 extends App{
+  //500
 
-  //differentiate: 0.2146066665
+  //differentiate:  5.046835936
 
-  //0.16885861s
-  //0.185609204s
-  //0.197609782s
-  //0.202886131s
-  //0.210018302s
-  //0.219195031s
-  //0.21946991s
-  //0.223005492s
-  //0.243662002s
-  //0.308342863s
+  //6.723734511s
+  //5.230645305s
+  //5.074735066s
+  //5.064860549s
+  //5.099417689s
+  //4.994254183
+  //4.759221493s
+  //4.596291372s
+  //4.561457613s
+  //5.099889009
 
-
-  //evaluate : 0.2416849535
-  //0.173170669s
-  //0.180696202s
-  //0.189410332s
-  //0.222277559s
-  //0.224933854s
-  //0.258436053s
-  //0.271928693s
-  //0.277088067s
-  //0.31932402s
-  //0.35267143s
-
-  var x = Param("x")
+  //evaluate :
 
 
   var x_0 = Param("x_0")
@@ -45,6 +32,46 @@ object VectorAddition100 extends App{
   var elemtype3 = x_2
 
   var exp1 = List(x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
+    x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
+    x_1, x_2, x_0, x_1, x_0, x_1, x_2, x_1, x_1,
+    x_0, x_0, x_0, x_1, x_2, x_0, x_2, x_2, x_1,
+    x_0, x_1, x_0, x_1, x_2, x_2, x_1, x_2, x_1,
+    x_2, x_1, x_2, x_2, x_2, x_0, x_1, x_0, x_1,
+    x_0, x_2, x_2, x_2, x_1, x_1, x_1, x_0, x_2,
+    x_2, x_2, x_2, x_1, x_1, x_1, x_2, x_1, x_0,
+    x_2, x_2, x_1, x_0, x_1, x_1, x_2, x_2, x_1,
+    x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_1, x_2,
+    x_0, x_0, x_2, x_0, x_0, x_0, x_1, x_0, x_2, x_0,x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
+    x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
+    x_1, x_2, x_0, x_1, x_0, x_1, x_2, x_1, x_1,
+    x_0, x_0, x_0, x_1, x_2, x_0, x_2, x_2, x_1,
+    x_0, x_1, x_0, x_1, x_2, x_2, x_1, x_2, x_1,
+    x_2, x_1, x_2, x_2, x_2, x_0, x_1, x_0, x_1,
+    x_0, x_2, x_2, x_2, x_1, x_1, x_1, x_0, x_2,
+    x_2, x_2, x_2, x_1, x_1, x_1, x_2, x_1, x_0,
+    x_2, x_2, x_1, x_0, x_1, x_1, x_2, x_2, x_1,
+    x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_1, x_2,
+    x_0, x_0, x_2, x_0, x_0, x_0, x_1, x_0, x_2, x_0,x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
+    x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
+    x_1, x_2, x_0, x_1, x_0, x_1, x_2, x_1, x_1,
+    x_0, x_0, x_0, x_1, x_2, x_0, x_2, x_2, x_1,
+    x_0, x_1, x_0, x_1, x_2, x_2, x_1, x_2, x_1,
+    x_2, x_1, x_2, x_2, x_2, x_0, x_1, x_0, x_1,
+    x_0, x_2, x_2, x_2, x_1, x_1, x_1, x_0, x_2,
+    x_2, x_2, x_2, x_1, x_1, x_1, x_2, x_1, x_0,
+    x_2, x_2, x_1, x_0, x_1, x_1, x_2, x_2, x_1,
+    x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_1, x_2,
+    x_0, x_0, x_2, x_0, x_0, x_0, x_1, x_0, x_2, x_0,x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
+    x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
+    x_1, x_2, x_0, x_1, x_0, x_1, x_2, x_1, x_1,
+    x_0, x_0, x_0, x_1, x_2, x_0, x_2, x_2, x_1,
+    x_0, x_1, x_0, x_1, x_2, x_2, x_1, x_2, x_1,
+    x_2, x_1, x_2, x_2, x_2, x_0, x_1, x_0, x_1,
+    x_0, x_2, x_2, x_2, x_1, x_1, x_1, x_0, x_2,
+    x_2, x_2, x_2, x_1, x_1, x_1, x_2, x_1, x_0,
+    x_2, x_2, x_1, x_0, x_1, x_1, x_2, x_2, x_1,
+    x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_1, x_2,
+    x_0, x_0, x_2, x_0, x_0, x_0, x_1, x_0, x_2, x_0,x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
   x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
   x_1, x_2, x_0, x_1, x_0, x_1, x_2, x_1, x_1,
   x_0, x_0, x_0, x_1, x_2, x_0, x_2, x_2, x_1,
@@ -56,13 +83,13 @@ object VectorAddition100 extends App{
   x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_1, x_2,
   x_0, x_0, x_2, x_0, x_0, x_0, x_1, x_0, x_2, x_0)
 
-  var vector = Array(exp1, x.t)
+  var vector = Array(exp1, x_0.t)
   var addition = DoubleEvaluator.eval(vector + vector)
   val t0 = System.nanoTime()
-  Evaluator.eval(AutomaticDifferentiate.autodifferentiate(addition, vector)) // call-by-name
+  (AutomaticDifferentiate.autodifferentiate(addition, vector)) // call-by-name
   val t1 = System.nanoTime()
 
-  println("Elapsed time: " + (t1 - t0)/(1e+9) + "s")
+  println("Elapsed time in seconds: " + (t1 - t0)/(1e+9))
 
  //  println(exp1.length)
   //println(Evaluator.printString(DoubleEvaluator.eval(x * Array(exp, x.t))))

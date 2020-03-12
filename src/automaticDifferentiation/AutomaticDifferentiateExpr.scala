@@ -52,7 +52,7 @@ object AutomaticDifferentiateExpr {
       forwardPrimalTrace (e)
       var reverseQueue = x.reverse
       var z = e
-      reverseQueue.foreach (x => z = Let (x._1, x._2, z) )
+      reverseQueue.foreach (x => z = (Let(x._1, x._2, z) ))
         //println("fPT:"+ z)
       z = DerivativeTrace.derivativeTrace (z, withRespectTo, x.reverse)
       x.removeAll ()

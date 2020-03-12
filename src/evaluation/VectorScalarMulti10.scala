@@ -1,4 +1,4 @@
-package evaluation.VectorScalaMult
+package evaluation
 
 import automaticDifferentiation.AutomaticDifferentiate
 import eval.{DoubleEvaluator, Evaluator}

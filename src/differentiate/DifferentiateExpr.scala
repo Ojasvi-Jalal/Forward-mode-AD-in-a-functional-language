@@ -211,7 +211,7 @@ object DifferentiateExpr {
               val elem = if (hm.contains(ely)) hm(ely) else ely
               var small_array: Seq[Pair] = Seq()
               for (x <- array.a) {
-                small_array = small_array :+ eval(Zip(elem, x.asInstanceOf[Param])).asInstanceOf[Pair]
+                small_array = small_array :+ eval(Zip(elem, x)).asInstanceOf[Pair]
               }
               matrix = matrix :+ small_array
             }

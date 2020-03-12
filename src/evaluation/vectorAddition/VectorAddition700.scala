@@ -1,24 +1,26 @@
 package evaluation.vectorAddition
 
 import automaticDifferentiation.AutomaticDifferentiate
-import eval.{DoubleEvaluator, Evaluator}
+import eval.DoubleEvaluator
+import evaluation.vectorAddition.VectorAddition100.{x_0, x_1, x_2}
 import intermediateRep.{Array, Param}
 
-object VectorAddition500 extends App{
+object VectorAddition700 extends App{
   //500
 
-  //differentiate:  5.046835936
-  
-  //6.723734511s
-  //5.230645305s
-  //5.074735066s
-  //5.064860549s
-  //5.099417689s
-  //4.994254183
-  //4.759221493s
-  //4.596291372s
-  //4.561457613s
-  //5.099889009
+  //differentiate:
+
+  //9.480451259
+  //9.124922591
+  //8.948869078
+  //8.724760354
+  //8.230285899
+  //8.181719522
+  //7.985531894
+  //7.058555899
+  //6.588349329
+  //6.616117014
+
 
   //evaluate :
 
@@ -32,6 +34,27 @@ object VectorAddition500 extends App{
   var elemtype3 = x_2
 
   var exp1 = List(x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
+    x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
+    x_1, x_2, x_0, x_1, x_0, x_1, x_2, x_1, x_1,
+    x_0, x_0, x_0, x_1, x_2, x_0, x_2, x_2, x_1,
+    x_0, x_1, x_0, x_1, x_2, x_2, x_1, x_2, x_1,
+    x_2, x_1, x_2, x_2, x_2, x_0, x_1, x_0, x_1,
+    x_0, x_2, x_2, x_2, x_1, x_1, x_1, x_0, x_2,
+    x_2, x_2, x_2, x_1, x_1, x_1, x_2, x_1, x_0,
+    x_2, x_2, x_1, x_0, x_1, x_1, x_2, x_2, x_1,
+    x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_1, x_2,
+    x_0, x_0, x_2, x_0, x_0, x_0, x_1, x_0, x_2, x_0,x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
+    x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
+    x_1, x_2, x_0, x_1, x_0, x_1, x_2, x_1, x_1,
+    x_0, x_0, x_0, x_1, x_2, x_0, x_2, x_2, x_1,
+    x_0, x_1, x_0, x_1, x_2, x_2, x_1, x_2, x_1,
+    x_2, x_1, x_2, x_2, x_2, x_0, x_1, x_0, x_1,
+    x_0, x_2, x_2, x_2, x_1, x_1, x_1, x_0, x_2,
+    x_2, x_2, x_2, x_1, x_1, x_1, x_2, x_1, x_0,
+    x_2, x_2, x_1, x_0, x_1, x_1, x_2, x_2, x_1,
+    x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_1, x_2,
+    x_0, x_0, x_2, x_0, x_0, x_0, x_1, x_0, x_2, x_0,
+    x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
     x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
     x_1, x_2, x_0, x_1, x_0, x_1, x_2, x_1, x_1,
     x_0, x_0, x_0, x_1, x_2, x_0, x_2, x_2, x_1,
@@ -91,7 +114,7 @@ object VectorAddition500 extends App{
 
   println("Elapsed time in seconds: " + (t1 - t0)/(1e+9))
 
- //  println(exp1.length)
+  // println(exp1.length)
   //println(Evaluator.printString(DoubleEvaluator.eval(x * Array(exp, x.t))))
  // println(Evaluator.printString(result))
 //  //println(result.t)
