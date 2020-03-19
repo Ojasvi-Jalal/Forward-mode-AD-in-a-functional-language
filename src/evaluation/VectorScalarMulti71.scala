@@ -1,13 +1,27 @@
 package evaluation
 
 import automaticDifferentiation.AutomaticDifferentiate
+import differentiate.DifferentiateExpr
 import eval.{DoubleEvaluator, Evaluator}
 import intermediateRep.{Array, Param}
 
 object VectorScalarMulti71 extends App{
   //71
 
-  //diff time
+  //evaluation: 0.2281732445
+
+  //0.064318743s
+  //0.071445181s
+  //0.101652136s
+  //0.131567383s
+  //0.214977838s
+  //0.241368651s
+  //0.324364974s
+  //0.328751323s
+  //0.371888585s
+  //0.440929883s
+
+  //auto-diff time
 
   //0.097684747s
   //0.093058154s
@@ -20,18 +34,19 @@ object VectorScalarMulti71 extends App{
   //0.072493742s
   //0.069556345s
 
-  //eval time: 0.0822
+  //diff: 0.3895
 
-  //0.09750421s
-  //0.092118744s
-  //0.087359689s
-  //0.083773169s
-  //0.082826159s
-  //0.08148155s
-  //0.078204456s
-  //0.075113109s
-  //0.073812483s
-  //0.073389227s
+  //0.287886987
+  //0.322202605
+  //0.34413507
+  //0.375678382
+  //0.381982286
+  //0.396997766
+  //0.533099114
+  //0.554733321
+  //0.596009203
+  //0.601331307
+
   var x = Param("x")
 
   var x_0 = Param("x_0")
@@ -48,7 +63,8 @@ object VectorScalarMulti71 extends App{
    //println(exp.length)
   var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
   val t0 = System.nanoTime()
-  Evaluator.eval(AutomaticDifferentiate.autodifferentiate(vector, x)) // call-by-name
+ // Evaluator.eval(AutomaticDifferentiate.autodifferentiate(vector, x)) // call-by-name
+  DifferentiateExpr.differentiate(vector, x)
   val t1 = System.nanoTime()
 
   println("Elapsed time: " + (t1 - t0)/(1e+9) + "s")

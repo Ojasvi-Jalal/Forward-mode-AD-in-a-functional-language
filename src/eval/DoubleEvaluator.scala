@@ -212,7 +212,7 @@ object DoubleEvaluator {
           case head :: tail =>
             body match {
               case FunctionCall(FunctionCall(_: MultiplyDouble, arg2), arg1) => eval(FunctionCall(FunctionCall(MultiplyDouble(Fold(body, initial, Array(tail, vector.t))), Fold(body, initial, Array(tail, vector.t))), head))
-              case FunctionCall(FunctionCall(_: AddDouble, arg2), arg1) => eval(FunctionCall(FunctionCall(AddDouble(eval(Fold(body, initial, Array(tail, vector.t)))), eval(Fold(body, initial, Array(tail, vector.t)))), head))
+              case FunctionCall(FunctionCall(_: AddDouble, arg2), arg1) => eval(FunctionCall(FunctionCall(AddDouble((Fold(body, initial, Array(tail, vector.t)))), (Fold(body, initial, Array(tail, vector.t)))), head))
      case GreaterThan(arg1, arg2) =>
        //tail match {
 //

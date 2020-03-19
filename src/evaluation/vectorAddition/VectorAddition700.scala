@@ -1,14 +1,14 @@
 package evaluation.vectorAddition
 
 import automaticDifferentiation.AutomaticDifferentiate
+import differentiate.DifferentiateExpr
 import eval.DoubleEvaluator
-import evaluation.vectorAddition.VectorAddition100.{x_0, x_1, x_2}
 import intermediateRep.{Array, Param}
 
 object VectorAddition700 extends App{
   //500
 
-  //differentiate:
+  //auto - differentiate:
 
   //9.480451259
   //9.124922591
@@ -22,7 +22,31 @@ object VectorAddition700 extends App{
   //6.616117014
 
 
-  //evaluate :
+  //differentiate
+
+  //21.227624812
+  //17.489519676
+  //16.937189772
+  //15.56983414
+  //15.256318516
+  //14.667292788
+  //13.051068351
+  //12.811477921
+  //9.534096593
+  //9.543889008
+
+
+  //evaluate : 0.0427560975
+  //0.033976249
+  //0.034111026
+  //0.03777767
+  //0.038201849
+  //0.041427967
+  //0.044084228
+  //0.045577333
+  //0.047225845
+  //0.051310849
+  //0.061762279
 
 
   var x_0 = Param("x_0")
@@ -109,7 +133,9 @@ object VectorAddition700 extends App{
   var vector = Array(exp1, x_0.t)
   var addition = DoubleEvaluator.eval(vector + vector)
   val t0 = System.nanoTime()
-  (AutomaticDifferentiate.autodifferentiate(addition, vector)) // call-by-name
+  //(AutomaticDifferentiate.autodifferentiate(addition, vector)) // call-by-name
+  //DifferentiateExpr.differentiate(addition, vector)
+  DoubleEvaluator.eval(vector + vector)
   val t1 = System.nanoTime()
 
   println("Elapsed time in seconds: " + (t1 - t0)/(1e+9))

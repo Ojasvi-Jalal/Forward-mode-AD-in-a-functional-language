@@ -9,7 +9,7 @@ object VectorScalarMulti137 extends App{
 
   //137
 
-  //diff time
+  //auto-diff time
 
   //0.124073423s
   //0.094379662s
@@ -22,17 +22,33 @@ object VectorScalarMulti137 extends App{
   //0.078061453s
   //0.074701713s
 
-  //evaluation time: 0.0929
-  //0.128527031s
-  //0.127595836s
-  //0.110604873s
-  //0.095783645s
-  //0.094112537s
-  //0.091692875s
-  //0.087658772s
-  //0.087036028s
-  //0.086742703s
-  //0.086201224s
+
+  //diff time:  0.4876372005
+
+  //0.223726073
+  //0.276312229s
+  //0.293566641
+  //0.354878217
+  //0.472923919
+  //0.502350482s
+  //0.504059801s
+  //0.535410245
+  //0.624324576s
+  //0.74084693s
+
+
+
+  //evaluation time: 0.022793247
+  //0.011332436s
+  //0.014804217s
+  //0.015680559s
+  //0.018140967s
+  //0.018224778s
+  //0.027361716s
+  //0.031799323s
+  //0.044178792s
+  //0.054264758s
+  //0.078164484s
 
   var x_0 = Param("x_0")
   var x_1 = Param("x_1")
@@ -47,9 +63,10 @@ object VectorScalarMulti137 extends App{
     elemtype3, elemtype1, elemtype2, elemtype1, elemtype2, elemtype3, elemtype2, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype1, elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3,
   elemtype3, elemtype1, elemtype2, elemtype1, elemtype2, elemtype3, elemtype2, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype1, elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3)
    //println(exp.length)
-  var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
+  //var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
   val t0 = System.nanoTime()
-  DoubleEvaluator.eval(AutomaticDifferentiate.autodifferentiate(vector, x)) // call-by-name
+  DoubleEvaluator.eval(x * Array(exp, x.t))
+  //DoubleEvaluator.eval(AutomaticDifferentiate.autodifferentiate(vector, x)) // call-by-name
   val t1 = System.nanoTime()
 
   println("Elapsed time: " + (t1 - t0)/(1e+9) + "s")

@@ -1,12 +1,16 @@
 package evaluation
 
 import automaticDifferentiation.AutomaticDifferentiate
+import differentiate.DifferentiateExpr
 import eval.DoubleEvaluator
+import evaluation.VectorScalarMulti10.{ x}
 import intermediateRep.{Array, Param}
 
 object VectorScalarMulti397 extends App{
 
   //397
+
+  //auto-diff
 
   //0.118668517s
   //0.104273693s
@@ -17,6 +21,19 @@ object VectorScalarMulti397 extends App{
   //0.100630686s
   //0.099596147s
   //0.09973202s
+
+  //diff: 0.1962312225
+
+  //0.302356041s
+  //0.243268537s
+  //0.210473504s
+  //0.207915203s
+  //0.204704689s
+  //0.187757756s
+  //0.160384968s
+  //0.144892234s
+  //0.126873545s
+  //0.120975697s
 
   var x = Param("x")
 
@@ -53,9 +70,11 @@ object VectorScalarMulti397 extends App{
   elemtype3, elemtype1, elemtype2, elemtype1, elemtype2, elemtype3, elemtype2, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype1, elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3)
 
   //println(exp.length)
-  var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
+  //var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
   val t0 = System.nanoTime()
-  val result = AutomaticDifferentiate.autodifferentiate(vector, x) // call-by-name
+  //val result = AutomaticDifferentiate.autodifferentiate(vector, x) // call-by-name
+  //DifferentiateExpr.differentiate(vector, x)
+  DoubleEvaluator.eval(x * Array(exp, x.t))
   val t1 = System.nanoTime()
 
   println("Elapsed time: " + (t1 - t0)/(1e+9) + "s")

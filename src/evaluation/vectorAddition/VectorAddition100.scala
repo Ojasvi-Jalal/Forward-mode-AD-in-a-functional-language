@@ -1,13 +1,15 @@
 package evaluation.vectorAddition
 
 import automaticDifferentiation.AutomaticDifferentiate
+import differentiate.DifferentiateExpr
 import eval.{DoubleEvaluator, Evaluator}
+import evaluation.vectorAddition.VectorAddition10.{addition, vector}
 import intermediateRep.{Array, Param}
 
 object VectorAddition100 extends App{
   //100
 
-  //differentiate: 0.2146066665
+  //auto differentiate: 0.2146066665
 
   //0.16885861s
   //0.185609204s
@@ -20,18 +22,30 @@ object VectorAddition100 extends App{
   //0.243662002s
   //0.308342863s
 
+  //differentiate: 0.350090552
+  //0.617114223s
+  //0.4830795s
+  //0.39708201s
+  //0.367776569s
+  // 0.351039117s
+  //0.349141987s
+  //0.331368304s
+  //0.268218045s
+  //0.24464958s
+  //0.261358747s
 
-  //evaluate : 0.2416849535
-  //0.173170669s
-  //0.180696202s
-  //0.189410332s
-  //0.222277559s
-  //0.224933854s
-  //0.258436053s
-  //0.271928693s
-  //0.277088067s
-  //0.31932402s
-  //0.35267143s
+
+  //eval: 0.078199367
+  //0.128529141s
+  //0.097970835s
+  //0.086504188s
+  //0.082013874s
+  //0.080264867s
+  //0.076133867s
+  //0.070754251s
+  //0.068805885s
+  //0.064939202s
+  //0.058825041s
 
   var x = Param("x")
 
@@ -57,9 +71,11 @@ object VectorAddition100 extends App{
   x_0, x_0, x_2, x_0, x_0, x_0, x_1, x_0, x_2, x_0)
 
   var vector = Array(exp1, x.t)
-  var addition = DoubleEvaluator.eval(vector + vector)
+  //var addition = DoubleEvaluator.eval(vector + vector)
   val t0 = System.nanoTime()
-  Evaluator.eval(AutomaticDifferentiate.autodifferentiate(addition, vector)) // call-by-name
+  DoubleEvaluator.eval(vector + vector)
+  //DifferentiateExpr.differentiate(addition, vector)
+  //Evaluator.eval(AutomaticDifferentiate.autodifferentiate(addition, vector)) // call-by-name
   val t1 = System.nanoTime()
 
   println("Elapsed time: " + (t1 - t0)/(1e+9) + "s")

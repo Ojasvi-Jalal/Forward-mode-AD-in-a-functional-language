@@ -1,12 +1,28 @@
 package evaluation
 
 import automaticDifferentiation.AutomaticDifferentiate
-import eval.DoubleEvaluator
+import differentiate.DifferentiateExpr
+import eval.{DoubleEvaluator, Evaluator}
 import intermediateRep.{Array, Param}
 
 object VectorScalarMulti7234 extends App{
 
   // 7234
+
+  //evaluation: 3.4199680165
+
+  //2.048455033s
+  //2.42946502s
+  //2.829836389s
+  //2.863400166s
+  //3.418250717s
+  //3.421685316s
+  //3.444760317s
+  //3.633009697s
+  //3.822542593s
+  //4.213970823s
+
+  //auto-diff:
 
   // 1.887118892s
   // 1.613996569s
@@ -18,6 +34,19 @@ object VectorScalarMulti7234 extends App{
   // 1.394065669s
   // 1.112050304s
   // 0.934004969s
+
+
+  //diff: 3.819924891s
+  //3.819924891s
+  //3.075634889s
+  //2.898516784s
+  //2.527911575s
+  //2.368988469s
+  //2.223446809s
+  //1.99220482s
+  //1.913023821s
+  //1.745383046s
+  //1.549658441s
 
   var x = Param("x")
   
@@ -558,12 +587,15 @@ object VectorScalarMulti7234 extends App{
 
   //println(exp.length)
   //println(exp.length)
-  var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
   val t0 = System.nanoTime()
-  val result = AutomaticDifferentiate.autodifferentiate(vector, x) // call-by-name
+  ///var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
+  //val result = AutomaticDifferentiate.autodifferentiate(vector, x) // call-by-name
+  //DifferentiateExpr.differentiate(vector, x)
+  val eval = Evaluator.printString(x * Array(exp, x.t))
   val t1 = System.nanoTime()
 
   println("Elapsed time: " + (t1 - t0)/(1e+9) + "s")
+
 
   // println(exp.length)
   //println(Evaluator.printString(DoubleEvaluator.eval(x * Array(exp, x.t))))
@@ -575,3 +607,4 @@ object VectorScalarMulti7234 extends App{
   // var check = List(DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0), DoubleLiteral(1.0))
  // println(check.length)
 }
+
