@@ -1,17 +1,10 @@
-package evaluation.dotProduct
+package evaluation
 
 import automaticDifferentiation.AutomaticDifferentiate
+import intermediateRep.{Array, Param}
 import eval.DoubleEvaluator
-import intermediateRep.{Array, DotProduct, Param}
 
-object DotProduct500 extends App{
-  //25
-
-  //auto differentiate:
-
-  //differentiate:
-
-  //evaluate :
+object VectorScalarMulti296 extends App{
 
 
   var x = Param("x")
@@ -20,52 +13,38 @@ object DotProduct500 extends App{
   var x_0 = Param("x_0")
   var x_1 = Param("x_1")
   var x_2 = Param("x_2")
-  var elemtype1 = x_0
+  var elemtype1 = DoubleEvaluator.eval((x_1 * x_2))
 
-  var elemtype2 = x_1
-  var elemtype3 = x_2
+  var elemtype2 = DoubleEvaluator.eval(x_0 + (x_1 + x_2))
+  var elemtype3 = DoubleEvaluator.eval(x_0 * (x_1 / x_2))
 
-  var exp1 = List(x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
-  x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
-  x_1, x_2, x_0, x_2, x_1,
-    x_1, x_2,x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
-    x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
-    x_1, x_2, x_0, x_2, x_1,
-    x_1, x_2,x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
-    x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
-    x_1, x_2, x_0, x_2, x_1,
-    x_1, x_2,x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
-    x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
-    x_1, x_2, x_0, x_2, x_1,
-    x_1, x_2,x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
-    x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
-    x_1, x_2, x_0, x_2,x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
-    x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
-    x_1, x_2, x_0, x_2, x_1,
-    x_1, x_2,x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
-    x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
-    x_1, x_2, x_0, x_2, x_1,
-    x_1, x_2,x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
-    x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
-    x_1, x_2, x_0, x_2, x_1,
-    x_1, x_2,x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
-    x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
-    x_1, x_2, x_0, x_2, x_1,
-    x_1, x_2,x_0, x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_2,
-    x_1, x_1, x_2, x_2, x_0, x_1, x_0, x_2, x_1,
-    x_1, x_2, x_0, x_2)
+  var exp = List(elemtype2, elemtype2, elemtype1, elemtype1, elemtype1, elemtype2, elemtype2, elemtype3, elemtype1, elemtype2, elemtype1, elemtype1, elemtype2,
+    elemtype2, elemtype1, elemtype2, elemtype1, elemtype2, elemtype2, elemtype1, elemtype2, elemtype3, elemtype2, elemtype1, elemtype3,
+    elemtype2, elemtype1, elemtype1, elemtype2, elemtype2, elemtype3, elemtype3, elemtype3, elemtype2, elemtype1, elemtype3, elemtype2, elemtype1,
+    elemtype3, elemtype3, elemtype3, elemtype1, elemtype1, elemtype1, elemtype1, elemtype2, elemtype2, elemtype1, elemtype1, elemtype3, elemtype1,
+    elemtype1, elemtype3, elemtype2, elemtype2, elemtype1, elemtype1, elemtype1, elemtype3, elemtype1, elemtype2, elemtype2, elemtype1, elemtype2,
+    elemtype3, elemtype3, elemtype1, elemtype3, elemtype2, elemtype1, elemtype2, elemtype3, elemtype1, elemtype2, elemtype1, elemtype2, elemtype1,
+    elemtype3, elemtype3, elemtype2, elemtype1, elemtype2, elemtype1, elemtype3, elemtype1, elemtype3, elemtype2, elemtype3, elemtype2, elemtype3,
+    elemtype1, elemtype1, elemtype1, elemtype3, elemtype1, elemtype1, elemtype2, elemtype1, elemtype1, elemtype2, elemtype2, elemtype3, elemtype2,
+    elemtype1, elemtype1, elemtype2, elemtype2, elemtype3, elemtype2, elemtype3, elemtype2, elemtype2, elemtype2, elemtype2, elemtype1, elemtype3,
+    elemtype2, elemtype1, elemtype3, elemtype2, elemtype2, elemtype3, elemtype3, elemtype3, elemtype3, elemtype3, elemtype1, elemtype1, elemtype1,
+    elemtype3, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype3, elemtype1, elemtype1, elemtype3, elemtype1, elemtype3, elemtype3,
+    elemtype2, elemtype1, elemtype2, elemtype3, elemtype1, elemtype3, elemtype3, elemtype2, elemtype2, elemtype1, elemtype2, elemtype1, elemtype3,
+    elemtype2, elemtype3, elemtype1, elemtype3, elemtype3, elemtype3, elemtype2, elemtype2, elemtype2, elemtype2, elemtype2, elemtype2, elemtype1,
+    elemtype2, elemtype2, elemtype1, elemtype1, elemtype2, elemtype1, elemtype2, elemtype1, elemtype3, elemtype1, elemtype2, elemtype1, elemtype2,
+    elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype3, elemtype1, elemtype2, elemtype3,
+    elemtype3, elemtype1, elemtype2, elemtype1, elemtype2, elemtype3, elemtype2, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype1, elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3)
 
-  var vector = Array(exp1, x.t)
-  var dot = DoubleEvaluator.eval(DotProduct(vector, vector))
+  println(exp.length)
+
+  var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
   val t0 = System.nanoTime()
-  //DoubleEvaluator.eval(DotProduct(vector, vector))
-  //DifferentiateExpr.differentiate(dot, vector)
-  (AutomaticDifferentiate.autodifferentiate(dot, vector)) // call-by-name
+  val result = AutomaticDifferentiate.autodifferentiate(vector, x) // call-by-name
   val t1 = System.nanoTime()
 
   println("Elapsed time: " + (t1 - t0)/(1e+9) + "s")
 
-   println(exp1.length)
+   //println(exp.length)
   //println(Evaluator.printString(DoubleEvaluator.eval(x * Array(exp, x.t))))
  // println(Evaluator.printString(result))
 //  //println(result.t)

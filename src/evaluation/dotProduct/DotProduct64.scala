@@ -9,16 +9,18 @@ object DotProduct10 extends App{
   //10
 
   //auto differentiate:   0.086756829
-  //0.111483978
-  //0.107197037s
-  //0.099340438
-  //0.089179151
-  //0.087159732
-  //0.086353926
-  //0.083768417
-  //0.080715074
-  //0.080343171
-  //0.080136649
+
+  //0.678491862
+  //0.602844738
+  //0.592945159
+  //0.579378962
+  //0.569467316
+  //0.53360553
+  //0.527529556
+  //0.495937693
+  //0.480661726
+  //0.475724162
+
 
   //diff: 0.1235814015
   //0.134596224
@@ -65,16 +67,9 @@ object DotProduct10 extends App{
 
  // var exp2 = Array(List( x_2,x_0, x_1, x_2,x_0, x_0, x_1, x_2,x_0, x_1, x_2,x_0, x_1, x_2,x_0, x_0, x_1, x_2,x_0, x_1, x_2,x_0, x_1, x_2,x_0), x_0.t)
 
-  var exp1 = Array(List(x_1, x_1, x_2, x_1, x_1, x_2,x_0, x_0, x_1, x_2,x_0, x_1, x_2,x_0, x_1, x_2,x_0, x_0, x_1, x_2, x_1, x_1, x_2, x_1, x_1, x_2,x_0, x_0, x_1, x_2,x_0, x_1, x_2,x_0, x_1, x_2,x_0, x_0, x_1, x_2,x_0, x_1, x_2,x_0, x_1, x_2,x_0), x_0.t)
+  var exp1 = List(x_1, x_1, x_2, x_1, x_1, x_2,x_0, x_0, x_1, x_2,x_0, x_1, x_2,x_0, x_1, x_2,x_0, x_0, x_1, x_2, x_1, x_1, x_2, x_1, x_1, x_2,x_0, x_0, x_1, x_2,x_0, x_1, x_2,x_0, x_1, x_2,x_0, x_0, x_1, x_2,x_0, x_1, x_2,x_0, x_1, x_2,x_0,x_2,x_0, x_1, x_2,x_0, x_0, x_1, x_2,x_0, x_1,x_2,x_0, x_1, x_2,x_0, x_0, x_1)
  // println(exp1.a.length)
-  //var dot = DoubleEvaluator.eval(DotProduct(exp1, exp1 ))
-  //println(Evaluator.printString(dot))
-  //var vector = DoubleEvaluator.eval(x * Array(exp2, x.t))
-  val t0 = System.nanoTime()
-  DoubleEvaluator.eval(DotProduct(exp1, exp1 ))
-  //val result = AutomaticDifferentiate.autodifferentiate(dot, exp1)
-  //DifferentiateExpr.differentiate(dot, exp1)
-  //val result = Evaluator.eval(AutomaticDifferentiate.autodifferentiate(vector, x)) // call-by-name
-  val t1 = System.nanoTime()
-  println("Elapsed time in seconds: " + (t1 - t0)/(1e+9))
+
+  println("ARRAY LENGTH "+ exp1.length + "*******************************************")
+  ExprDotProdVector.eval(exp1, true, true)
 }
