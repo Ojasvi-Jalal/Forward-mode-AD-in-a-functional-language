@@ -4,24 +4,24 @@ import automaticDifferentiation.AutomaticDifferentiate
 import eval.DoubleEvaluator
 import intermediateRep.{Array, Param}
 
-object VectorScalarMulti306 extends App{
+object VectorScalarMulti187 extends App{
   var x = Param("x")
-  //306
 
-  //0.112608515s
-  //0.111802592s
-  //0.110192868s
-  //0.104205114s
-  //0.103376621s
-  //0.103041182s
-  //0.103010801s
-  //0.098429568s
-  //0.09521682s
-  //0.092766256s
+  //187
 
+  //diff
+  //0.108484788s
+  //0.102825704s
+  //0.102425353s
+  //0.101109577s
+  //0.100991847s
+  //0.097529219s
+  //0.092329516s
+  //0.091481434s
+  //0.090725728s
+  //0.089917814s
 
-
-
+  //evalute
   var x_0 = Param("x_0")
   var x_1 = Param("x_1")
   var x_2 = Param("x_2")
@@ -31,16 +31,7 @@ object VectorScalarMulti306 extends App{
   var elemtype3 = DoubleEvaluator.eval(x_0 * (x_1 / x_2))
 
   var exp = List(
-    elemtype1, elemtype3, elemtype2, elemtype2, elemtype1, elemtype1, elemtype1, elemtype3, elemtype1, elemtype2, elemtype2, elemtype1, elemtype2,
-    elemtype3, elemtype3, elemtype1, elemtype3, elemtype2, elemtype1, elemtype2, elemtype3, elemtype1, elemtype2, elemtype1, elemtype2, elemtype1,
-    elemtype3, elemtype3, elemtype2, elemtype1, elemtype2, elemtype1, elemtype3, elemtype1, elemtype3, elemtype2, elemtype3, elemtype2, elemtype3,
-    elemtype1, elemtype1, elemtype1, elemtype3, elemtype1, elemtype1, elemtype2, elemtype1, elemtype1, elemtype2, elemtype2, elemtype3, elemtype2,
-    elemtype1, elemtype1, elemtype2, elemtype2, elemtype3, elemtype2, elemtype3, elemtype2, elemtype2, elemtype2, elemtype2, elemtype1, elemtype3,
-    elemtype2, elemtype1, elemtype3, elemtype2, elemtype2, elemtype3, elemtype3, elemtype3, elemtype3, elemtype3, elemtype1, elemtype1, elemtype1,
-    elemtype3, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype3, elemtype1, elemtype1, elemtype3, elemtype1, elemtype3, elemtype3,
-    elemtype2, elemtype1, elemtype2, elemtype3, elemtype1, elemtype3, elemtype3, elemtype2, elemtype2, elemtype1, elemtype2, elemtype1, elemtype3,
-    elemtype2, elemtype3, elemtype1, elemtype3, elemtype3, elemtype3, elemtype2, elemtype2, elemtype2, elemtype2, elemtype2, elemtype2, elemtype1,
-    elemtype2, elemtype2, elemtype1, elemtype1, elemtype2, elemtype1, elemtype2, elemtype1, elemtype3, elemtype1, elemtype2, elemtype1, elemtype2,
+    elemtype1, elemtype1, elemtype2, elemtype1, elemtype2, elemtype1, elemtype3, elemtype1, elemtype2, elemtype1, elemtype2,
     elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype3, elemtype1, elemtype2, elemtype3,
     elemtype2, elemtype3, elemtype1, elemtype3, elemtype3, elemtype3, elemtype2, elemtype2, elemtype2, elemtype2, elemtype2, elemtype2, elemtype1,
     elemtype2, elemtype2, elemtype1, elemtype1, elemtype2, elemtype1, elemtype2, elemtype1, elemtype3, elemtype1, elemtype2, elemtype1, elemtype2,
@@ -55,7 +46,7 @@ object VectorScalarMulti306 extends App{
 
   println("Elapsed time: " + (t1 - t0)/(1e+9) + "s")
 
-  // println(exp.length)
+ // println(exp.length)
   //println(Evaluator.printString(DoubleEvaluator.eval(x * Array(exp, x.t))))
  // println(Evaluator.printString(result))
 //  //println(result.t)

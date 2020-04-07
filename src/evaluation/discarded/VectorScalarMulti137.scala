@@ -1,26 +1,53 @@
 package evaluation.discarded
 
-import automaticDifferentiation.AutomaticDifferentiate
 import eval.DoubleEvaluator
 import intermediateRep.{Array, Param}
 
-object VectorScalarMulti306 extends App{
+object VectorScalarMulti137 extends App{
   var x = Param("x")
-  //306
 
-  //0.112608515s
-  //0.111802592s
-  //0.110192868s
-  //0.104205114s
-  //0.103376621s
-  //0.103041182s
-  //0.103010801s
-  //0.098429568s
-  //0.09521682s
-  //0.092766256s
+  //137
+
+  //auto-diff time
+
+  //0.124073423s
+  //0.094379662s
+  //0.0919396s
+  //0.089093235s
+  //0.089082948s
+  //0.084667637s
+  //0.083237609s
+  //0.079306976s
+  //0.078061453s
+  //0.074701713s
+
+
+  //diff time:  0.4876372005
+
+  //0.223726073
+  //0.276312229s
+  //0.293566641
+  //0.354878217
+  //0.472923919
+  //0.502350482s
+  //0.504059801s
+  //0.535410245
+  //0.624324576s
+  //0.74084693s
 
 
 
+  //evaluation time: 0.022793247
+  //0.011332436s
+  //0.014804217s
+  //0.015680559s
+  //0.018140967s
+  //0.018224778s
+  //0.027361716s
+  //0.031799323s
+  //0.044178792s
+  //0.054264758s
+  //0.078164484s
 
   var x_0 = Param("x_0")
   var x_1 = Param("x_1")
@@ -31,31 +58,19 @@ object VectorScalarMulti306 extends App{
   var elemtype3 = DoubleEvaluator.eval(x_0 * (x_1 / x_2))
 
   var exp = List(
-    elemtype1, elemtype3, elemtype2, elemtype2, elemtype1, elemtype1, elemtype1, elemtype3, elemtype1, elemtype2, elemtype2, elemtype1, elemtype2,
-    elemtype3, elemtype3, elemtype1, elemtype3, elemtype2, elemtype1, elemtype2, elemtype3, elemtype1, elemtype2, elemtype1, elemtype2, elemtype1,
-    elemtype3, elemtype3, elemtype2, elemtype1, elemtype2, elemtype1, elemtype3, elemtype1, elemtype3, elemtype2, elemtype3, elemtype2, elemtype3,
-    elemtype1, elemtype1, elemtype1, elemtype3, elemtype1, elemtype1, elemtype2, elemtype1, elemtype1, elemtype2, elemtype2, elemtype3, elemtype2,
-    elemtype1, elemtype1, elemtype2, elemtype2, elemtype3, elemtype2, elemtype3, elemtype2, elemtype2, elemtype2, elemtype2, elemtype1, elemtype3,
-    elemtype2, elemtype1, elemtype3, elemtype2, elemtype2, elemtype3, elemtype3, elemtype3, elemtype3, elemtype3, elemtype1, elemtype1, elemtype1,
-    elemtype3, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype3, elemtype1, elemtype1, elemtype3, elemtype1, elemtype3, elemtype3,
-    elemtype2, elemtype1, elemtype2, elemtype3, elemtype1, elemtype3, elemtype3, elemtype2, elemtype2, elemtype1, elemtype2, elemtype1, elemtype3,
-    elemtype2, elemtype3, elemtype1, elemtype3, elemtype3, elemtype3, elemtype2, elemtype2, elemtype2, elemtype2, elemtype2, elemtype2, elemtype1,
-    elemtype2, elemtype2, elemtype1, elemtype1, elemtype2, elemtype1, elemtype2, elemtype1, elemtype3, elemtype1, elemtype2, elemtype1, elemtype2,
-    elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype3, elemtype1, elemtype2, elemtype3,
-    elemtype2, elemtype3, elemtype1, elemtype3, elemtype3, elemtype3, elemtype2, elemtype2, elemtype2, elemtype2, elemtype2, elemtype2, elemtype1,
-    elemtype2, elemtype2, elemtype1, elemtype1, elemtype2, elemtype1, elemtype2, elemtype1, elemtype3, elemtype1, elemtype2, elemtype1, elemtype2,
     elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype3, elemtype1, elemtype2, elemtype3,
     elemtype3, elemtype1, elemtype2, elemtype1, elemtype2, elemtype3, elemtype2, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype1, elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3,
   elemtype3, elemtype1, elemtype2, elemtype1, elemtype2, elemtype3, elemtype2, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype1, elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3)
-  // println(exp.length)
-  var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
+   //println(exp.length)
+  //var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
   val t0 = System.nanoTime()
-  val result = AutomaticDifferentiate.autodifferentiate(vector, x) // call-by-name
+  DoubleEvaluator.eval(x * Array(exp, x.t))
+  //DoubleEvaluator.eval(AutomaticDifferentiate.autodifferentiate(vector, x)) // call-by-name
   val t1 = System.nanoTime()
 
   println("Elapsed time: " + (t1 - t0)/(1e+9) + "s")
 
-  // println(exp.length)
+   println(exp.length)
   //println(Evaluator.printString(DoubleEvaluator.eval(x * Array(exp, x.t))))
  // println(Evaluator.printString(result))
 //  //println(result.t)

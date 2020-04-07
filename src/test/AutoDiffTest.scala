@@ -41,6 +41,7 @@ object AutoDiffTest extends App{
 
   var y = Param("y")
 
+  AutomaticDifferentiate.autodifferentiate(x*y, x)
   var z = Param("z")
   var y_vector = DoubleEvaluator.eval(Map(x, (x * x), x_vector))
 

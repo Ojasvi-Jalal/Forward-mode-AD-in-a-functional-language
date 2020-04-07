@@ -266,11 +266,12 @@ object DifferentiateExpr {
 
   def differentiateProduct(lhs: Expr, rhs: Expr, param: Expr, hm : mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()) : Expr = {
     (lhs, rhs) match {
-      case (DoubleLiteral(d), exp) => Evaluator.eval(lhs * differentiate(exp, param, hm))
+      case (DoubleLiteral(d), exp) => (lhs * differentiate(exp, param, hm)) //Evaluator.eval(lhs * differentiate(exp, param, hm))
 
-      case (exp, DoubleLiteral(d)) => Evaluator.eval(differentiate(lhs, param, hm) * rhs)
+      case (exp, DoubleLiteral(d)) => (differentiate(lhs, param, hm) * rhs) //Evaluator.eval(differentiate(lhs, param, hm) * rhs)
 
-      case (e1, e2) => DoubleEvaluator.eval(((differentiate(e1, param, hm) * DoubleEvaluator.eval(e2, hm)) + (DoubleEvaluator.eval(differentiate(e2, param, hm)) * DoubleEvaluator.eval(e1, hm))))
+      case (e1, e2) => (((differentiate(e1, param, hm) * DoubleEvaluator.eval(e2, hm)) + (DoubleEvaluator.eval(differentiate(e2, param, hm)) * DoubleEvaluator.eval(e1, hm))))
+      //DoubleEvaluator.eval(((differentiate(e1, param, hm) * DoubleEvaluator.eval(e2, hm)) + (DoubleEvaluator.eval(differentiate(e2, param, hm)) * DoubleEvaluator.eval(e1, hm))))
     }
   }
 
@@ -282,8 +283,8 @@ object DifferentiateExpr {
       case (e1, DoubleLiteral(0)) => DoubleLiteral(0)
 
       case (e1, DoubleLiteral(d)) =>
-        DoubleEvaluator.eval((DoubleLiteral(d) * DoubleEvaluator.eval((e1 ^ DoubleEvaluator.eval((DoubleLiteral(d) + DoubleLiteral(-1)), hm)) * DoubleEvaluator.eval(differentiate(e1, withRespectTo, hm)), hm)), hm)
-
+//        DoubleEvaluator.eval((DoubleLiteral(d) * DoubleEvaluator.eval((e1 ^ DoubleEvaluator.eval((DoubleLiteral(d) + DoubleLiteral(-1)), hm)) * DoubleEvaluator.eval(differentiate(e1, withRespectTo, hm)), hm)), hm)
+    DoubleEvaluator.eval((DoubleLiteral(d) * DoubleEvaluator.eval((e1 ^ DoubleEvaluator.eval((DoubleLiteral(d) + DoubleLiteral(-1)), hm)) * DoubleEvaluator.eval(differentiate(e1, withRespectTo, hm)), hm)), hm)
       //case (e1, e2) => Evaluator.eval(e2 * Evaluator.eval(e1 ^ Evaluator.eval(e2 + DoubleLiteral(-1))))
     }
   }
@@ -301,7 +302,8 @@ object DifferentiateExpr {
       case (e1, e2) => var new_numerator = ((differentiate(e1, param) * e2)) + (DoubleLiteral(-1) * differentiate(e2, param) * e1)
         var new_denominator = (e2 ^ DoubleLiteral(2))
         var result = new_numerator / new_denominator
-        Evaluator.eval(result)
+//        Evaluator.eval(result)
+        (result)
     }
   }
 }

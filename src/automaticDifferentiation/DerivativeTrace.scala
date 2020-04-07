@@ -29,23 +29,19 @@ import scala.language.implicitConversions
 object DerivativeTrace {
   val paramToArg = mutable.HashMap[Expr, Expr]()
 
-  def derivativeTrace(e: Expr, withRespectTo: Expr, queue: Queue[(Expr, Expr)] = Queue[(Expr, Expr)](), hm: mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
+  def derivativeTrace(e: Expr, withRespectTo: Expr, queue: Queue[(Expr, Expr)] = Queue[(Expr, Expr)]()): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
       case FunctionCall(Lambda(param, body), arg) =>
         paramToArg.put(param, arg.asInstanceOf[Expr])
-        derivativeTrace(body, withRespectTo, queue, paramToArg)
+        derivativeTrace(body, withRespectTo, queue)
 
       case _ =>
 
         var z_prime: Expr = queue.apply(0)._1
-        queue.foreach(x => z_prime = Let(x._1, DifferentiateExpr.differentiate(paramToArg(x._1), withRespectTo, hm), z_prime))
+        queue.foreach(x => z_prime = Let(x._1, DifferentiateExpr.differentiate(paramToArg(x._1), withRespectTo, paramToArg), z_prime))
         paramToArg.clear()
-        hm.clear()
         (z_prime)
-
-
     }
-
   }
 }
 

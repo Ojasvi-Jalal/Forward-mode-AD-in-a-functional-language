@@ -1,68 +1,72 @@
 package evaluation
 
-import automaticDifferentiation.AutomaticDifferentiate
-import intermediateRep.{Array, Param}
 import eval.DoubleEvaluator
+import intermediateRep.{Array, Param}
 
 
-object VectorScalarMulti256 extends App{
+object VectorScalarMulti304 extends App{
 
-//  ARRAY LENGTH 256*******************************************
-//    Eval:1324093ns
-//    Eval:1360889ns
-//    Eval:2100735ns
-//    Eval:2501081ns
-//    Eval:3946715ns
-//    Eval:4311475ns
-//    Eval:6094865ns
-//    Eval:6697907ns
-//    Eval:8096617ns
-//    Eval:16477856ns
+//  ARRAY LENGTH 304*******************************************
+  //  2781391ns - 0.002781391s
+//    Eval:1690674ns
+//    Eval:1754353ns
+//    Eval:2017155ns
+//    Eval:2309796ns
+//    Eval:2607456ns
+//    Eval:2955326ns
+//    Eval:2989938ns
+//    Eval:8658297ns
+//    Eval:17494039ns
+//    Eval:18368001ns
 //    ***********************************************
-//  AD time:3499096ns
-//    AD time:8020452ns
-//    AD time:12810887ns
-//    AD time:14856870ns
-//    AD time:16601447ns
-//    AD time:25296527ns
-//    AD time:26599271ns
-//    AD time:29680734ns
-//    AD time:40557914ns
-//    AD time:106924194ns
+  //  15209822ns - 0.015209822
+//    AD time:5004724ns
+//    AD time:8557809ns
+//    AD time:8667605ns
+//    AD time:9675105ns
+//    AD time:12330387ns
+//    AD time:18089257ns
+//    AD time:22203381ns
+//    AD time:33232531ns
+//    AD time:38135819ns
+//    AD time:126626126ns
 //    ***********************************************
-//  AD eval time:3466526ns
-//    AD eval time:3550195ns
-//    AD eval time:3643255ns
-//    AD eval time:3675001ns
-//    AD eval time:4758215ns
-//    AD eval time:5097706ns
-//    AD eval time:6942689ns
-//    AD eval time:8429993ns
-//    AD eval time:14270745ns
-//    AD eval time:27765407ns
+  //  8077684.5ns - 0.0080776845s
+//    AD eval time:4560534ns
+//    AD eval time:4768122ns
+//    AD eval time:5075387ns
+//    AD eval time:6943386ns
+//    AD eval time:7188610ns
+//    AD eval time:8966759ns
+//    AD eval time:9199467ns
+//    AD eval time:10940407ns
+//    AD eval time:18821590ns
+//    AD eval time:19028733ns
 //    ***********************************************
 //  ***********************************************
-//  SD time:1320284ns
-//    SD time:1353165ns
-//    SD time:1398307ns
-//    SD time:1399741ns
-//    SD time:1414661ns
-//    SD time:1515541ns
-//    SD time:1795284ns
-//    SD time:2150455ns
-//    SD time:3689441ns
-//    SD time:9214605ns
+//    1932206.5s - 0.001932206s
+//    SD time:1818285ns
+//    SD time:1836569ns
+//    SD time:1839713ns
+//    SD time:1872804ns
+//    SD time:1877629ns
+//    SD time:1986784ns
+//    SD time:2547168ns
+//    SD time:2991736ns
+//    SD time:5598975ns
+//    SD time:8686916ns
 //    ***********************************************
-//  SD eval time:830155ns
-//    SD eval time:831006ns
-//    SD eval time:841415ns
-//    SD eval time:841995ns
-//    SD eval time:886747ns
-//    SD eval time:899916ns
-//    SD eval time:930164ns
-//    SD eval time:992711ns
-//    SD eval time:7230889ns
-//    SD eval time:19599480ns
+  // 1998446.5 -  0.0019984465s
+//    SD eval time:1401261ns
+//    SD eval time:1402059ns
+//    SD eval time:1404812ns
+//    SD eval time:1787205ns
+//    SD eval time:1803764ns
+//    SD eval time:2193129ns
+//    SD eval time:2520790ns
+//    SD eval time:3491967ns
+//    SD eval time:5412109ns
+//    SD eval time:5816452ns
 
 
 
@@ -85,6 +89,10 @@ object VectorScalarMulti256 extends App{
     elemtype1, elemtype1, elemtype2, elemtype2, elemtype3, elemtype2, elemtype3, elemtype2, elemtype2, elemtype2, elemtype2, elemtype1, elemtype3,
     elemtype2, elemtype1, elemtype3, elemtype2, elemtype2, elemtype3, elemtype3, elemtype3, elemtype3, elemtype3, elemtype1, elemtype1, elemtype1,
     elemtype3, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype3, elemtype1, elemtype1, elemtype3, elemtype1, elemtype3, elemtype3,
+    elemtype2, elemtype1, elemtype2, elemtype3, elemtype1, elemtype3, elemtype3, elemtype2, elemtype2, elemtype1, elemtype2,
+    elemtype2, elemtype1, elemtype2, elemtype3, elemtype1, elemtype3, elemtype3, elemtype2, elemtype2, elemtype1, elemtype2, elemtype1, elemtype3,
+    elemtype2, elemtype3, elemtype1, elemtype3, elemtype3, elemtype3, elemtype2, elemtype2, elemtype2, elemtype2, elemtype2, elemtype2, elemtype1,
+    elemtype2, elemtype1, elemtype2, elemtype3, elemtype1, elemtype3, elemtype3, elemtype2, elemtype2, elemtype1, elemtype2,
     elemtype2, elemtype1, elemtype2, elemtype3, elemtype1, elemtype3, elemtype3, elemtype2, elemtype2, elemtype1, elemtype2, elemtype1, elemtype3,
     elemtype2, elemtype3, elemtype1, elemtype3, elemtype3, elemtype3, elemtype2, elemtype2, elemtype2, elemtype2, elemtype2, elemtype2, elemtype1,
     elemtype2, elemtype2, elemtype1, elemtype1, elemtype2, elemtype1, elemtype2, elemtype1, elemtype3, elemtype1, elemtype2, elemtype1, elemtype2,

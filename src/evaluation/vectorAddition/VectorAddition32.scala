@@ -1,66 +1,77 @@
 package evaluation.vectorAddition
 
-import intermediateRep.{Array, Param}
+import intermediateRep.Param
 
-object VectorAddition08 extends App{
+object VectorAddition32 extends App{
 
-//  ARRAY LENGTH 8*******************************************
-//    Eval:664359ns
-//    Eval:672931ns
-//    Eval:798386ns
-//    Eval:832599ns
-//    Eval:891206ns
-//    Eval:1004540ns
-//    Eval:1060223ns
-//    Eval:1223235ns
-//    Eval:2343513ns
-//    Eval:3794284ns
+//  ARRAY LENGTH 32*******************************************
+//    Eval:2299410ns - 0.00229941s / 0.002071602
 //    ***********************************************
-//  AD time:1059965ns
-//    AD time:1397460ns
-//    AD time:3755262ns
-//    AD time:4823454ns
-//    AD time:5111846ns
-//    AD time:5779771ns
-//    AD time:8740945ns
-//    AD time:11005639ns
-//    AD time:18095899ns
-//    AD time:115262995ns
+//  AD time:6041637ns - 0.006041637s
 //    ***********************************************
-//  AD eval time:270987ns
-//    AD eval time:288366ns
-//    AD eval time:289200ns
-//    AD eval time:295800ns
-//    AD eval time:372096ns
-//    AD eval time:459220ns
-//    AD eval time:509116ns
-//    AD eval time:589769ns
-//    AD eval time:2639315ns
-//    AD eval time:11850776ns
+//  AD eval time:1871878ns - 0.001871878s
 //    ***********************************************
 //  ***********************************************
-//  SD time:425171ns
-//    SD time:426707ns
-//    SD time:430056ns
-//    SD time:434457ns
-//    SD time:443675ns
-//    SD time:473614ns
-//    SD time:491467ns
-//    SD time:731988ns
-//    SD time:1462456ns
-//    SD time:2750726ns
+//  SD time:1902682ns - 0.001902682s
 //    ***********************************************
-//  SD eval time:206914ns
-//    SD eval time:228354ns
-//    SD eval time:267793ns
-//    SD eval time:333869ns
-//    SD eval time:389327ns
-//    SD eval time:515568ns
-//    SD eval time:524939ns
-//    SD eval time:588954ns
-//    SD eval time:11238359ns
-//    SD eval time:13127491ns
+//  SD eval time:1701099ns - 0.001701099s
 
+//  ARRAY LENGTH 32*******************************************
+//    Eval:2096066ns
+//    Eval:2112944ns
+//    Eval:2159485ns
+//    Eval:2191744ns
+//    Eval:2214128ns
+//    Eval:2279875ns
+//    Eval:2498154ns
+//    Eval:2653207ns
+//    Eval:3338042ns
+//    Eval:3441714ns
+//    ***********************************************
+//  AD time:2911216ns
+//    AD time:3690155ns
+//    AD time:3873911ns
+//    AD time:4134040ns
+//    AD time:5715528ns
+//    AD time:9073862ns
+//    AD time:10716286ns
+//    AD time:15880847ns
+//    AD time:21875827ns
+//    AD time:98552316ns
+//    ***********************************************
+//  AD eval time:1681056ns
+//    AD eval time:1691566ns
+//    AD eval time:1694237ns
+//    AD eval time:1698227ns
+//    AD eval time:1737862ns
+//    AD eval time:1772029ns
+//    AD eval time:1980931ns
+//    AD eval time:1996005ns
+//    AD eval time:5994273ns
+//    AD eval time:76322369ns
+//    ***********************************************
+//  ***********************************************
+//  SD time:1704636ns
+//    SD time:1803229ns
+//    SD time:2053192ns
+//    SD time:2141597ns
+//    SD time:2199548ns
+//    SD time:2218475ns
+//    SD time:2838757ns
+//    SD time:4775351ns
+//    SD time:5708367ns
+//    SD time:7050397ns
+//    ***********************************************
+//  SD eval time:745800ns
+//    SD eval time:968686ns
+//    SD eval time:1052776ns
+//    SD eval time:1300445ns
+//    SD eval time:1342439ns
+//    SD eval time:1688014ns
+//    SD eval time:1702237ns
+//    SD eval time:1720166ns
+//    SD eval time:1746582ns
+//    SD eval time:5762210ns
 
   var x = Param("x")
 
@@ -74,8 +85,11 @@ object VectorAddition08 extends App{
   var elemtype3 = x_2
 
   var exp1 = List(
+    elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype3,
+    elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype3,
+    elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype3,
     elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype3)
-  //println(exp.length)
+
   println("ARRAY LENGTH "+ exp1.length + "*******************************************")
   ExprVectorAddition.eval(exp1, true, true)
 

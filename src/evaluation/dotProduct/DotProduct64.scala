@@ -5,49 +5,71 @@ import differentiate.DifferentiateExpr
 import eval.{DoubleEvaluator, Evaluator}
 import intermediateRep.{Array, DotProduct, Param}
 
-object DotProduct10 extends App{
-  //10
+object DotProduct64 extends App{
 
-  //auto differentiate:   0.086756829
+//  ARRAY LENGTH 64*******************************************
+  //   9211275ns - 0.009211275s - 5222650 - 0.00522265
+//    Eval:2233316ns
+//    Eval:6401474ns
+//    Eval:6908284ns
+//    Eval:7558672ns
+//    Eval:7655163ns
+//    Eval:10767387ns
+//    Eval:13035924ns
+//    Eval:13922229ns
+//    Eval:14631124ns
+//    Eval:28913868ns
+//    ***********************************************
+  //  257329268ns - 0.257329268s
+//    AD time:91282370ns
+//    AD time:145226457ns
+//    AD time:196911868ns
+//    AD time:203582805ns
+//    AD time:215011798ns
+//    AD time:299646738ns
+//    AD time:393990457ns
+//    AD time:782193158ns
+//    AD time:2241012446ns
+//    AD time:2490904940ns
+//    ***********************************************
+  //  11898603 : 0.011898603
+//    AD eval time:6121687ns
+//    AD eval time:8209078ns
+//    AD eval time:9591608ns
+//    AD eval time:10414235ns
+//    AD eval time:11435695ns
+//    AD eval time:12361511ns
+//    AD eval time:13516422ns
+//    AD eval time:26906461ns
+//    AD eval time:86385219ns
+//    AD eval time:218612705ns
+//    ***********************************************
+//  ***********************************************
 
-  //0.678491862
-  //0.602844738
-  //0.592945159
-  //0.579378962
-  //0.569467316
-  //0.53360553
-  //0.527529556
-  //0.495937693
-  //0.480661726
-  //0.475724162
+  //  2557990ns : 0.00255799s
+//    SD time:1831618ns
+//    SD time:2370869ns
+//    SD time:2445534ns
+//    SD time:2474269ns
+//    SD time:2486338ns
+//    SD time:2629642ns
+//    SD time:2698071ns
+//    SD time:3098283ns
+//    SD time:6070503ns
+//    SD time:20882418ns
+//    ***********************************************
 
-
-  //diff: 0.1235814015
-  //0.134596224
-  //0.133192006
-  //0.130774262
-  //0.128152499
-  //0.125846537
-  //0.121316266
-  //0.120096506
-  //0.119921095
-  //0.113259802
-  //0.10301378
-
-
-
-  //evaluate: 0.0656077145
-
-  //0.17671654
-  //0.091994626
-  //0.081242195
-  //0.082847549
-  //0.075312866
-  //0.055902563
-  //0.048626712
-  //0.045378215
-  //0.03431729
-  //0.031739643
+  //  7355395.5 ns - 0.0073553955s
+//    SD eval time:5822727ns
+//    SD eval time:6593548ns
+//    SD eval time:7085830ns
+//    SD eval time:7127323ns
+//    SD eval time:7132750ns
+//    SD eval time:7578041ns
+//    SD eval time:7591923ns
+//    SD eval time:7773266ns
+//    SD eval time:16396838ns
+//    SD eval time:17510896ns
 
 
 

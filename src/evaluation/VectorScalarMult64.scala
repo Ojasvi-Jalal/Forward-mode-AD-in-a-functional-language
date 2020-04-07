@@ -1,68 +1,79 @@
 package evaluation
 
-import automaticDifferentiation.AutomaticDifferentiate
-import differentiate.DifferentiateExpr
 import eval.DoubleEvaluator
 import intermediateRep.{Array, Param}
-//ARRAY LENGTH 16*******************************************
-//Eval:1066899ns
-//Eval:1217393ns
-//Eval:1247285ns
-//Eval:2119717ns
-//Eval:3318601ns
-//Eval:4242791ns
-//Eval:5664585ns
-//Eval:5936870ns
-//Eval:6553509ns
-//Eval:8274188ns
+//ARRAY LENGTH 64*******************************************
+//0.004710613
+//4722686.5ns - 0.0047226865s
+
+//Eval:3927501ns
+//Eval:4280925ns
+//Eval:4451375ns
+//Eval:4518512ns
+//Eval:4601452ns
+//Eval:4843921ns
+//Eval:5323255ns
+//Eval:6148276ns
+//Eval:6463532ns
+//Eval:12111640ns
 //***********************************************
-//AD time:1773405ns
-//AD time:1968819ns
-//AD time:2540523ns
-//AD time:2724921ns
-//AD time:3588648ns
-//AD time:4021983ns
-//AD time:4705414ns
-//AD time:5314263ns
-//AD time:15449474ns
-//AD time:103019227ns
+
+//6268650ns - 0.00626865s
+
+//AD time:2398679ns
+//AD time:2451294ns
+//AD time:2453683ns
+//AD time:4352148ns
+//AD time:4382126ns
+//AD time:8155174ns
+//AD time:8705208ns
+//AD time:9218303ns
+//AD time:17622145ns
+//AD time:98435992ns
 //***********************************************
-//AD eval time:296314ns
-//AD eval time:327637ns
-//AD eval time:465103ns
-//AD eval time:475402ns
-//AD eval time:498637ns
-//AD eval time:534913ns
-//AD eval time:554562ns
-//AD eval time:2476042ns
-//AD eval time:7589373ns
-//AD eval time:20063806ns
+
+//1258238ns - 0.001258238s
+
+//AD eval time:905635ns
+//AD eval time:936346ns
+//AD eval time:958514ns
+//AD eval time:1024691ns
+//AD eval time:1237248ns
+//AD eval time:1279228ns
+//AD eval time:3263694ns
+//AD eval time:10248190ns
+//AD eval time:22909833ns
+//AD eval time:50647982ns
 //***********************************************
 //***********************************************
-//SD time:319879ns
-//SD time:335726ns
-//SD time:343037ns
-//SD time:343772ns
-//SD time:348685ns
-//SD time:349982ns
-//SD time:367382ns
-//SD time:378898ns
-//SD time:1748365ns
-//SD time:9056879ns
+//712346ns - 0.000712346s
+
+//SD time:533096ns
+//SD time:538318ns
+//SD time:541507ns
+//SD time:696956ns
+//SD time:706073ns
+//SD time:718619ns
+//SD time:917233ns
+//SD time:1117692ns
+//SD time:1305356ns
+//SD time:5884166ns
 //***********************************************
-//SD eval time:317180ns
-//SD eval time:321637ns
-//SD eval time:325521ns
-//SD eval time:331185ns
-//SD eval time:346999ns
-//SD eval time:359478ns
-//SD eval time:361723ns
-//SD eval time:417156ns
-//SD eval time:2083336ns
-//SD eval time:9079987ns
+  // 0.000989588
+
+//SD eval time:335987ns
+//SD eval time:356743ns
+//SD eval time:605226ns
+//SD eval time:932202ns
+//SD eval time:978858ns
+//SD eval time:1000318ns
+//SD eval time:1044479ns
+//SD eval time:1206765ns
+//SD eval time:1831363ns
+//SD eval time:26239419ns
 
 
-object VectorScalarMult16 extends App {
+object VectorScalarMult64 extends App {
     var x = Param("x")
 
     var x_0 = Param("x_0")
@@ -74,7 +85,15 @@ object VectorScalarMult16 extends App {
 
 
     var exp12 = List(
-        elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype3, elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype3)
+        elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2,
+        elemtype3, elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1,
+        elemtype2, elemtype3,elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2,
+        elemtype3, elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1,
+        elemtype2, elemtype3,elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2,
+        elemtype3, elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1,
+        elemtype2, elemtype3,elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2,
+        elemtype3, elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1,
+        elemtype2, elemtype3)
     println("ARRAY LENGTH "+ exp12.length + "*******************************************")
     var vector = DoubleEvaluator.eval(x * Array(exp12, x.t))
     ExprVectorScalar.eval(exp12, true, true)

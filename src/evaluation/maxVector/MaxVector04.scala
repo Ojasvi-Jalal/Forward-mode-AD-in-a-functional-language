@@ -6,64 +6,70 @@ import eval.DoubleEvaluator
 import intermediateRep.{Array, Fold, GreaterThan, Param}
 
 
-object MaxVector05 extends App{
+object MaxVector04 extends App{
 
-//  ARRAY LENGTH 5*******************************************
-//    Eval:88318ns
-//    Eval:90272ns
-//    Eval:93787ns
-//    Eval:94812ns
-//    Eval:97151ns
-//    Eval:100752ns
-//    Eval:101159ns
-//    Eval:110249ns
-//    Eval:158994ns
-//    Eval:165219ns
+
+//  ARRAY LENGTH 4*******************************************
+  //  115927ns - 0.000115927 - 0.000125914
+//    Eval:103359ns
+//    Eval:107834ns
+//    Eval:109810ns
+//    Eval:111095ns
+//    Eval:114492ns
+//    Eval:117362ns
+//    Eval:122016ns
+//    Eval:128359ns
+//    Eval:134066ns
+//    Eval:225885ns
 //    ***********************************************
-//  AD time:1944632ns
-//    AD time:1994242ns
-//    AD time:2185179ns
-//    AD time:2812002ns
-//    AD time:4692355ns
-//    AD time:4864066ns
-//    AD time:5024913ns
-//    AD time:5144119ns
-//    AD time:5147776ns
-//    AD time:42569301ns
+  //  3398924.5ns - 0.0033989245
+//    AD time:1500935ns
+//    AD time:2628238ns
+//    AD time:3010836ns
+//    AD time:3027774ns
+//    AD time:3357481ns
+//    AD time:3440368ns
+//    AD time:4966829ns
+//    AD time:6717653ns
+//    AD time:46410450ns
+//    AD time:81513204ns
 //    ***********************************************
-//  AD eval time:684748ns
-//    AD eval time:689398ns
-//    AD eval time:773542ns
-//    AD eval time:890356ns
-//    AD eval time:921944ns
-//    AD eval time:940122ns
-//    AD eval time:1247971ns
-//    AD eval time:1541201ns
-//    AD eval time:4264660ns
-//    AD eval time:8271153ns
+  //  341589ns  - 0.000341589s
+//    AD eval time:316741ns
+//    AD eval time:323432ns
+//    AD eval time:328209ns
+//    AD eval time:333536ns
+//    AD eval time:340086ns
+//    AD eval time:343092ns
+//    AD eval time:368480ns
+//    AD eval time:377122ns
+//    AD eval time:3308929ns
+//    AD eval time:21188325ns
 //    ***********************************************
 //  ***********************************************
-//  SD time:33178ns
-//    SD time:33634ns
-//    SD time:35365ns
-//    SD time:36466ns
-//    SD time:37260ns
-//    SD time:38732ns
-//    SD time:39127ns
-//    SD time:39193ns
-//    SD time:49058ns
-//    SD time:791876ns
+  //  27820.5ns -  2.78205e-5s
+//    SD time:24042ns
+//    SD time:24447ns
+//    SD time:24458ns
+//    SD time:24708ns
+//    SD time:25550ns
+//    SD time:30091ns
+//    SD time:30389ns
+//    SD time:40303ns
+//    SD time:96454ns
+//    SD time:732687ns
 //    ***********************************************
-//  SD eval time:702362ns
-//    SD eval time:722394ns
-//    SD eval time:724255ns
-//    SD eval time:727337ns
-//    SD eval time:742843ns
-//    SD eval time:744155ns
-//    SD eval time:745437ns
-//    SD eval time:1092399ns
-//    SD eval time:1108952ns
-//    SD eval time:1177626ns
+  //  301136ns - 0.000301136s
+//    SD eval time:286929ns
+//    SD eval time:288328ns
+//    SD eval time:294318ns
+//    SD eval time:300085ns
+//    SD eval time:300804ns
+//    SD eval time:301468ns
+//    SD eval time:305511ns
+//    SD eval time:314963ns
+//    SD eval time:334023ns
+//    SD eval time:1621114ns
 
 
 

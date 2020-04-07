@@ -6,65 +6,69 @@ import eval.DoubleEvaluator
 import intermediateRep.{Array, Fold, GreaterThan, Param}
 
 
-object MaxVector10 extends App{
-
+object MaxVector08 extends App{
 //
-//  ARRAY LENGTH 10*******************************************
-//    Eval:129563ns
-//    Eval:238230ns
-//    Eval:252323ns
-//    Eval:272085ns
-//    Eval:279947ns
-//    Eval:299283ns
-//    Eval:384208ns
-//    Eval:488221ns
-//    Eval:544265ns
-//    Eval:573079ns
+//  ARRAY LENGTH 8*******************************************
+  //  231905ns - 0.000231905s
+//    Eval:147390ns
+//    Eval:173583ns
+//    Eval:196579ns
+//    Eval:219832ns
+//    Eval:223148ns
+//    Eval:240662ns
+//    Eval:241053ns
+//    Eval:245958ns
+//    Eval:268843ns
+//    Eval:357036ns
 //    ***********************************************
-//  AD time:1911851ns
-//    AD time:2180476ns
-//    AD time:2601097ns
-//    AD time:2723992ns
-//    AD time:3096292ns
-//    AD time:10464066ns
-//    AD time:17249428ns
-//    AD time:22904805ns
-//    AD time:72170600ns
-//    AD time:112046423ns
+  //  4814467ns - 0.004814467s
+//    AD time:2212348ns
+//    AD time:2370426ns
+//    AD time:2411874ns
+//    AD time:2859276ns
+//    AD time:3326382ns
+//    AD time:6302552ns
+//    AD time:6371372ns
+//    AD time:37533341ns
+//    AD time:79105179ns
+//    AD time:147197197ns
 //    ***********************************************
-//  AD eval time:2074011ns
-//    AD eval time:2188813ns
-//    AD eval time:2415611ns
-//    AD eval time:6331661ns
-//    AD eval time:7403403ns
-//    AD eval time:7721881ns
-//    AD eval time:8086109ns
-//    AD eval time:8333622ns
-//    AD eval time:56652105ns
-//    AD eval time:174098738ns
+  //  15686530ns  - 0.01568653s
+//    AD eval time:1834724ns
+//    AD eval time:7862323ns
+//    AD eval time:8126548ns
+//    AD eval time:8272017ns
+//    AD eval time:9315445ns
+//    AD eval time:22057615ns
+//    AD eval time:26571034ns
+//    AD eval time:29449760ns
+//    AD eval time:65543741ns
+//    AD eval time:97298098ns
 //    ***********************************************
 //  ***********************************************
-//  SD time:86349ns
-//    SD time:86548ns
-//    SD time:87810ns
-//    SD time:88262ns
-//    SD time:88916ns
-//    SD time:90697ns
-//    SD time:93845ns
-//    SD time:105460ns
-//    SD time:106409ns
-//    SD time:1022012ns
+  //  37259.5ns - 3.72595e-5s
+//    SD time:33075ns
+//    SD time:33433ns
+//    SD time:34045ns
+//    SD time:34666ns
+//    SD time:36549ns
+//    SD time:37970ns
+//    SD time:38947ns
+//    SD time:39565ns
+//    SD time:41217ns
+//    SD time:945146ns
 //    ***********************************************
-//  SD eval time:1466876ns
-//    SD eval time:1657333ns
-//    SD eval time:2465077ns
-//    SD eval time:2597521ns
-//    SD eval time:4489402ns
-//    SD eval time:7226464ns
-//    SD eval time:8791644ns
-//    SD eval time:10515657ns
-//    SD eval time:14272471ns
-//    SD eval time:15618604ns
+//    1586234ns : 0.001586234s
+//    SD eval time:1390638ns
+//    SD eval time:1412129ns
+//    SD eval time:1425464ns
+//    SD eval time:1553577ns
+//    SD eval time:1559911ns
+//    SD eval time:1612557ns
+//    SD eval time:1624310ns
+//    SD eval time:1830988ns
+//    SD eval time:2097809ns
+//    SD eval time:6920678ns
 
   var x = Param("x")
   var y = Param("y")
@@ -72,11 +76,8 @@ object MaxVector10 extends App{
   var x_0 = Param("x_0")
   var x_1 = Param("x_1")
   var x_2 = Param("x_2")
-  //  var x_3 = Param("x_3")
-  //  var x_vector = Array(List(x_1, x_2, x_3), x.t)
 
   var exp = List(x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2)
-
 
   println("ARRAY LENGTH "+ exp.length + "*******************************************")
   ExprMaxVector.eval(exp, true, true)

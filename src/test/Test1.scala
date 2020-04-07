@@ -10,6 +10,7 @@ object Test1 extends App {
     var x = Param("x")
     var y = Param("y")
     val division = x * x
+    DoubleEvaluator.eval((x+y)*var2)
     println(DoubleEvaluator.eval(division))
 
     val product = var1 * (var2 + var3)
@@ -30,7 +31,6 @@ object Test1 extends App {
     println(Evaluator.eval(Max(x, var2)))
     println(DoubleEvaluator.eval(Fold(GreaterThan(x,y), x_vector.list.head, x_vector )))
     println(DoubleEvaluator.eval(Fold(GreaterThan(x,y), array.list.head, array )))
-
 
     println(Evaluator.printString(dot))
     var additionOfTwoVectors =  DoubleEvaluator.eval(x_vector + x_vector)

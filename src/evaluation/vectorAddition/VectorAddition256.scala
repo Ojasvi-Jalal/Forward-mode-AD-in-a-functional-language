@@ -3,49 +3,79 @@ package evaluation.vectorAddition
 import automaticDifferentiation.AutomaticDifferentiate
 import differentiate.DifferentiateExpr
 import eval.DoubleEvaluator
-import evaluation.vectorAddition.VectorAddition500.exp1
+import evaluation.vectorAddition.VectorAddition452.exp1
 import intermediateRep.{Array, Param}
 
-object VectorAddition300 extends App{
-  //300
+object VectorAddition256 extends App{
+//
+//  ARRAY LENGTH 256*******************************************
+//    Eval:3461816ns - 0.003461816 / 0.011585463
+//    ***********************************************
+//  AD time:456166252ns - 0.456166252
+//    ***********************************************
+//  AD eval time:78029000ns - 0.078029
+//    ***********************************************
+//  ***********************************************
+//  SD time:125845467ns - 0.125845467
+//    ***********************************************
+//  SD eval time:61804803ns - 0.061804803
 
-  //auto-differentiate:  1.013809217
-  //2.047133214
-  //1.743646525
-  //1.356331607
-  //1.202974519
-  //1.054614304
-  //1.013809217
-  //0.999503994
-  //0.966842505
-  //0.920929763
-  //0.909652237
-
-  //diff:  2.356165218
-  //2.622038512
-  //2.618615818
-  //2.562741921
-  //2.355755997
-  //2.356165218
-  //2.325631402
-  //1.981716132
-  //1.9386417
-  //1.868791975
-  //0.751258592
-
-
-  //evaluate : 0.014645304
-
-  //0.012213081
-  //0.012248214
-  //0.012757058
-  //0.01342155
-  //0.014557253
-  //0.014733355
-  //0.016097943
-  //0.023338684
-  //0.030584571
-  //0.049636707
+//  ARRAY LENGTH 256*******************************************
+//    Eval:1589969ns
+//    Eval:1691052ns
+//    Eval:1704513ns
+//    Eval:2960300ns
+//    Eval:4502116ns
+//    Eval:7725223ns
+//    Eval:15101092ns
+//    Eval:15426708ns
+//    Eval:15501992ns
+//    Eval:19052754ns
+//    ***********************************************
+//  AD time:194212349ns
+//    AD time:203182914ns
+//    AD time:239378751ns
+//    AD time:255868828ns
+//    AD time:294750819ns
+//    AD time:423891707ns
+//    AD time:582888925ns
+//    AD time:602921958ns
+//    AD time:784136008ns
+//    AD time:1162593584ns
+//    ***********************************************
+//  AD eval time:60596359ns
+//    AD eval time:61961781ns
+//    AD eval time:65484499ns
+//    AD eval time:66964245ns
+//    AD eval time:68033555ns
+//    AD eval time:78671153ns
+//    AD eval time:79003343ns
+//    AD eval time:82429231ns
+//    AD eval time:189658291ns
+//    AD eval time:315016354ns
+//    ***********************************************
+//  ***********************************************
+//  SD time:126150188ns
+//    SD time:128224338ns
+//    SD time:128477420ns
+//    SD time:135300289ns
+//    SD time:137903339ns
+//    SD time:139182014ns
+//    SD time:143392972ns
+//    SD time:166225182ns
+//    SD time:190893840ns
+//    SD time:203379453ns
+//    ***********************************************
+//  SD eval time:61312645ns
+//    SD eval time:61530445ns
+//    SD eval time:61556959ns
+//    SD eval time:65424801ns
+//    SD eval time:65937932ns
+//    SD eval time:66450301ns
+//    SD eval time:67821157ns
+//    SD eval time:75442716ns
+//    SD eval time:79900712ns
+//    SD eval time:85749993ns
 
   var x = Param("x")
 
