@@ -17,7 +17,7 @@ object ExprMaxVector extends App {
 
     var eval: List[Long] = List()
 
-    for (a <- 0 to 9) {
+    for (a <- 0 to 19) {
       val t0 = System.nanoTime()
       (DoubleEvaluator.eval(Fold(GreaterThan(x,y), vector.list.head, vector )))
       val t1 = System.nanoTime()
@@ -26,11 +26,13 @@ object ExprMaxVector extends App {
 
     eval = eval.sorted
 
-    println( "Eval:" + (eval(4)+eval(5))/2+ "ns")
+    var resEval = ((eval(9)+eval(10))*0.000001)/2
+    //  evalAll.addOne(resEval)
+    println( "Eval:" + resEval + "ms")
 
     if (ad == true) {
       var arrAD: List[Long] = List()
-      for (a <- 0 to 9) {
+      for (a <- 0 to 19) {
         val t0 = System.nanoTime()
         (AutomaticDifferentiate.autodifferentiate(maxVector, vector))
         val t1 = System.nanoTime()
@@ -41,23 +43,22 @@ object ExprMaxVector extends App {
       var AD =  (AutomaticDifferentiate.autodifferentiate(maxVector, vector))
       var ADeval = DoubleEvaluator.eval(AD)
       var arrADEval: List[Long] = List()
-      for (a <- 0 to 9) {
+      for (a <- 0 to 19) {
         val t0 = System.nanoTime()
         Evaluator.printString(ADeval)
         val t1 = System.nanoTime()
         arrADEval = arrADEval :+ (t1 - t0)
       }
 
-     var sortedADEval = arrADEval.sorted
+      var sortedADEval = arrADEval.sorted
       var sortedAD = arrAD.sorted
+      var resAD =   ((sortedAD(9)+sortedAD(10))*0.000001)/2
 
-
-      println( "AD time:" + (sortedAD (4)+sortedAD (5))/2 + "ns")
+      var resADEval =   ((sortedADEval(9)+sortedADEval(10))*0.000001)/2
+      println( "AD time:" + resAD + "ms")
 
       println("***********************************************")
-
-      //      for(x<- sortedADEval){
-      println( "AD eval time:" + (sortedADEval(4)+sortedADEval(5))/2+ "ns")
+      println( "AD eval time:" +  resADEval+ "ms")
     }
 
 
@@ -66,7 +67,7 @@ object ExprMaxVector extends App {
 
     if (sd == true) {
       var arrSD: List[Long] = List()
-      for (a <- 0 to 9) {
+      for (a <- 0 to 19) {
         val t0 = System.nanoTime()
         DifferentiateExpr.differentiate(maxVector, vector)
         val t1 = System.nanoTime()
@@ -76,7 +77,7 @@ object ExprMaxVector extends App {
       var SD = DifferentiateExpr.differentiate(maxVector, vector)
       var SDeval = DoubleEvaluator.eval(SD)
       var arrSDEval: List[Long] = List()
-      for (a <- 0 to 9) {
+      for (a <- 0 to 19) {
         val t0 = System.nanoTime()
         Evaluator.printString(SDeval)
         val t1 = System.nanoTime()
@@ -87,15 +88,21 @@ object ExprMaxVector extends App {
       var sortedSDEval = arrSDEval.sorted
       var sortedSD = arrSD.sorted
 
+      var resSD =   ((sortedSD(9)+sortedSD(10))*0.000001)/2
+      //  SDAll = SDAll :+resSD
+
+      var resSDEval =   ((sortedSDEval(9)+sortedSDEval(10))*0.000001)/2
+      // SDEvalAll = SDEvalAll  :+ resSDEval
+
       //      for(x<- sortedSD){
-      println( "SD time:" + (sortedSD(4)+sortedSD(5))/2+ "ns")
+      println( "SD time:" + resSD+ "ms")
       //      }
 
       println("***********************************************")
 
       //      for(x<- sortedSDEval){
-      println( "SD eval time:" + (sortedSDEval(4)+sortedSDEval(5))/2+ "ns")
-      //      }
+      println( "SD eval time:" + resSDEval + "ms")
+      println()
     }
   }
 }

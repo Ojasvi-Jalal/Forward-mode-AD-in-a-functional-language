@@ -17,7 +17,7 @@ object ExprDotProdVector extends App {
 
     var eval: List[Long] = List()
 
-    for (a <- 0 to 9) {
+    for (a <- 0 to 19) {
       val t0 = System.nanoTime()
       DoubleEvaluator.eval(DotProduct(vector, vector))
       val t1 = System.nanoTime()
@@ -25,11 +25,13 @@ object ExprDotProdVector extends App {
     }
 
     eval = eval.sorted
-    println( "Eval:" + (eval(4)+eval(5))/2+ "ns")
+
+    var resEval = ((eval(9)+eval(10))*0.000001)/2
+    println( "Eval:" + resEval + "ms")
 
     if (ad == true) {
       var arrAD: List[Long] = List()
-      for (a <- 0 to 9) {
+      for (a <- 0 to 19) {
         val t0 = System.nanoTime()
         (AutomaticDifferentiate.autodifferentiate(dot, vector))
         val t1 = System.nanoTime()
@@ -39,7 +41,7 @@ object ExprDotProdVector extends App {
       var AD =  (AutomaticDifferentiate.autodifferentiate(dot, vector))
       var ADeval = DoubleEvaluator.eval(AD)
       var arrADEval: List[Long] = List()
-      for (a <- 0 to 9) {
+      for (a <- 0 to 19) {
         val t0 = System.nanoTime()
         Evaluator.printString(ADeval)
         val t1 = System.nanoTime()
@@ -47,14 +49,13 @@ object ExprDotProdVector extends App {
       }
       var sortedADEval = arrADEval.sorted
       var sortedAD = arrAD.sorted
+      var resAD =   ((sortedAD(9)+sortedAD(10))*0.000001)/2
 
-      println( "AD time:" + (sortedAD (4)+sortedAD (5))/2 + "ns")
+      var resADEval =   ((sortedADEval(9)+sortedADEval(10))*0.000001)/2
+      println( "AD time:" + resAD + "ms")
 
       println("***********************************************")
-
-      //      for(x<- sortedADEval){
-      println( "AD eval time:" + (sortedADEval(4)+sortedADEval(5))/2+ "ns")
-      //      }
+      println( "AD eval time:" +  resADEval+ "ms")
     }
 
 
@@ -63,7 +64,7 @@ object ExprDotProdVector extends App {
 
     if (sd == true) {
       var arrSD: List[Long] = List()
-      for (a <- 0 to 9) {
+      for (a <- 0 to 19) {
         val t0 = System.nanoTime()
         DifferentiateExpr.differentiate(dot, vector)
         val t1 = System.nanoTime()
@@ -73,7 +74,7 @@ object ExprDotProdVector extends App {
       var SD = DifferentiateExpr.differentiate(dot, vector)
       var SDeval = DoubleEvaluator.eval(SD)
       var arrSDEval: List[Long] = List()
-      for (a <- 0 to 9) {
+      for (a <- 0 to 19) {
         val t0 = System.nanoTime()
         Evaluator.printString(SDeval)
         val t1 = System.nanoTime()
@@ -83,15 +84,15 @@ object ExprDotProdVector extends App {
       var sortedSDEval = arrSDEval.sorted
       var sortedSD = arrSD.sorted
 
-      //      for(x<- sortedSD){
-      println( "SD time:" + (sortedSD(4)+sortedSD(5))/2+ "ns")
-      //      }
+      var resSD =   ((sortedSD(9)+sortedSD(10))*0.000001)/2
 
+      var resSDEval =   ((sortedSDEval(9)+sortedSDEval(10))*0.000001)/2
+
+      println( "SD time:" + resSD+ "ms")
       println("***********************************************")
 
-      //      for(x<- sortedSDEval){
-      println( "SD eval time:" + (sortedSDEval(4)+sortedSDEval(5))/2+ "ns")
-      //      }
+      println( "SD eval time:" + resSDEval + "ms")
+      println()
     }
   }
 }

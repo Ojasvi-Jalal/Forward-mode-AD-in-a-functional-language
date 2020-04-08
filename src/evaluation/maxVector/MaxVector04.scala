@@ -80,10 +80,24 @@ object MaxVector04 extends App{
   var x_1 = Param("x_1")
   var x_2 = Param("x_2")
 
-  var exp = List(x_0, x_2, x_2, x_1)
+  var exp4 = List(x_0, x_2, x_2, x_1)
+  var exp8 = List(x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2)
+  var exp16 = List(x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2)
+  var exp24 = List(x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2)
+  var exp32 = List(x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2)
+  var exp40 = List(x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2)
+  var exp48 = List(x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2)
+  var exp56 = List(x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2)
+  var exp64 = List(x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2)
+  var exp72 = List(x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2,x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2)
+  var exp100 = List(x_1, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_1, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_1, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_1, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_1, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_1, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_1, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2,x_0, x_2)
 
-
-  println("ARRAY LENGTH "+ exp.length + "*******************************************")
-  ExprMaxVector.eval(exp, true, true)
-  //var maxVector = (DoubleEvaluator.eval(Fold(GreaterThan(x,y), vector.list.head, vector )))
+  var list_expr = List(exp4,exp8,exp16, exp24,exp32, exp40, exp48, exp56, exp64, exp72, exp100)
+  var  lenList: List[Int] = List()
+  for(a <- list_expr){
+    lenList = lenList :+ a.length
+    println("ARRAY LENGTH "+ a.length + "*******************************************")
+    ExprMaxVector.eval(a, true, true)
+  }
+  println("len "+lenList)
 }
