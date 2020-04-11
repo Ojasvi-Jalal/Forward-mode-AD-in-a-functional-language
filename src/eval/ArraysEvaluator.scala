@@ -12,9 +12,9 @@ object ArraysEvaluator {
 
   def eval(e: Expr, hm: mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()): Expr= { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
-      case Array(a, b) => Array(a, b)
       case Vector(a, b) => Vector(a, b)
-      case ArrayAccess(a, b) => a.a(b.asInstanceOf[Int])
+      case Vector(a, b) => Vector(a, b)
+      case VectorAccess(a, b) => a.a(b.asInstanceOf[Int])
     }
   }
 }

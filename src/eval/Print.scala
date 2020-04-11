@@ -16,13 +16,13 @@ object Print {
     e match {
       case DoubleLiteral(d) => DoubleLiteral(d)
 
-      case _:Array =>  var array: Seq[Expr] = Seq()
-        var inputArray = e.asInstanceOf[Array].list
+      case _:Vector =>  var array: Seq[Expr] = Seq()
+        var inputArray = e.asInstanceOf[Vector].list
         for(x <- inputArray) {
             array =  array:+(printString(x))
       }
 
-      Array(array, e.t)
+      Vector(array, e.t)
       case Pair(x, y) => Pair(x, y)
       //case Array(a,b) => a
 
@@ -34,11 +34,11 @@ object Print {
             case (arg1: Param, _) => Param("(" + newarg1 + " + " + newarg2 + ")") // fix this
             case (_, arg2: Param) => Param("(" + newarg1 + " + " + newarg2 + ")")
             case (DoubleLiteral(newarg1), DoubleLiteral(newarg2)) => DoubleLiteral(newarg1 + newarg2)
-            case (_: Array, _: Array) =>
+            case (_: Vector, _: Vector) =>
               var array: Expr = printString(Zip(newarg1, newarg2))
               var x = Param("x")
               var y = Param("y")
-              array = printString(Map(Pair(x, y), x + y, array.asInstanceOf[ArrayPairs]))
+              array = printString(Map(Pair(x, y), x + y, array.asInstanceOf[VectorPairs]))
               array
             case (_, _) => printString(printString(newarg1) + (printString(newarg2)))
           }
@@ -48,35 +48,35 @@ object Print {
             case (arg1: Param, _) => Param("(" + arg1 + " + " + arg2 + ")")
             case (_, arg2: Param) => Param("(" + arg1 + " + " + arg2 + ")")
             case (DoubleLiteral(arg1), DoubleLiteral(arg2)) => DoubleLiteral(arg1 + arg2)
-            case (_: Array, _: Array) =>
+            case (_: Vector, _: Vector) =>
               var array: Expr = printString(Zip(arg1, arg2))
               var x = Param("x")
               var y = Param("y")
-              array = printString(Map(Pair(x, y), x + y, array.asInstanceOf[ArrayPairs]))
+              array = printString(Map(Pair(x, y), x + y, array.asInstanceOf[VectorPairs]))
               array
-            case (_: Array, _: Param) =>
+            case (_: Vector, _: Param) =>
               var array: Expr = printString(Zip(arg1, arg2))
               var x = Param("x")
               var y = Param("y")
-              array = printString(Map(Pair(x, y), x + y, array.asInstanceOf[ArrayPairs]))
+              array = printString(Map(Pair(x, y), x + y, array.asInstanceOf[VectorPairs]))
               array
-            case (_: Array, _: DoubleLiteral) =>
+            case (_: Vector, _: DoubleLiteral) =>
               var array: Expr = printString(Zip(arg1, arg2))
               var x = Param("x")
               var y = Param("y")
-              array = printString(Map(Pair(x, y), x + y, array.asInstanceOf[ArrayPairs]))
+              array = printString(Map(Pair(x, y), x + y, array.asInstanceOf[VectorPairs]))
               array
-            case (_: Param, _: Array) =>
+            case (_: Param, _: Vector) =>
               var array: Expr = printString(Zip(arg1, arg2))
               var x = Param("x")
               var y = Param("y")
-              array = printString(Map(Pair(x, y), x + y, array.asInstanceOf[ArrayPairs]))
+              array = printString(Map(Pair(x, y), x + y, array.asInstanceOf[VectorPairs]))
               array
-            case (_: DoubleLiteral, _: Array) =>
+            case (_: DoubleLiteral, _: Vector) =>
               var array: Expr = printString(Zip(arg1, arg2))
               var x = Param("x")
               var y = Param("y")
-              array = printString(Map(Pair(x, y), x + y, array.asInstanceOf[ArrayPairs]))
+              array = printString(Map(Pair(x, y), x + y, array.asInstanceOf[VectorPairs]))
               array
             case (_, _) => printString(printString(arg1) + (printString(arg2)))
           }
@@ -94,35 +94,35 @@ object Print {
             //            case (arg1: Param, _) => newarg1  * newarg2 // fix this
             //            case (_, arg2: Param) => newarg1 *  newarg2
             case (DoubleLiteral(newarg1), DoubleLiteral(newarg2)) => DoubleLiteral(newarg1 * newarg2)
-            case (_: Array, _: Array) =>
+            case (_: Vector, _: Vector) =>
               var array: Expr = printString(Zip(newarg1, newarg2))
               var x = Param("x")
               var y = Param("y")
-              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[ArrayPairs]))
+              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[VectorPairs]))
               array
-            case (_: Array, _: Param) =>
+            case (_: Vector, _: Param) =>
               var array: Expr = printString(Zip(newarg1, newarg2))
               var x = Param("x")
               var y = Param("y")
-              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[ArrayPairs]))
+              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[VectorPairs]))
               array
-            case (_: Array, _: DoubleLiteral) =>
+            case (_: Vector, _: DoubleLiteral) =>
               var array: Expr = printString(Zip(newarg1, newarg2))
               var x = Param("x")
               var y = Param("y")
-              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[ArrayPairs]))
+              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[VectorPairs]))
               array
-            case (_: Param, _: Array) =>
+            case (_: Param, _: Vector) =>
               var array: Expr = printString(Zip(newarg1, newarg2))
               var x = Param("x")
               var y = Param("y")
-              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[ArrayPairs]))
+              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[VectorPairs]))
               array
-            case (_: DoubleLiteral, _: Array) =>
+            case (_: DoubleLiteral, _: Vector) =>
               var array: Expr = printString(Zip(newarg1, newarg2))
               var x = Param("x")
               var y = Param("y")
-              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[ArrayPairs]))
+              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[VectorPairs]))
               array
             case (_, _) => printString(printString(newarg1) * (printString(newarg2)))
           }
@@ -133,35 +133,35 @@ object Print {
             case (arg1: Param, _) => Param("(" + arg1 + " * " + arg2 + ")")
             case (_, arg2: Param) => Param("(" + arg1 + " * " + arg2 + ")")
             case (DoubleLiteral(arg1), DoubleLiteral(arg2)) => DoubleLiteral(arg1 * arg2)
-            case (_: Array, _: Array) =>
+            case (_: Vector, _: Vector) =>
               var array: Expr = printString(Zip(arg1, arg2))
               var x = Param("x")
               var y = Param("y")
-              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[ArrayPairs]))
+              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[VectorPairs]))
               array
-            case (_: Array, _: Param) =>
+            case (_: Vector, _: Param) =>
               var array: Expr = printString(Zip(arg1, arg2))
               var x = Param("x")
               var y = Param("y")
-              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[ArrayPairs]))
+              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[VectorPairs]))
               array
-            case (_: Array, _: DoubleLiteral) =>
+            case (_: Vector, _: DoubleLiteral) =>
               var array: Expr = printString(Zip(arg1, arg2))
               var x = Param("x")
               var y = Param("y")
-              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[ArrayPairs]))
+              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[VectorPairs]))
               array
-            case (_: Param, _: Array) =>
+            case (_: Param, _: Vector) =>
               var array: Expr = printString(Zip(arg1, arg2))
               var x = Param("x")
               var y = Param("y")
-              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[ArrayPairs]))
+              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[VectorPairs]))
               array
-            case (_: DoubleLiteral, _: Array) =>
+            case (_: DoubleLiteral, _: Vector) =>
               var array: Expr = printString(Zip(arg1, arg2))
               var x = Param("x")
               var y = Param("y")
-              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[ArrayPairs]))
+              array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[VectorPairs]))
               array
             case (_, _) => printString(printString(arg1) * (printString(arg2)))
           }
@@ -197,19 +197,19 @@ object Print {
       }
 
       case Map(param, body, vector) => vector match {
-        case vector: Array =>
+        case vector: Vector =>
           var array: Seq[Expr] = Seq()
-          for (z <- vector.asInstanceOf[Array].list) {
+          for (z <- vector.asInstanceOf[Vector].list) {
             array = array :+ (printString(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), z)))
           }
-          return Array(array, vector.t)
+          return Vector(array, vector.t)
 
-        case vector: ArrayPairs =>
+        case vector: VectorPairs =>
           var array: Seq[Expr] = Seq()
-          for (z <- vector.asInstanceOf[ArrayPairs].a) {
+          for (z <- vector.asInstanceOf[VectorPairs].a) {
             array = array :+ (printString(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), z)))
           }
-          return Array(array, vector.t)
+          return Vector(array, vector.t)
       }
 
 
@@ -225,8 +225,8 @@ object Print {
           case Nil => initial
           case head :: tail =>
             body match {
-              case FunctionCall(FunctionCall(_: MultiplyDouble, arg2), arg1) => printString(FunctionCall(FunctionCall(MultiplyDouble(Fold(body, initial, Array(tail, vector.t))), Fold(body, initial, Array(tail, vector.t))), head))
-              case FunctionCall(FunctionCall(_: AddDouble, arg2), arg1) => printString(FunctionCall(FunctionCall(AddDouble(printString(Fold(body, initial, Array(tail, vector.t)))), printString(Fold(body, initial, Array(tail, vector.t)))), head))
+              case FunctionCall(FunctionCall(_: MultiplyDouble, arg2), arg1) => printString(FunctionCall(FunctionCall(MultiplyDouble(Fold(body, initial, Vector(tail, vector.t))), Fold(body, initial, Vector(tail, vector.t))), head))
+              case FunctionCall(FunctionCall(_: AddDouble, arg2), arg1) => printString(FunctionCall(FunctionCall(AddDouble(printString(Fold(body, initial, Vector(tail, vector.t)))), printString(Fold(body, initial, Vector(tail, vector.t)))), head))
               //FunctionCall(FunctionCall(MultiplyDouble(Fold(param, body, head, Array(tail, vector.t))), Fold(param, body, head, Array(tail, vector.t)), head))
             }
         }
@@ -235,48 +235,48 @@ object Print {
         (arg1, arg2) match {
           case (_: Param, _: Param) => Pair(arg1, arg2)
 
-          case (_: Param, _: Array) =>
+          case (_: Param, _: Vector) =>
             var array: Seq[Pair] = Seq()
-            for (z <- arg2.asInstanceOf[Array].list) {
+            for (z <- arg2.asInstanceOf[Vector].list) {
               array = array :+ (Pair(arg1, z))
             }
-            ArrayPairs(array, arg2.asInstanceOf[Array].t)
+            VectorPairs(array, arg2.asInstanceOf[Vector].t)
 
-          case (_: Array, _: DoubleLiteral) =>
+          case (_: Vector, _: DoubleLiteral) =>
             var array: Seq[Pair] = Seq()
-            for (z <- arg1.asInstanceOf[Array].list) {
+            for (z <- arg1.asInstanceOf[Vector].list) {
               array = array :+ (Pair(z, arg2))
             }
-            ArrayPairs(array, arg1.asInstanceOf[Array].t)
+            VectorPairs(array, arg1.asInstanceOf[Vector].t)
 
-          case (_: DoubleLiteral, _: Array) =>
+          case (_: DoubleLiteral, _: Vector) =>
             var array: Seq[Pair] = Seq()
-            for (z <- arg2.asInstanceOf[Array].list) {
+            for (z <- arg2.asInstanceOf[Vector].list) {
               array = array :+ (Pair(arg1, z))
             }
-            ArrayPairs(array, arg2.asInstanceOf[Array].t)
+            VectorPairs(array, arg2.asInstanceOf[Vector].t)
 
-          case (_: Array, _: Param) =>
+          case (_: Vector, _: Param) =>
             var array: Seq[Pair] = Seq()
-            for (z <- arg1.asInstanceOf[Array].list) {
+            for (z <- arg1.asInstanceOf[Vector].list) {
               array = array :+ (Pair(z, arg2))
             }
-            ArrayPairs(array, arg1.asInstanceOf[Array].t)
+            VectorPairs(array, arg1.asInstanceOf[Vector].t)
 
-          case (_: Array, _: Array) =>
+          case (_: Vector, _: Vector) =>
             var array: Seq[Pair] = Seq()
-            for (x <- arg1.asInstanceOf[Array].list zip arg2.asInstanceOf[Array].list) {
+            for (x <- arg1.asInstanceOf[Vector].list zip arg2.asInstanceOf[Vector].list) {
               array = array :+ (Pair(x._1, x._2))
             }
-            ArrayPairs(array, arg1.asInstanceOf[Array].t)
+            VectorPairs(array, arg1.asInstanceOf[Vector].t)
         }
 
       case DotProduct(array1, array2) =>
         var array: Expr = printString(Zip(array1, array2))
         var x = Param("x")
         var y = Param("y")
-        array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[ArrayPairs]))
-        printString(Fold(x + x, intermediateRep.DoubleLiteral(0), array.asInstanceOf[Array]))
+        array = printString(Map(Pair(x, y), x * y, array.asInstanceOf[VectorPairs]))
+        printString(Fold(x + x, intermediateRep.DoubleLiteral(0), array.asInstanceOf[Vector]))
 
       case FunctionCall(Lambda(param, body), arg) =>
         // store in a map   param -> arg and eval body
@@ -304,7 +304,7 @@ object Print {
         var result_matrix: Seq[Seq[Expr]] = Seq()
         for (ely <- p.a) {
           var small_array: Seq[Expr] = Seq()
-          for (x <- Array(ely.asInstanceOf[Seq[Expr]], p.t).a) {
+          for (x <- Vector(ely.asInstanceOf[Seq[Expr]], p.t).a) {
             small_array = small_array :+ printString(x)
           }
           result_matrix = result_matrix :+ small_array

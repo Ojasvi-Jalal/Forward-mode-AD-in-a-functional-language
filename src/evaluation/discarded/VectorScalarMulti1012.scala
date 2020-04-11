@@ -4,7 +4,7 @@ import automaticDifferentiation.AutomaticDifferentiate
 import eval.DoubleEvaluator
 import evaluation.ExprVectorScalar
 import evaluation.discarded.VectorScalarMulti2024.{exp, x}
-import intermediateRep.{Array, Param}
+import intermediateRep.{Vector, Param}
 
 object VectorScalarMulti1012 extends App{
 
@@ -105,6 +105,6 @@ object VectorScalarMulti1012 extends App{
   elemtype3, elemtype1, elemtype2, elemtype1, elemtype2, elemtype3, elemtype2, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype1, elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3)
 
   println("ARRAY LENGTH "+ exp.length + "*******************************************")
-  var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
+  var vector = DoubleEvaluator.eval(x * Vector(exp, x.t))
   ExprVectorScalar.eval(exp, true, true)
 }

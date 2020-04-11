@@ -3,7 +3,7 @@ package evaluation.discarded
 import automaticDifferentiation.AutomaticDifferentiate
 import differentiate.DifferentiateExpr
 import eval.DoubleEvaluator
-import intermediateRep.{Array, Param}
+import intermediateRep.{Vector, Param}
 
 object VectorScalarMulti71 extends App{
   //71
@@ -61,7 +61,7 @@ object VectorScalarMulti71 extends App{
     elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype3, elemtype1, elemtype2, elemtype3,
     elemtype1, elemtype2, elemtype1, elemtype2, elemtype3, elemtype2, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype1, elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3)
    //println(exp.length)
-  var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
+  var vector = DoubleEvaluator.eval(x * Vector(exp, x.t))
   var SD = DifferentiateExpr.differentiate(vector, x)
   var AD = (AutomaticDifferentiate.autodifferentiate(vector, x))
   val t0 = System.nanoTime()

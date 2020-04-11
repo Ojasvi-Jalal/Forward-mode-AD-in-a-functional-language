@@ -1,7 +1,7 @@
 package evaluation.discarded
 
 import eval.DoubleEvaluator
-import intermediateRep.{Array, Param}
+import intermediateRep.{Vector, Param}
 
 object VectorAddition700 extends App{
   //500
@@ -128,7 +128,7 @@ object VectorAddition700 extends App{
   x_1, x_0, x_2, x_0, x_0, x_2, x_2, x_1, x_2,
   x_0, x_0, x_2, x_0, x_0, x_0, x_1, x_0, x_2, x_0)
 
-  var vector = Array(exp1, x_0.t)
+  var vector = Vector(exp1, x_0.t)
   var addition = DoubleEvaluator.eval(vector + vector)
   val t0 = System.nanoTime()
   //(AutomaticDifferentiate.autodifferentiate(addition, vector)) // call-by-name

@@ -14,7 +14,7 @@ object AutoDiffTest extends App{
   var x_1 = Param("x_1")
   var x_2 = Param("x_2")
   var x_3 = Param("x_3")
-  var x_vector = Array(List(x_1, x_2, x_3), x.t)
+  var x_vector = Vector(List(x_1, x_2, x_3), x.t)
 
 //  var exp = List(x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2, x_1, x_0, x_0, x_0, x_0,
 //                x_1, x_1, x_0, x_2, x_2, x_1, x_2, x_2, x_0, x_2, x_0, x_1, x_0,

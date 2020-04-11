@@ -73,8 +73,8 @@ object Let {
 case class Map(param: Expr, body: Expr, vector: Expr) extends AnonymousFunction {
   var size = 0
   vector match {
-    case _: Array => size =  vector.asInstanceOf[Array].a.size
-    case _: ArrayPairs => size =  vector.asInstanceOf[ArrayPairs].a.size
+    case _: Vector => size =  vector.asInstanceOf[Vector].a.size
+    case _: VectorPairs => size =  vector.asInstanceOf[VectorPairs].a.size
   }
   override var t: Type = ArrayType(vector.t, size)
 
@@ -84,10 +84,10 @@ case class Map(param: Expr, body: Expr, vector: Expr) extends AnonymousFunction 
 
 }
 
-case class Fold(body: Expr, initial : Expr, vector: Array) extends AnonymousFunction {
+case class Fold(body: Expr, initial : Expr, vector: Vector) extends AnonymousFunction {
   override var t: Type = vector.t
 
-  override def build(newChildren: Seq[IR]): Fold = Fold(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr], newChildren(2).asInstanceOf[Array] )
+  override def build(newChildren: Seq[IR]): Fold = Fold(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr], newChildren(2).asInstanceOf[Vector] )
 
   override def children: Seq[IR] = Seq(body, vector)
 }
@@ -223,9 +223,21 @@ case class Pair(a: Expr, b: Expr) extends Expr{
   override def build(newChildren: Seq[IR]) = Pair(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr])
   override def children = Seq()
 }
+//
+//case class Vector(a: Seq[Expr], et: Type) extends Values{
+//  override var t: Type = VectorType(et, a.length)
+//
+//  override def toString(): String = a.toString
+//
+//  override def build(newChildren: Seq[IR]) = Vector(newChildren(0).asInstanceOf[Seq[Expr]], newChildren(1).asInstanceOf[Type])
+//
+//  override def children = Seq()
+//}
 
-case class Vector(a: Seq[Expr], et: Type) extends Values{
-  override var t: Type = VectorType(et, a.length)
+case class Vector(a: Seq[Expr], et: Type) extends Expr{
+  override var t: Type = ArrayType(et, a.length)
+
+  var list: Seq[Expr] =  a
 
   override def toString(): String = a.toString
 
@@ -234,24 +246,12 @@ case class Vector(a: Seq[Expr], et: Type) extends Values{
   override def children = Seq()
 }
 
-case class Array(a: Seq[Expr], et: Type) extends Expr{
-  override var t: Type = ArrayType(et, a.length)
-
-  var list: Seq[Expr] =  a
-
-  override def toString(): String = a.toString
-
-  override def build(newChildren: Seq[IR]) = Array(newChildren(0).asInstanceOf[Seq[Expr]], newChildren(1).asInstanceOf[Type])
-
-  override def children = Seq()
-}
-
-case class ArrayPairs(a: Seq[Pair], et: Type) extends Expr{
+case class VectorPairs(a: Seq[Pair], et: Type) extends Expr{
   override var t: Type = ArrayType(et, a.length)
 
   override def toString(): String = a.toString
 
-  override def build(newChildren: Seq[IR]) = ArrayPairs(newChildren(0).asInstanceOf[Seq[Pair]], newChildren(1).asInstanceOf[Type])
+  override def build(newChildren: Seq[IR]) = VectorPairs(newChildren(0).asInstanceOf[Seq[Pair]], newChildren(1).asInstanceOf[Type])
 
   override def children = Seq()
 }
@@ -268,12 +268,31 @@ case class Matrix(a: Seq[Seq[_]], et: Type) extends Expr {
   override def children = Seq()
 }
 
-case class ArrayAccess(a: Array, index: Int) extends Expr {
+case class VectorAccess(a: Vector, index: Int) extends Expr {
   override var t: Type = a.t
 
   override def toString(): String = a.toString
 
-  override def build(newChildren: Seq[IR]) = ArrayAccess(newChildren(0).asInstanceOf[Array], newChildren(1).asInstanceOf[Int])
+  override def build(newChildren: Seq[IR]) = VectorAccess(newChildren(0).asInstanceOf[Vector], newChildren(1).asInstanceOf[Int])
+
+  override def children = Seq()
+}
+
+case class Drop(a: Vector, index: Int) extends Expr {
+  override var t: Type = a.t
+
+  override def toString(): String = a.toString
+
+  override def build(newChildren: Seq[IR]) = Drop(newChildren(0).asInstanceOf[Vector], newChildren(1).asInstanceOf[Int])
+
+  override def children = Seq()
+}
+
+abstract case class Build(start: Int, stop: Int) extends Expr {
+
+  override def toString(): String = start.toString
+
+  override def build(newChildren: Seq[IR]) = Drop(newChildren(0).asInstanceOf[Vector], newChildren(1).asInstanceOf[Int])
 
   override def children = Seq()
 }

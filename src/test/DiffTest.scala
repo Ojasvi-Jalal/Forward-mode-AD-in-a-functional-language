@@ -13,7 +13,7 @@ object DiffTest extends App{
   var y = Param("y")
 
   var z = Param("z")
-  var x_vector = Array(List(x_1, x_2, x_3), x.t)
+  var x_vector = Vector(List(x_1, x_2, x_3), x.t)
   var y_vector = DoubleEvaluator.eval(Map(x, (x * x), x_vector))
   var max = Max(x, y)
   var max2 = Max(x*x, y*y)

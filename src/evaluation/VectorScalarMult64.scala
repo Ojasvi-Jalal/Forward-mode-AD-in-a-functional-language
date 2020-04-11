@@ -1,7 +1,7 @@
 package evaluation
 
 import eval.DoubleEvaluator
-import intermediateRep.{Array, Param}
+import intermediateRep.{Vector, Param}
 //ARRAY LENGTH 64*******************************************
 //0.004710613
 //4722686.5ns - 0.0047226865s
@@ -95,6 +95,6 @@ object VectorScalarMult64 extends App {
         elemtype3, elemtype3, elemtype2, elemtype3, elemtype2, elemtype1, elemtype1,
         elemtype2, elemtype3)
     println("ARRAY LENGTH "+ exp12.length + "*******************************************")
-    var vector = DoubleEvaluator.eval(x * Array(exp12, x.t))
+    var vector = DoubleEvaluator.eval(x * Vector(exp12, x.t))
     ExprVectorScalar.eval(exp12, true, true)
 }

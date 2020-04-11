@@ -1,7 +1,7 @@
 package evaluation
 
 import eval.DoubleEvaluator
-import intermediateRep.{Array, Param}
+import intermediateRep.{Vector, Param}
 
 
 object VectorScalarMulti304 extends App{

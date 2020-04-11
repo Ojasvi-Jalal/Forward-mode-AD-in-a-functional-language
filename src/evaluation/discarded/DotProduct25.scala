@@ -2,7 +2,7 @@ package evaluation.discarded
 
 import differentiate.DifferentiateExpr
 import eval.DoubleEvaluator
-import intermediateRep.{Array, DotProduct, Param}
+import intermediateRep.{Vector, DotProduct, Param}
 
 object DotProduct25 extends App{
 
@@ -23,7 +23,7 @@ object DotProduct25 extends App{
   x_1, x_2, x_0, x_2, x_1,
     x_1, x_2)
 
-  var vector = Array(exp1, x.t)
+  var vector = Vector(exp1, x.t)
   var dot = DoubleEvaluator.eval(DotProduct(vector, vector))
   val t0 = System.nanoTime()
   DifferentiateExpr.differentiate(dot, vector)

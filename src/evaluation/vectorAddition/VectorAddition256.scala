@@ -4,7 +4,7 @@ import automaticDifferentiation.AutomaticDifferentiate
 import differentiate.DifferentiateExpr
 import eval.DoubleEvaluator
 import evaluation.vectorAddition.VectorAddition452.exp1
-import intermediateRep.{Array, Param}
+import intermediateRep.{Vector, Param}
 
 object VectorAddition256 extends App{
 //

@@ -3,7 +3,7 @@ package evaluation.discarded
 import automaticDifferentiation.AutomaticDifferentiate
 import eval.DoubleEvaluator
 import evaluation.ExprVectorScalar
-import intermediateRep.{Array, Param}
+import intermediateRep.{Vector, Param}
 
 object VectorScalarMulti659 extends App{
 
@@ -56,6 +56,6 @@ object VectorScalarMulti659 extends App{
 
 
   println("ARRAY LENGTH "+ exp.length + "*******************************************")
-  var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
+  var vector = DoubleEvaluator.eval(x * Vector(exp, x.t))
   ExprVectorScalar.eval(exp, true, true)
 }

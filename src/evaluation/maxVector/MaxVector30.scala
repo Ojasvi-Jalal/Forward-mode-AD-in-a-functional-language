@@ -3,7 +3,7 @@ package evaluation.maxVector
 import automaticDifferentiation.AutomaticDifferentiate
 import differentiate.DifferentiateExpr
 import eval.DoubleEvaluator
-import intermediateRep.{Array, Fold, GreaterThan, Param}
+import intermediateRep.{Vector, Fold, GreaterThan, Param}
 
 
 object MaxVector30 extends App{

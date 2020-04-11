@@ -3,7 +3,7 @@ package evaluation.vectorAddition
 import automaticDifferentiation.AutomaticDifferentiate
 import differentiate.DifferentiateExpr
 import eval.{DoubleEvaluator, Evaluator}
-import intermediateRep.{Array, Param}
+import intermediateRep.{Vector, Param}
 
 object VectorAddition452 extends App{
 

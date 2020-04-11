@@ -18,14 +18,14 @@ object Test1 extends App {
     val sum  = var1 + var2
     val power = (x ^ var2) + (y ^ var2)
     val nested = product + var2
-    var array = Array(List(var1, var2, var3), var1.t)
+    var array = Vector(List(var1, var2, var3), var1.t)
     Let(x,body,y)
     var x_1 = Param("x_1")
     var x_2 = Param("x_2")
     var x_3 = Param("x_3")
     var z = Param("z")
     val product2 = x * y
-    var x_vector = Array(List(x_1, x_2, x_3), x.t)
+    var x_vector = Vector(List(x_1, x_2, x_3), x.t)
     var dot = DoubleEvaluator.eval(DotProduct(x_vector, x_vector))
     println(Evaluator.eval(Max(var1, var2)))
     println(Evaluator.eval(Max(x, var2)))

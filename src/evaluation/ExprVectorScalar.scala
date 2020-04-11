@@ -5,15 +5,16 @@ import differentiate.DifferentiateExpr
 import eval.{DoubleEvaluator, Evaluator}
 import scala.collection.mutable
 import scala.collection.mutable.Queue
-import intermediateRep.{Array, Expr, Param}
+import intermediateRep.{Vector, Expr, Param}
+
 
 object ExprVectorScalar extends App {
-//
-//  var evalAll :Queue[Double] = _
-//  var ADAll= Queue[Double]()
-//  var ADEvalAll= Queue[Double]()
-//  var SDAll= Queue[Double]()
-//  var SDEvalAll= Queue[Double]()
+
+  var evalAll: List[Double] = Nil
+  var ADAll= Queue[Double]()
+  var ADEvalAll= Queue[Double]()
+  var SDAll= Queue[Double]()
+  var SDEvalAll= Queue[Double]()
 ////
 //  ARRAY LENGTH 2*******************************************
 //    Eval:0.227654ms
@@ -322,17 +323,17 @@ object ExprVectorScalar extends App {
 
     for (a <- 0 to 19) {
       val t0 = System.nanoTime()
-      DoubleEvaluator.eval(x * Array(exp, x.t))
+      DoubleEvaluator.eval(x * Vector(exp, x.t))
       val t1 = System.nanoTime()
       eval = eval :+ ((t1 - t0))
     }
 
     eval = eval.sorted
 
-    var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
+    var vector = DoubleEvaluator.eval(x * Vector(exp, x.t))
 
       var resEval = ((eval(9)+eval(10))*0.000001)/2
-    //  evalAll.addOne(resEval)
+      //evalAll =  (resEval) ::evalAll
       println( "Eval:" + resEval + "ms")
 
     if (ad == true) {
@@ -358,7 +359,7 @@ object ExprVectorScalar extends App {
       var sortedADEval = arrADEval.sorted
       var sortedAD = arrAD.sorted
       var resAD =   ((sortedAD(9)+sortedAD(10))*0.000001)/2
-    //  ADAll = ADAll :+resAD
+      //ADAll = ADAll :+resAD
 
       var resADEval =   ((sortedADEval(9)+sortedADEval(10))*0.000001)/2
      // ADEvalAll = ADEvalAll  :+ resADEval

@@ -3,7 +3,7 @@ package evaluation.dotProduct
 import automaticDifferentiation.AutomaticDifferentiate
 import differentiate.DifferentiateExpr
 import eval.DoubleEvaluator
-import intermediateRep.{Array, DotProduct, Param}
+import intermediateRep.{Vector, DotProduct, Param}
 
 object DotProduct100 extends App{
 //  ARRAY LENGTH 100*******************************************

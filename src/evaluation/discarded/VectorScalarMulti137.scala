@@ -1,7 +1,7 @@
 package evaluation.discarded
 
 import eval.DoubleEvaluator
-import intermediateRep.{Array, Param}
+import intermediateRep.{Vector, Param}
 
 object VectorScalarMulti137 extends App{
   var x = Param("x")
@@ -64,7 +64,7 @@ object VectorScalarMulti137 extends App{
    //println(exp.length)
   //var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
   val t0 = System.nanoTime()
-  DoubleEvaluator.eval(x * Array(exp, x.t))
+  DoubleEvaluator.eval(x * Vector(exp, x.t))
   //DoubleEvaluator.eval(AutomaticDifferentiate.autodifferentiate(vector, x)) // call-by-name
   val t1 = System.nanoTime()
 

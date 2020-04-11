@@ -1,7 +1,7 @@
 package evaluation
 
 import automaticDifferentiation.AutomaticDifferentiate
-import intermediateRep.{Array, Param}
+import intermediateRep.{Vector, Param}
 import eval.DoubleEvaluator
 
 
@@ -104,6 +104,6 @@ object VectorScalarMulti256 extends App{
     elemtype3, elemtype1, elemtype2, elemtype1, elemtype2, elemtype3, elemtype2, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype2, elemtype1, elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2, elemtype1, elemtype1, elemtype1,elemtype1, elemtype1, elemtype1, elemtype2, elemtype3, elemtype1, elemtype1, elemtype3, elemtype3, elemtype2,elemtype3)
 
   println("ARRAY LENGTH "+ exp.length + "*******************************************")
-  var vector = DoubleEvaluator.eval(x * Array(exp, x.t))
+  var vector = DoubleEvaluator.eval(x * Vector(exp, x.t))
   ExprVectorScalar.eval(exp, true, true)
 }

@@ -40,7 +40,7 @@ object DifferentiateExpr {
               }
             }
 
-          case array: Array =>
+          case array: Vector =>
             //var array : Seq[Expr] = Seq()
             //scala.collection.mutable.ListBuffer[(Expr, Expr)] = ListBuffer()
             val elem = if (hm.contains(p)) hm(p) else p
@@ -54,7 +54,7 @@ object DifferentiateExpr {
               y_i = y_i :+ (differentiate(pair.first, pair.second))
             }
 
-            Array(y_i, array.t)
+            Vector(y_i, array.t)
         }
 
 
@@ -70,7 +70,7 @@ object DifferentiateExpr {
           else
             differentiatePower(arg1, arg2, withRespectTo)
 
-      case array: Array =>
+      case array: Vector =>
         if (!hm.isEmpty) {
           val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
           val newarg2 = if (hm.contains(arg2)) hm(arg2) else arg2
@@ -78,14 +78,14 @@ object DifferentiateExpr {
           for (x <- array.a) {
             small_array = small_array :+ differentiatePower(arg1, arg2, x)
           }
-          Array(small_array, array.t)
+          Vector(small_array, array.t)
         }
           else{
             var small_array: Seq[Expr] = Seq()
             for (x <- array.a) {
               small_array = small_array :+ differentiatePower(arg1, arg2, x)
             }
-            Array(small_array, array.t)
+            Vector(small_array, array.t)
           }
 
         }
@@ -104,7 +104,7 @@ object DifferentiateExpr {
             differentiate(arg1, withRespectTo) + differentiate(arg2, withRespectTo)
           }
 
-          case array: Array =>
+          case array: Vector =>
             if (!hm.isEmpty) {
               val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
               val newarg2 = if (hm.contains(arg2)) hm(arg2) else arg2
@@ -112,14 +112,14 @@ object DifferentiateExpr {
               for (x <- array.a) {
                 small_array = small_array :+ (differentiate(newarg1, x, hm) + differentiate(newarg2, x, hm))
               }
-              Array(small_array, array.t)
+              Vector(small_array, array.t)
             }
             else{
               var small_array: Seq[Expr] = Seq()
               for (x <- array.a) {
                 small_array = small_array :+(differentiate(arg1, x) + differentiate(arg2, x))
               }
-              Array(small_array, array.t)
+              Vector(small_array, array.t)
             }
 
         }
@@ -136,7 +136,7 @@ object DifferentiateExpr {
           else
             differentiateProduct(arg1, arg2, withRespectTo, hm)
 
-        case array: Array =>
+        case array: Vector =>
           if (!hm.isEmpty) {
             val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
             val newarg2 = if (hm.contains(arg2)) hm(arg2) else arg2
@@ -144,14 +144,14 @@ object DifferentiateExpr {
             for (x <- array.a) {
               small_array = small_array :+ (differentiateProduct(newarg1, newarg2, x, hm))
             }
-            Array(small_array, array.t)
+            Vector(small_array, array.t)
           }
           else{
             var small_array: Seq[Expr] = Seq()
             for (x <- array.a) {
               small_array = small_array :+(differentiateProduct(arg1, arg2, x, hm))
             }
-            Array(small_array, array.t)
+            Vector(small_array, array.t)
           }
       }
 
@@ -162,18 +162,18 @@ object DifferentiateExpr {
       case Map(param, body, vector) =>
         withRespectTo match {
           case param: Param => var array: Seq[Expr] = Seq()
-            var y = eval(Map(param, body, vector)).asInstanceOf[Array].a
+            var y = eval(Map(param, body, vector)).asInstanceOf[Vector].a
             for (z <- y) {
               array = array :+ (differentiate(z, withRespectTo))
             }
-            Array(array, vector.t)
+            Vector(array, vector.t)
 
-          case array: Array =>
+          case array: Vector =>
             //var array : Seq[Expr] = Seq()
             //scala.collection.mutable.ListBuffer[(Expr, Expr)] = ListBuffer()
             var matrix: Seq[Seq[Pair]] = Seq()
             var result_matrix: Seq[Seq[Expr]] = Seq()
-            var y = eval(Map(param, body, vector)).asInstanceOf[Array].list
+            var y = eval(Map(param, body, vector)).asInstanceOf[Vector].list
             for (ely <- y) {
               var small_array: Seq[Pair] = Seq()
               for (x <- array.a) {
@@ -192,7 +192,7 @@ object DifferentiateExpr {
             Matrix(result_matrix, array.t)
         }
 
-      case y: Array => {
+      case y: Vector => {
         withRespectTo match {
           case param: Param => var array: Seq[Expr] = Seq()
             //var y = eval(Map(param, body, vector)).asInstanceOf[Array].a
@@ -200,9 +200,9 @@ object DifferentiateExpr {
               val elem = if (hm.contains(z)) hm(z) else z
               array = array :+ (differentiate(elem.asInstanceOf[Expr], withRespectTo, hm))
             }
-            Array(array, y.t)
+            Vector(array, y.t)
 
-          case array: Array =>
+          case array: Vector =>
             //var array : Seq[Expr] = Seq()
             //scala.collection.mutable.ListBuffer[(Expr, Expr)] = ListBuffer()
             var matrix: Seq[Seq[Pair]] = Seq()
@@ -244,21 +244,21 @@ object DifferentiateExpr {
           else
             If_Else(cond, differentiate(stmt1, withRespectTo, hm), differentiate(stmt2, withRespectTo, hm))
 
-        case array: Array => var result: Seq[Expr] = Seq()
+        case array: Vector => var result: Seq[Expr] = Seq()
           if(!hm.isEmpty) {
             val newarg1 = if (hm.contains(stmt1)) hm(stmt1) else stmt1
             val newarg2 = if (hm.contains(stmt2)) hm(stmt2) else stmt2
             for(x <- array.list) {
               result = result:+ (If_Else(cond, differentiate(newarg1, x, hm), differentiate(newarg2, x, hm)))
             }
-            Array(result, stmt1.t)
+            Vector(result, stmt1.t)
           }
 
           else {
             for (x <- array.list) {
               result = result :+ (If_Else(cond, differentiate(stmt1, x), differentiate(stmt2, x)))
             }
-            Array(result, stmt1.t)
+            Vector(result, stmt1.t)
           }
       }
     }

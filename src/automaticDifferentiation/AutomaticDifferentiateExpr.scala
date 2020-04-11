@@ -17,7 +17,7 @@ object AutomaticDifferentiateExpr {
 
   def autoDifferentiate(e: Expr, withRespectTo: Expr): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
-      case y_vector: Array =>
+      case y_vector: Vector =>
         //val y_vector = DoubleEvaluator.eval(Map(param, body, vector)).asInstanceOf[Array]
 
         val vectorQueue = Queue[(Expr, Expr)]()
@@ -29,7 +29,7 @@ object AutomaticDifferentiateExpr {
         for(x <- vectorQueue){
           transformedSeq = transformedSeq:+x._1
         }
-        val array = Array(transformedSeq, y_vector.t)
+        val array = Vector(transformedSeq, y_vector.t)
         vectorQueue.addOne((Param("a_".concat(arrayCounter.toString)), array))
         arrayCounter = arrayCounter + 1
 
