@@ -213,13 +213,13 @@ object DoubleEvaluator {
             body match {
               case FunctionCall(FunctionCall(_: MultiplyDouble, arg2), arg1) => eval(FunctionCall(FunctionCall(MultiplyDouble(Fold(body, initial, Vector(tail, vector.t))), Fold(body, initial, Vector(tail, vector.t))), head))
               case FunctionCall(FunctionCall(_: AddDouble, arg2), arg1) => eval(FunctionCall(FunctionCall(AddDouble((Fold(body, initial, Vector(tail, vector.t)))), (Fold(body, initial, Vector(tail, vector.t)))), head))
-     case GreaterThan(arg1, arg2) =>
-       //tail match {
-//
-//                case Nil => initial
-//                case head :: tail =>
-               eval(Max(head, eval(Fold(body, head, Vector(tail, vector.t)))))
-             // }
+              case GreaterThan(arg1, arg2) =>
+                //tail match {
+                //
+                //                case Nil => initial
+                //                case head :: tail =>
+                eval(Max(head, eval(Fold(body, head, Vector(tail, vector.t)))))
+              // }
               //FunctionCall(FunctionCall(MultiplyDouble(Fold(param, body, head, Array(tail, vector.t))), Fold(param, body, head, Array(tail, vector.t)), head))
             }
         }
@@ -274,11 +274,11 @@ object DoubleEvaluator {
         eval(Fold(x + x, intermediateRep.DoubleLiteral(0), array.asInstanceOf[Vector]))
 
       case Max(arg1, arg2) => (arg1, arg2) match {
-        case (_: DoubleLiteral, _ :DoubleLiteral) => eval (If_Else (eval(GreaterThan(arg1, arg2)), arg1, arg2) )
-        case (_, _) => (If_Else(eval(GreaterThan(arg1, arg2)),  arg1, arg2))
+        case (_: DoubleLiteral, _: DoubleLiteral) => eval(If_Else(eval(GreaterThan(arg1, arg2)), arg1, arg2))
+        case (_, _) => (If_Else(eval(GreaterThan(arg1, arg2)), arg1, arg2))
       }
 
-      case GreaterThan(arg1, arg2) =>  (arg1, arg2) match {
+      case GreaterThan(arg1, arg2) => (arg1, arg2) match {
         case (_: DoubleLiteral, _: DoubleLiteral) => Bool(arg1.asInstanceOf[DoubleLiteral].d > arg2.asInstanceOf[DoubleLiteral].d)
         case (_, _) => if (!hm.isEmpty) {
           val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
@@ -291,10 +291,10 @@ object DoubleEvaluator {
       }
 
       case If_Else(expr, stmt1, stmt2) =>
-             if (expr.asInstanceOf[Bool].d == true)
-               stmt1
-            else
-               stmt2
+        if (expr.asInstanceOf[Bool].d == true)
+          stmt1
+        else
+          stmt2
 
       case FunctionCall(Lambda(param, body), arg) =>
         // store in a map   param -> arg and eval body
@@ -322,10 +322,12 @@ object DoubleEvaluator {
         }
       case p: Matrix => p
       case a: Vector => a
-      }
-
-     case 
+      case Drop(vector, index) => VectorVar(vector.a, vector.len - 1)
+      //      case MaxVar(vectorVar) =>
+      //        Fold(Max(VectorAccess(vectorVar,i)), Sequence((0 to vectorVar.len-1).toList), vector ))
+      //
     }
+  }
 
   def deEval(): mutable.HashMap[Expr, Expr] = {
     val argToParam = mutable.HashMap[Expr, Expr]()

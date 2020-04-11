@@ -76,7 +76,7 @@ case class Map(param: Expr, body: Expr, vector: Expr) extends AnonymousFunction 
     case _: Vector => size =  vector.asInstanceOf[Vector].a.size
     case _: VectorPairs => size =  vector.asInstanceOf[VectorPairs].a.size
   }
-  override var t: Type = ArrayType(vector.t, size)
+  override var t: Type = VectorType(vector.t, size)
 
   override def build(newChildren: Seq[IR]): Map = Map(newChildren(0).asInstanceOf[Param], newChildren(1).asInstanceOf[Expr], newChildren(2).asInstanceOf[Expr] )
 
@@ -223,19 +223,9 @@ case class Pair(a: Expr, b: Expr) extends Expr{
   override def build(newChildren: Seq[IR]) = Pair(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr])
   override def children = Seq()
 }
-//
-//case class Vector(a: Seq[Expr], et: Type) extends Values{
-//  override var t: Type = VectorType(et, a.length)
-//
-//  override def toString(): String = a.toString
-//
-//  override def build(newChildren: Seq[IR]) = Vector(newChildren(0).asInstanceOf[Seq[Expr]], newChildren(1).asInstanceOf[Type])
-//
-//  override def children = Seq()
-//}
 
 case class Vector(a: Seq[Expr], et: Type) extends Expr{
-  override var t: Type = ArrayType(et, a.length)
+  override var t: Type = VectorType(et, a.length)
 
   var list: Seq[Expr] =  a
 
@@ -246,8 +236,33 @@ case class Vector(a: Seq[Expr], et: Type) extends Expr{
   override def children = Seq()
 }
 
+case class VectorVar(a: Expr, len: Int) extends Expr{
+  override var t: Type = VectorType(a.t, len)
+
+  var elem: Expr = a
+
+  override def toString(): String = a.toString
+
+  override def build(newChildren: Seq[IR]) = Vector(newChildren(0).asInstanceOf[Seq[Expr]], newChildren(1).asInstanceOf[Type])
+
+  override def children = Seq()
+}
+
+case class Sequence(a: Seq[Int]) extends Expr{
+  override var t: Type = IntType
+
+  var list: Seq[Int] =  a
+
+  override def toString(): String = a.toString
+
+  override def build(newChildren: Seq[IR]) = Sequence(newChildren(0).asInstanceOf[Seq[Int]])
+
+  override def children = Seq()
+}
+
+
 case class VectorPairs(a: Seq[Pair], et: Type) extends Expr{
-  override var t: Type = ArrayType(et, a.length)
+  override var t: Type = VectorType(et, a.length)
 
   override def toString(): String = a.toString
 
@@ -257,13 +272,23 @@ case class VectorPairs(a: Seq[Pair], et: Type) extends Expr{
 }
 
 case class Matrix(a: Seq[Seq[_]], et: Type) extends Expr {
-  override var t: Type = ArrayType(et, a.length)
+  override var t: Type = VectorType(et, a.length)
 
   var matrix: Seq[Seq[_]] =  a
 
   override def toString(): String = a.toString
 
   override def build(newChildren: Seq[IR]) = Matrix(newChildren(0).asInstanceOf[Seq[Seq[Expr]]], newChildren(1).asInstanceOf[Type])
+
+  override def children = Seq()
+}
+
+case class VectorVarAccess(a: VectorVar, index: Int) extends Expr {
+  override var t: Type = a.t
+
+  override def toString(): String = a.toString
+
+  override def build(newChildren: Seq[IR]) = VectorVarAccess(newChildren(0).asInstanceOf[VectorVar], newChildren(1).asInstanceOf[Int])
 
   override def children = Seq()
 }
@@ -278,24 +303,33 @@ case class VectorAccess(a: Vector, index: Int) extends Expr {
   override def children = Seq()
 }
 
-case class Drop(a: Vector, index: Int) extends Expr {
+case class MaxVar(arg1: VectorVar) extends Expr {
+  override var t: Type = arg1.t
+
+  override def build(newChildren: Seq[IR]) = MaxVar(newChildren(0).asInstanceOf[VectorVar])
+
+  override def children = Seq(arg1)
+}
+
+
+case class Drop(a: VectorVar, index: Int) extends BuiltInFunction {
   override var t: Type = a.t
 
   override def toString(): String = a.toString
 
-  override def build(newChildren: Seq[IR]) = Drop(newChildren(0).asInstanceOf[Vector], newChildren(1).asInstanceOf[Int])
+  override def build(newChildren: Seq[IR]) = Drop(newChildren(0).asInstanceOf[VectorVar], newChildren(1).asInstanceOf[Int])
 
   override def children = Seq()
 }
 
-abstract case class Build(start: Int, stop: Int) extends Expr {
-
-  override def toString(): String = start.toString
-
-  override def build(newChildren: Seq[IR]) = Drop(newChildren(0).asInstanceOf[Vector], newChildren(1).asInstanceOf[Int])
-
-  override def children = Seq()
-}
+//abstract case class Build(len: Int) extends BuiltInFunction {
+//  override var t: Type = IntType
+//  override def toString(): String = len.toString
+//
+// override def build(newChildren: Seq[IR]) = Build(newChildren(0).asInstanceOf[Int])
+//
+//  override def children = Seq()
+//}
 
 case class Max(arg1: Expr, arg2: Expr) extends Expr {
   override var t: Type = arg1.t
