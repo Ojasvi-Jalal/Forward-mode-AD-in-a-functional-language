@@ -196,15 +196,14 @@ object DoubleEvaluator {
             array = array :+ (eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), z)))
           }
           return Vector(array, vector.t)
+
+        case vector: Sequence =>
+          var array: Seq[Expr] = Seq()
+          for (z <- vector.asInstanceOf[Vector].list) {
+            array = array :+ (eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), z)))
+          }
+          return Vector(array, vector.t)
       }
-
-
-      //        def foldLeft(list: Seq[Expr], z: Expr): Expr = {
-      //          list match {
-      //            case Nil => DoubleLiteral(1)
-      //            case head :: tail => FunctionCall(FunctionCall(MultiplyDouble(foldLeft(tail, head)), foldLeft(tail, head)), head)
-      //          }
-      //          z
 
       case Fold(body, initial, vector) =>
         vector.a match {
@@ -322,10 +321,11 @@ object DoubleEvaluator {
         }
       case p: Matrix => p
       case a: Vector => a
-      case Drop(vector, index) => VectorVar(vector.a, vector.len - 1)
-      //      case MaxVar(vectorVar) =>
-      //        Fold(Max(VectorAccess(vectorVar,i)), Sequence((0 to vectorVar.len-1).toList), vector ))
-      //
+      case Drop(vector, index) =>
+        index  match {
+         case index: IntLiteral => VectorVar(vector.a, vector.len - 1)
+         case _ => Drop(vector, index)
+      }
     }
   }
 

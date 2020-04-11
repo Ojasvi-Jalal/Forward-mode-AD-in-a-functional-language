@@ -40,10 +40,14 @@ object AutoDiffTest extends App{
 //            )
 
   var y = Param("y")
+  var i = Param("i")
 
   AutomaticDifferentiate.autodifferentiate(x*y, x)
   var z = Param("z")
   var y_vector = DoubleEvaluator.eval(Map(x, (x * x), x_vector))
+  var vectorVar = VectorVar(x,100)
+
+  Map(i, If_Else(GreaterThan(VectorVarAccess(vectorVar,i),Drop(vectorVar,i)),IntLiteral(1) , IntLiteral(0)), Sequence((0 to vectorVar.len).toList))
 
  // println("differentiate_param_1 = "+ AutomaticDifferentiate.autodifferentiate(vector_expr, x_0)) //0
   var max = DoubleEvaluator.eval(Max(x, y))

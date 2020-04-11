@@ -75,6 +75,7 @@ case class Map(param: Expr, body: Expr, vector: Expr) extends AnonymousFunction 
   vector match {
     case _: Vector => size =  vector.asInstanceOf[Vector].a.size
     case _: VectorPairs => size =  vector.asInstanceOf[VectorPairs].a.size
+    case _: Sequence => size = vector.asInstanceOf[Sequence].list.length
   }
   override var t: Type = VectorType(vector.t, size)
 
@@ -283,12 +284,12 @@ case class Matrix(a: Seq[Seq[_]], et: Type) extends Expr {
   override def children = Seq()
 }
 
-case class VectorVarAccess(a: VectorVar, index: Int) extends Expr {
+case class VectorVarAccess(a: VectorVar, index: Expr) extends Expr {
   override var t: Type = a.t
 
   override def toString(): String = a.toString
 
-  override def build(newChildren: Seq[IR]) = VectorVarAccess(newChildren(0).asInstanceOf[VectorVar], newChildren(1).asInstanceOf[Int])
+  override def build(newChildren: Seq[IR]) = VectorVarAccess(newChildren(0).asInstanceOf[VectorVar], newChildren(1).asInstanceOf[Expr])
 
   override def children = Seq()
 }
@@ -312,12 +313,12 @@ case class MaxVar(arg1: VectorVar) extends Expr {
 }
 
 
-case class Drop(a: VectorVar, index: Int) extends BuiltInFunction {
+case class Drop(a: VectorVar, index: Expr) extends BuiltInFunction {
   override var t: Type = a.t
 
   override def toString(): String = a.toString
 
-  override def build(newChildren: Seq[IR]) = Drop(newChildren(0).asInstanceOf[VectorVar], newChildren(1).asInstanceOf[Int])
+  override def build(newChildren: Seq[IR]) = Drop(newChildren(0).asInstanceOf[VectorVar], newChildren(1).asInstanceOf[Expr])
 
   override def children = Seq()
 }
@@ -358,13 +359,3 @@ case class If(condition: Expr, stmt1: Expr) extends Expr {
 
   override def children = Seq()
 }
-
-//case class Vector(a: Expr, number: Type) extends Values{
-//  override var t: Type = VectorType(a.t, number)
-//
-//  override def toString(): String = a.toString
-//
-//  override def build(newChildren: Seq[IR]) = Vector(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Type])
-//
-//  override def children = Seq()
-//}

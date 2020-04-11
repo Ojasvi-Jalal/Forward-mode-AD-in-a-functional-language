@@ -17,6 +17,7 @@ object AutomaticDifferentiateExpr {
 
   def autoDifferentiate(e: Expr, withRespectTo: Expr): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
+      //case MaxVar(vectorVar) =>
       case y_vector: Vector =>
         //val y_vector = DoubleEvaluator.eval(Map(param, body, vector)).asInstanceOf[Array]
 
