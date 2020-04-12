@@ -146,6 +146,18 @@ object AutomaticDifferentiateExpr {
             hm.put(((x.apply(x.knownSize-1)._2) + (( x.apply(x.knownSize-2)._2))), (Param("v_".concat(counter.toString))))
             counter = counter + 1
 
+          case (_:VectorVar, _: VectorVar) =>
+            x.addOne((Param("v_".concat(counter.toString))), arg1)
+            hm.put(arg1, Param("v_".concat(counter.toString)))
+            counter = counter + 1
+            x.addOne((Param("v_".concat(counter.toString))), arg2)
+            hm.put(arg2, Param("v_".concat(counter.toString)))
+            //hm.put(arg2.toString, Param("v_".concat(counter.toString)).toString())
+            counter = counter + 1
+            x.addOne(Param("v_".concat(counter.toString)), ((x.apply(x.knownSize-1)._1) + (( x.apply(x.knownSize-2)._1))))
+            hm.put(((x.apply(x.knownSize-1)._2) + (( x.apply(x.knownSize-2)._2))), (Param("v_".concat(counter.toString))))
+            counter = counter + 1
+
           case (_: Param, _) =>
             x.addOne((Param("v_".concat(counter.toString)), arg1))
             hm.put(arg1, Param("v_".concat(counter.toString)))

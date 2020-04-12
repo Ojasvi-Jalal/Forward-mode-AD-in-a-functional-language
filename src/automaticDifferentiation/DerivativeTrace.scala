@@ -48,6 +48,15 @@ object DerivativeTrace {
         Let(queue.apply(0)._1,arg2,e)
        // Let(queue.apply(0)._1,VectorVar(IntLiteral(0), arg2.asInstanceOf[VectorVar].len),e)
 
+      case FunctionCall(FunctionCall(_: AddDouble, arg1:VectorVar), arg2:VectorVar) =>
+        var i = Param("i")
+        var j = Param("j")
+        paramToArg.clear()
+        //Map(Lambda i, Map (j, differentiate(f(i) w.r.t j ), (0...N)) (0....N))
+       // Let(queue.apply(0)._1,  Map(i, Map(j, DifferentiateExpr.differentiate(queue.apply(0)._2, VectorVarAccess(withRespectTo.asInstanceOf[VectorVar],j),paramToArg) , Sequence((0 to withRespectTo.asInstanceOf[VectorVar].len-1).toList)), Sequence((0 to withRespectTo.asInstanceOf[VectorVar].len-1).toList)),e)
+       Let(queue.apply(0)._1,  Map(i, Map(j, If_Else( EqualTo(i,j), IntLiteral(1),IntLiteral(0)) , Sequence((0 to withRespectTo.asInstanceOf[VectorVar].len-1).toList)), Sequence((0 to withRespectTo.asInstanceOf[VectorVar].len-1).toList)),e)
+
+
       case DotProduct(arg1:VectorVar, arg2:VectorVar) =>
        // if(arg1 === withRespectTo.asInstanceOf[VectorVar])
         paramToArg.clear()

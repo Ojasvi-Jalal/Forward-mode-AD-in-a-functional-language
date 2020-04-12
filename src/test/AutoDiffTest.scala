@@ -46,7 +46,10 @@ object AutoDiffTest extends App{
   var vectorVar1 = VectorVar(vectorX,100)
   var vectorVar2 = VectorVar(vectorY,100)
 
+  println(AutomaticDifferentiate.autodifferentiate((vectorVar1+vectorVar2), vectorVar1))
+
   println(AutomaticDifferentiate.autodifferentiate(DotProduct(vectorVar1,vectorVar2), vectorVar1))
+
   println(AutomaticDifferentiate.autodifferentiate(y*vectorVar1, y))
   var z = Param("z")
   var y_vector = DoubleEvaluator.eval(Map(vectorX, (vectorX * vectorX), x_vector))

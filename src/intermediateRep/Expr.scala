@@ -210,6 +210,20 @@ case class IntLiteral(d: Int) extends Values{
   override def build(newChildren: Seq[IR]) = DoubleLiteral(newChildren.head.asInstanceOf[Int])
 
   override def children = Seq()
+
+  def ===(that: Var) : Boolean = {
+    this.d == that.asInstanceOf[IntLiteral].d
+  }
+}
+
+case class EqualTo(a: Expr, b:Expr) extends Values{
+  override var t: Type = BooleanType
+
+  override def toString(): String = a.toString
+
+  override def build(newChildren: Seq[IR]) = EqualTo(newChildren(0).asInstanceOf[Expr], newChildren(1).asInstanceOf[Expr])
+
+  override def children = Seq()
 }
 
 case class Bool(d: Boolean) extends Values{
