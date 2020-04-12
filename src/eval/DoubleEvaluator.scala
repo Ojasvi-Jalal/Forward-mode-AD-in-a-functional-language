@@ -1,6 +1,5 @@
 package eval
 
-import automaticDifferentiation.DerivativeTrace.{derivativeTrace, paramToArg}
 import intermediateRep._
 
 import scala.collection.mutable
@@ -199,8 +198,8 @@ object DoubleEvaluator {
 
         case vector: Sequence =>
           var array: Seq[Expr] = Seq()
-          for (z <- vector.asInstanceOf[Vector].list) {
-            array = array :+ (eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), z)))
+          for (z <- vector.list) {
+            array = array :+ (eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), IntLiteral(z))))
           }
           return Vector(array, vector.t)
       }
@@ -290,25 +289,31 @@ object DoubleEvaluator {
       }
 
       case If_Else(expr, stmt1, stmt2) =>
-        if (expr.asInstanceOf[Bool].d == true)
-          stmt1
-        else
-          stmt2
+      expr match{
+        case GreaterThan(arg1, arg2) => eval(expr)
+        case _ =>
+          if (expr.asInstanceOf[Bool].d == true)
+            stmt1
+          else
+            stmt2
+      }
 
       case FunctionCall(Lambda(param, body), arg) =>
         // store in a map   param -> arg and eval body
-        (param, arg) match {
-          case (_: Pair, _: Pair) =>
-            paramToArg.put(param.asInstanceOf[Pair].first, arg.asInstanceOf[Pair].first)
-            paramToArg.put(param.asInstanceOf[Pair].second, arg.asInstanceOf[Pair].second)
-            var z = eval(body, paramToArg)
-            paramToArg.clear()
-            z
-          case (_, _) =>
-            paramToArg.put(param, arg.asInstanceOf[Expr])
-            var z = eval(body, paramToArg)
-            paramToArg.clear()
-            z
+
+            (param, body, arg) match {
+              case (_: Pair, _,  _: Pair) =>
+                paramToArg.put(param.asInstanceOf[Pair].first, arg.asInstanceOf[Pair].first)
+                paramToArg.put(param.asInstanceOf[Pair].second, arg.asInstanceOf[Pair].second)
+                var z = eval(body, paramToArg)
+                paramToArg.clear()
+                z
+              case(_, MaxVar(vectorVar), _) => eval(arg)
+              case (_,_, _) =>
+                paramToArg.put(param, arg.asInstanceOf[Expr])
+                var z = eval(body, paramToArg)
+                paramToArg.clear()
+                z
         }
 
       case p: Param =>
@@ -326,6 +331,11 @@ object DoubleEvaluator {
          case index: IntLiteral => VectorVar(vector.a, vector.len - 1)
          case _ => Drop(vector, index)
       }
+      case MaxVar(vectorVar) =>
+        var i = Param("i")
+        if(paramToArg.contains(e))
+          eval(paramToArg(e))
+        MaxVar(vectorVar)
     }
   }
 

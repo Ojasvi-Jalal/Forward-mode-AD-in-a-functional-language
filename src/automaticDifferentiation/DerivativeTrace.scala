@@ -38,7 +38,7 @@ object DerivativeTrace {
       case MaxVar(vectorVar: VectorVar) =>
         var i = Param("i")
         paramToArg.clear()
-        Let(queue.apply(0)._1,  Map(i, If_Else(GreaterThan(VectorVarAccess(vectorVar,i),Drop(vectorVar,i)),IntLiteral(1) , IntLiteral(0)), Sequence((0 to vectorVar.len).toList)), e)
+        Let(queue.apply(0)._1,  Map(i, If_Else(GreaterThan(VectorVarAccess(vectorVar,i),Drop(vectorVar,i)),IntLiteral(1) , IntLiteral(0)), Sequence((0 to vectorVar.len-1).toList)), e)
 
 
       case _ =>
