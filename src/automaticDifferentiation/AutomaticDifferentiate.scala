@@ -10,12 +10,4 @@ object AutomaticDifferentiate {
       case _ => AutomaticDifferentiateExpr.autoDifferentiate(e, p)
     }
   }
-
-//  def autodifferentiate(e:Seq[Expr], p: Expr) : Seq[Expr] = {
-//    p.t match {
-//      case _: Param => AutomaticDifferentiateExpr.autoDifferentiateVector (e, p)
-//    }
-//      //case _:FunctionType => PrimalTrace2.autoDifferentiate(e, p)
-//      //case _:Array => AutomaticDifferentiateExpr.autoDifferentiate(e, p)
-//  }
 }

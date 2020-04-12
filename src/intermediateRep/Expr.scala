@@ -304,7 +304,7 @@ case class VectorAccess(a: Vector, index: Int) extends Expr {
   override def children = Seq()
 }
 
-case class MaxVar(arg1: VectorVar) extends Expr {
+case class MaxVar(arg1: Expr) extends Expr {
   override var t: Type = arg1.t
 
   override def build(newChildren: Seq[IR]) = MaxVar(newChildren(0).asInstanceOf[VectorVar])

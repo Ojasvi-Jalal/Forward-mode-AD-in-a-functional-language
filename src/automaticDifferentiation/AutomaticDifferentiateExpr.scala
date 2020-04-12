@@ -17,7 +17,6 @@ object AutomaticDifferentiateExpr {
 
   def autoDifferentiate(e: Expr, withRespectTo: Expr): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
-      //case MaxVar(vectorVar) =>
       case y_vector: Vector =>
         //val y_vector = DoubleEvaluator.eval(Map(param, body, vector)).asInstanceOf[Array]
 
@@ -123,6 +122,11 @@ object AutomaticDifferentiateExpr {
         hm.put(p, Param("v_".concat(counter.toString)))
         counter = counter + 1
         x.addOne((Param("v_".concat(counter.toString)), ( x.apply(x.knownSize-1)._1)))
+        counter = counter + 1
+
+      case vectorVar: VectorVar =>
+        x.addOne((Param("v_".concat(counter.toString)), vectorVar))
+        hm.put(vectorVar, Param("v_".concat(counter.toString)))
         counter = counter + 1
 
       case FunctionCall(FunctionCall(_: AddDouble, arg1), arg2) => {
@@ -277,6 +281,13 @@ object AutomaticDifferentiateExpr {
         forwardPrimalTrace(stmt2)
         x.addOne(Param("v_".concat(counter.toString)), If_Else(cond, hm(stmt1), hm(stmt2)))
         hm.put(If_Else(cond, stmt1, stmt2), Param("v_".concat(counter.toString)))
+        counter = counter + 1
+
+
+      case MaxVar(vectorVar: VectorVar) =>
+        forwardPrimalTrace(vectorVar)
+        x.addOne(Param("v_".concat(counter.toString)), MaxVar(hm(vectorVar)))
+        hm.put(MaxVar(vectorVar), Param("v_".concat(counter.toString)))
         counter = counter + 1
     }
   }

@@ -35,8 +35,13 @@ object DerivativeTrace {
         paramToArg.put(param, arg.asInstanceOf[Expr])
         derivativeTrace(body, withRespectTo, queue)
 
-      case _ =>
+      case MaxVar(vectorVar: VectorVar) =>
+        var i = Param("i")
+        paramToArg.clear()
+        Let(queue.apply(0)._1,  Map(i, If_Else(GreaterThan(VectorVarAccess(vectorVar,i),Drop(vectorVar,i)),IntLiteral(1) , IntLiteral(0)), Sequence((0 to vectorVar.len).toList)), e)
 
+
+      case _ =>
         var z_prime: Expr = queue.apply(0)._1
         queue.foreach(x => z_prime = Let(x._1, DifferentiateExpr.differentiate(paramToArg(x._1), withRespectTo, paramToArg), z_prime))
         paramToArg.clear()
