@@ -75,6 +75,7 @@ case class Map(param: Expr, body: Expr, vector: Expr) extends AnonymousFunction 
   vector match {
     case _: Vector => size =  vector.asInstanceOf[Vector].a.size
     case _: VectorPairs => size =  vector.asInstanceOf[VectorPairs].a.size
+    case _: VectorVar => size =  vector.asInstanceOf[VectorVar].len
     case _: Sequence => size = vector.asInstanceOf[Sequence].list.length
   }
   override var t: Type = VectorType(vector.t, size)

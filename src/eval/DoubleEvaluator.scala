@@ -97,12 +97,23 @@ object DoubleEvaluator {
               var y = Param("y")
               array = eval(Map(Pair(x, y), x * y, array.asInstanceOf[VectorPairs]))
               array
+            case (scalar: Param, _: VectorVar) =>
+              var y = Param("y")
+              var array = eval(Map(y, scalar * y, newarg2.asInstanceOf[VectorVar]))
+              array
+
+            case ( _: VectorVar,scalar: Param) =>
+              var y = Param("y")
+              var array = eval(Map(y, scalar * y, newarg1.asInstanceOf[VectorVar]))
+              array
+
             case (_: Param, _: Vector) =>
               var array: Expr = eval(Zip(newarg1, newarg2))
               var x = Param("x")
               var y = Param("y")
               array = eval(Map(Pair(x, y), x * y, array.asInstanceOf[VectorPairs]))
               array
+
             case (_: DoubleLiteral, _: Vector) =>
               var array: Expr = eval(Zip(newarg1, newarg2))
               var x = Param("x")
@@ -140,6 +151,17 @@ object DoubleEvaluator {
               var y = Param("y")
               array = eval(Map(Pair(x, y), x * y, array.asInstanceOf[VectorPairs]))
               array
+            case (scalar: Param, vector: VectorVar) =>
+              var i = Param("i")
+//              var array = eval(Map(y, scalar * y, arg2.asInstanceOf[VectorVar]))
+//              array
+              Map(i, scalar * VectorVarAccess(vector, i),Sequence((0 to vector.len-1).toList))
+
+            case ( vector: VectorVar,scalar: Param) =>
+              var i = Param("i")
+             // var array = eval(Map(y, scalar * y, arg1.asInstanceOf[VectorVar]))
+              eval(Map(i, scalar * VectorVarAccess(vector, i),Sequence((0 to vector.len-1).toList)))
+
             case (_: DoubleLiteral, _: Vector) =>
               var array: Expr = eval(Zip(arg1, arg2))
               var x = Param("x")
@@ -195,6 +217,16 @@ object DoubleEvaluator {
             array = array :+ (eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), z)))
           }
           return Vector(array, vector.t)
+
+//        case vector: VectorVar =>
+//          body match{
+//            FunctionCall(FunctionCall(_: MultiplyDouble, arg1), arg2:VectorVar) =>
+//
+//          }
+//          var array: Seq[Expr] = Seq()
+//          for (z <- vector) {
+//            array = array :+ (eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), IntLiteral(z))))
+//          }
 
         case vector: Sequence =>
           var array: Seq[Expr] = Seq()
