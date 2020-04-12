@@ -165,6 +165,10 @@ case class Param(x: String) extends Expr {
 
   override def toString(): String = x.toString
 
+  def ===(that: Var) : Boolean = {
+    this.toString() == that.toString
+  }
+
   override def build(newChildren: Seq[IR]) = ???
 
   override def children = Seq()
@@ -242,6 +246,10 @@ case class VectorVar(a: Expr, len: Int) extends Expr{
   override var t: Type = VectorType(a.t, len)
 
   var elem: Expr = a
+
+  def ===(that: Var) : Boolean = {
+    this.a.toString == that.asInstanceOf[VectorVar].a.toString && this.len == that.asInstanceOf[VectorVar].len
+  }
 
   override def toString(): String = a.toString
 

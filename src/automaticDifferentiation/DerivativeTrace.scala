@@ -44,9 +44,14 @@ object DerivativeTrace {
         if(withRespectTo == arg1){
           Let(queue.apply(0)._1,arg2,e)
         }
+        paramToArg.clear()
         Let(queue.apply(0)._1,arg2,e)
        // Let(queue.apply(0)._1,VectorVar(IntLiteral(0), arg2.asInstanceOf[VectorVar].len),e)
 
+      case DotProduct(arg1:VectorVar, arg2:VectorVar) =>
+       // if(arg1 === withRespectTo.asInstanceOf[VectorVar])
+        paramToArg.clear()
+        Let(queue.apply(0)._1,arg2,e)
       case _ =>
         var z_prime: Expr = queue.apply(0)._1
         queue.foreach(x => z_prime = Let(x._1, DifferentiateExpr.differentiate(paramToArg(x._1), withRespectTo, paramToArg), z_prime))

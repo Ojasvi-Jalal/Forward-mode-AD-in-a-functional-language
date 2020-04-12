@@ -305,6 +305,17 @@ object AutomaticDifferentiateExpr {
         x.addOne(Param("v_".concat(counter.toString)), MaxVar(hm(vectorVar)))
         hm.put(MaxVar(vectorVar), Param("v_".concat(counter.toString)))
         counter = counter + 1
+
+      case DotProduct(vector1:VectorVar, vector2:VectorVar) =>
+        x.addOne(Param("v_".concat(counter.toString)), vector1)
+        hm.put(vector1, Param("v_".concat(counter.toString)))
+        counter = counter + 1
+        x.addOne(Param("v_".concat(counter.toString)), vector2)
+        hm.put(vector2, Param("v_".concat(counter.toString)))
+        counter = counter + 1
+        x.addOne(Param("v_".concat(counter.toString)), DotProduct(hm(vector1), hm(vector2)))
+        hm.put(DotProduct(hm(vector1), hm(vector2)), Param("v_".concat(counter.toString)))
+        counter = counter + 1
     }
   }
 }

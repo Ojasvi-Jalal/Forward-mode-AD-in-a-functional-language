@@ -10,6 +10,7 @@ object AutoDiffTest extends App{
 
 
   var vectorX = Param("x")
+  var vectorY = Param("y")
   var x_0 = Param("x_0")
   var x_1 = Param("x_1")
   var x_2 = Param("x_2")
@@ -42,12 +43,15 @@ object AutoDiffTest extends App{
   var y = Param("y")
   var i = Param("i")
 
-  var vectorVar = VectorVar(vectorX,100)
-  println(AutomaticDifferentiate.autodifferentiate(y*vectorVar, y))
+  var vectorVar1 = VectorVar(vectorX,100)
+  var vectorVar2 = VectorVar(vectorY,100)
+
+  println(AutomaticDifferentiate.autodifferentiate(DotProduct(vectorVar1,vectorVar2), vectorVar1))
+  println(AutomaticDifferentiate.autodifferentiate(y*vectorVar1, y))
   var z = Param("z")
   var y_vector = DoubleEvaluator.eval(Map(vectorX, (vectorX * vectorX), x_vector))
 
-  var vectorVarMax = AutomaticDifferentiate.autodifferentiate(MaxVar(vectorVar), vectorVar)
+  var vectorVarMax = AutomaticDifferentiate.autodifferentiate(MaxVar(vectorVar1), vectorVar1)
   print(DoubleEvaluator.eval(vectorVarMax))
   //Map(i, If_Else(GreaterThan(VectorVarAccess(vectorVar,i),Drop(vectorVar,i)),IntLiteral(1) , IntLiteral(0)), Sequence((0 to vectorVar.len).toList))
 
