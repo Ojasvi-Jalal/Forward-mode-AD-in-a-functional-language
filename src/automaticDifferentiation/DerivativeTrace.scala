@@ -40,6 +40,12 @@ object DerivativeTrace {
         paramToArg.clear()
         Let(queue.apply(0)._1,  Map(i, If_Else(GreaterThan(VectorVarAccess(vectorVar,i),Drop(vectorVar,i)),IntLiteral(1) , IntLiteral(0)), Sequence((0 to vectorVar.len-1).toList)), e)
 
+      case FunctionCall(FunctionCall(_: MultiplyDouble, arg1), arg2:VectorVar) =>
+        if(withRespectTo == arg1){
+          Let(queue.apply(0)._1,arg2,e)
+        }
+        Let(queue.apply(0)._1,arg2,e)
+       // Let(queue.apply(0)._1,VectorVar(IntLiteral(0), arg2.asInstanceOf[VectorVar].len),e)
 
       case _ =>
         var z_prime: Expr = queue.apply(0)._1

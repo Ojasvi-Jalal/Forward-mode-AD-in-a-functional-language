@@ -9,12 +9,12 @@ import test.DiffTest.{x, x_1, x_vector, y}
 object AutoDiffTest extends App{
 
 
-  var x = Param("x")
+  var vectorX = Param("x")
   var x_0 = Param("x_0")
   var x_1 = Param("x_1")
   var x_2 = Param("x_2")
   var x_3 = Param("x_3")
-  var x_vector = Vector(List(x_1, x_2, x_3), x.t)
+  var x_vector = Vector(List(x_1, x_2, x_3), vectorX.t)
 
 //  var exp = List(x_2, x_2, x_0, x_0, x_1, x_0, x_2, x_2, x_1, x_0, x_0, x_0, x_0,
 //                x_1, x_1, x_0, x_2, x_2, x_1, x_2, x_2, x_0, x_2, x_0, x_1, x_0,
@@ -42,10 +42,11 @@ object AutoDiffTest extends App{
   var y = Param("y")
   var i = Param("i")
 
-  AutomaticDifferentiate.autodifferentiate(x*y, x)
+  var vectorVar = VectorVar(vectorX,100)
+  println(AutomaticDifferentiate.autodifferentiate(y*vectorVar, y))
   var z = Param("z")
-  var y_vector = DoubleEvaluator.eval(Map(x, (x * x), x_vector))
-  var vectorVar = VectorVar(x,100)
+  var y_vector = DoubleEvaluator.eval(Map(vectorX, (vectorX * vectorX), x_vector))
+
   var vectorVarMax = AutomaticDifferentiate.autodifferentiate(MaxVar(vectorVar), vectorVar)
   print(DoubleEvaluator.eval(vectorVarMax))
   //Map(i, If_Else(GreaterThan(VectorVarAccess(vectorVar,i),Drop(vectorVar,i)),IntLiteral(1) , IntLiteral(0)), Sequence((0 to vectorVar.len).toList))
