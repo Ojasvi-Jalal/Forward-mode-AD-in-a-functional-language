@@ -341,6 +341,7 @@ object DoubleEvaluator {
                 paramToArg.clear()
                 z
               case(_, MaxVar(vectorVar), _) => eval(arg)
+              case(_, DotProduct(_:VectorVar,_:VectorVar), _) => eval(arg)
               case (_,_, _) =>
                 paramToArg.put(param, arg.asInstanceOf[Expr])
                 var z = eval(body, paramToArg)
@@ -358,6 +359,7 @@ object DoubleEvaluator {
         }
       case p: Matrix => p
       case a: Vector => a
+      case a: VectorVar => a
       case Drop(vector, index) =>
         index  match {
          case index: IntLiteral => VectorVar(vector.a, vector.len - 1)

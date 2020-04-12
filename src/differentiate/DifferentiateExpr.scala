@@ -285,6 +285,7 @@ object DifferentiateExpr {
       case (e1, DoubleLiteral(d)) =>
 //        DoubleEvaluator.eval((DoubleLiteral(d) * DoubleEvaluator.eval((e1 ^ DoubleEvaluator.eval((DoubleLiteral(d) + DoubleLiteral(-1)), hm)) * DoubleEvaluator.eval(differentiate(e1, withRespectTo, hm)), hm)), hm)
     DoubleEvaluator.eval((DoubleLiteral(d) * DoubleEvaluator.eval((e1 ^ DoubleEvaluator.eval((DoubleLiteral(d) + DoubleLiteral(-1)), hm)) * DoubleEvaluator.eval(differentiate(e1, withRespectTo, hm)), hm)), hm)
+      //  ((DoubleLiteral(d) * ((e1 ^ DoubleEvaluator.eval((DoubleLiteral(d) + DoubleLiteral(-1)), hm)) * DoubleEvaluator.eval(differentiate(e1, withRespectTo, hm)), hm)), hm)
       //case (e1, e2) => Evaluator.eval(e2 * Evaluator.eval(e1 ^ Evaluator.eval(e2 + DoubleLiteral(-1))))
     }
   }
