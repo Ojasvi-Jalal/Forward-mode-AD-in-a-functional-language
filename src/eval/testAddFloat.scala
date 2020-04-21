@@ -1,5 +1,22 @@
-package eval
+//
+//  var vec2 = List(DoubleLiteral(0), DoubleLiteral(2))
+//  var vec4 = List(DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(1))
+//  var vec6 = List(DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(1),DoubleLiteral(0), DoubleLiteral(2))
+//  var vec8 = List(DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(0), DoubleLiteral(0), DoubleLiteral(1), DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2))
+//  var vec10 = List(DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(1),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(1),DoubleLiteral(0))
+//  var vec12 = List(DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(1),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(1),DoubleLiteral(0))
+//  var vec14 = List(DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(1),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(1),DoubleLiteral(0))
+//  var vec18 = List(DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(1),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2))
+//  var vec20 = List( DoubleLiteral(2), DoubleLiteral(1),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(1),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0),DoubleLiteral(1),DoubleLiteral(0))
+//  var vec22 = List(DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(1),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(1),DoubleLiteral(0), DoubleLiteral(2),DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2))
+//  var vec16 = List(DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(0), DoubleLiteral(0), DoubleLiteral(1), DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2),DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(0), DoubleLiteral(0), DoubleLiteral(1), DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2))
+//  var vec24 = List(DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(0), DoubleLiteral(0), DoubleLiteral(1), DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2),DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(0), DoubleLiteral(0), DoubleLiteral(1), DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2),DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(0), DoubleLiteral(0), DoubleLiteral(1), DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2))
+//  var vec26 = List(DoubleLiteral(2), DoubleLiteral(2),DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(0), DoubleLiteral(0), DoubleLiteral(1), DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2),DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(0), DoubleLiteral(0), DoubleLiteral(1), DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2),DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(0), DoubleLiteral(0), DoubleLiteral(1), DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2))
+//  var vec28 = List(DoubleLiteral(2), DoubleLiteral(2),DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(0), DoubleLiteral(0), DoubleLiteral(1), DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2),DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(0), DoubleLiteral(0), DoubleLiteral(1), DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2),DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(0), DoubleLiteral(0), DoubleLiteral(1), DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2))
+//  var vec30 = List(DoubleLiteral(2), DoubleLiteral(2),DoubleLiteral(2), DoubleLiteral(2),DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(0), DoubleLiteral(0), DoubleLiteral(1), DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2),DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(0), DoubleLiteral(0), DoubleLiteral(1), DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2),DoubleLiteral(2), DoubleLiteral(2), DoubleLiteral(0), DoubleLiteral(0), DoubleLiteral(1), DoubleLiteral(0), DoubleLiteral(2), DoubleLiteral(2))
+//  var list_vecr = List(vec2,vec4,vec6,vec8,vec10,vec12,vec14,vec16,vec18,vec20,vec22,vec24,vec26,vec28,vec30)
 
-class testAddFloat {
 
-}
+
+
+//var vec8 =

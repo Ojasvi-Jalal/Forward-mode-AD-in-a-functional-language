@@ -204,7 +204,7 @@ case class DoubleLiteral(d: Double) extends Values{
 
 case class IntLiteral(d: Int) extends Values{
   override var t: Type = IntType
-
+  var value: Int = d
   override def toString(): String = d.toString
 
   override def build(newChildren: Seq[IR]) = DoubleLiteral(newChildren.head.asInstanceOf[Int])
@@ -327,6 +327,16 @@ case class VectorAccess(a: Vector, index: Int) extends Expr {
   override def children = Seq()
 }
 
+case class VectorSequenceAccess(a: Sequence, index: Int) extends Expr {
+  override var t: Type = a.t
+
+  override def toString(): String = a.toString
+
+  override def build(newChildren: Seq[IR]) = VectorAccess(newChildren(0).asInstanceOf[Vector], newChildren(1).asInstanceOf[Int])
+
+  override def children = Seq()
+}
+
 case class MaxVar(arg1: Expr) extends Expr {
   override var t: Type = arg1.t
 
@@ -335,8 +345,17 @@ case class MaxVar(arg1: Expr) extends Expr {
   override def children = Seq(arg1)
 }
 
+case class MaxVec(arg1: Sequence) extends Expr {
+  override var t: Type = arg1.t
 
-case class Drop(a: VectorVar, index: Expr) extends BuiltInFunction {
+  override def build(newChildren: Seq[IR]) = MaxVec(newChildren(0).asInstanceOf[Sequence])
+
+  override def children = Seq(arg1)
+}
+
+
+
+case class Drop(a: Expr, index: Expr) extends BuiltInFunction {
   override var t: Type = a.t
 
   override def toString(): String = a.toString
@@ -382,3 +401,4 @@ case class If(condition: Expr, stmt1: Expr) extends Expr {
 
   override def children = Seq()
 }
+

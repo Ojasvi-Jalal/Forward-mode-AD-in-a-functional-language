@@ -12,6 +12,7 @@ object DoubleEvaluator {
   def eval(e: Expr, hm: mutable.HashMap[Expr, Expr] = mutable.HashMap[Expr, Expr]()): Expr = { //passing down vthe imformation -> I can start having variables //hm goes from var to a float
     e match {
       case DoubleLiteral(d) => DoubleLiteral(d)
+      case IntLiteral(d) => IntLiteral(d)
       case Pair(x, y) => Pair(x, y)
       //case Array(a,b) => a
       case FunctionCall(FunctionCall(_: AddDouble, arg2), arg1) => {
@@ -31,7 +32,7 @@ object DoubleEvaluator {
             case (_, _) => (eval(newarg1) + (eval(newarg2)))
           }
         }
-        else {
+        else
           (arg1, arg2) match {
             case (arg1: Param, _) => arg1 + arg2
             case (_, arg2: Param) => arg1 + arg2
@@ -69,7 +70,6 @@ object DoubleEvaluator {
             case (_, _) => (eval(arg1) + (eval(arg2)))
           }
         }
-      }
 
       case FunctionCall(FunctionCall(_: MultiplyDouble, arg2), arg1) => {
         if (!hm.isEmpty) {
@@ -102,7 +102,7 @@ object DoubleEvaluator {
               var array = eval(Map(y, scalar * y, newarg2.asInstanceOf[VectorVar]))
               array
 
-            case ( _: VectorVar,scalar: Param) =>
+            case (_: VectorVar, scalar: Param) =>
               var y = Param("y")
               var array = eval(Map(y, scalar * y, newarg1.asInstanceOf[VectorVar]))
               array
@@ -153,14 +153,14 @@ object DoubleEvaluator {
               array
             case (scalar: Param, vector: VectorVar) =>
               var i = Param("i")
-//              var array = eval(Map(y, scalar * y, arg2.asInstanceOf[VectorVar]))
-//              array
-              Map(i, scalar * VectorVarAccess(vector, i),Sequence((0 to vector.len-1).toList))
+              //              var array = eval(Map(y, scalar * y, arg2.asInstanceOf[VectorVar]))
+              //              array
+              Map(i, scalar * VectorVarAccess(vector, i), Sequence((0 to vector.len - 1).toList))
 
-            case ( vector: VectorVar,scalar: Param) =>
+            case (vector: VectorVar, scalar: Param) =>
               var i = Param("i")
-             // var array = eval(Map(y, scalar * y, arg1.asInstanceOf[VectorVar]))
-              eval(Map(i, scalar * VectorVarAccess(vector, i),Sequence((0 to vector.len-1).toList)))
+              // var array = eval(Map(y, scalar * y, arg1.asInstanceOf[VectorVar]))
+              eval(Map(i, scalar * VectorVarAccess(vector, i), Sequence((0 to vector.len - 1).toList)))
 
             case (_: DoubleLiteral, _: Vector) =>
               var array: Expr = eval(Zip(arg1, arg2))
@@ -203,38 +203,77 @@ object DoubleEvaluator {
         }
       }
 
-      case Map(param, body, vector) => vector match {
-        case vector: Vector =>
-          var array: Seq[Expr] = Seq()
-          for (z <- vector.asInstanceOf[Vector].list) {
-            array = array :+ (eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), z)))
-          }
-          return Vector(array, vector.t)
+      case Map(param, body, vector) => (body, vector) match {
 
-        case vector: VectorPairs =>
+        case (v: EqualTo, vector: Vector) =>
+          v match {
+            case EqualTo(a, b) => {
+              var array: Seq[Expr] = Seq()
+              for (z <- vector.list) {
+                array = array :+ eval(EqualTo(a, z))
+              }
+              paramToArg.clear()
+              return (Vector(array, vector.t))
+            }
+          }
+
+        case (_, vector: Sequence) =>
+          var result_matrix: Seq[Seq[Expr]] = Seq()
+          for(i<-vector.list){
+            var small_array: Seq[Expr] = Seq()
+            for(j<-vector.list){
+              small_array = small_array :+ eval(eval(If_Else(EqualTo(IntLiteral(i),IntLiteral(j)),IntLiteral(1),IntLiteral(0))))
+            }
+            result_matrix = result_matrix :+ small_array
+          }
+          Matrix(result_matrix, vector.t)
+
+
+
+
+
+
+//          var newV = paramToArg.values.head
+//          if (paramToArg.contains(v)) {
+//            newV = paramToArg(v)
+//          }
+//
+//          var array: Seq[Expr] = Seq()
+//          for (z <- vector.list) {
+//            array = array :+ eval(EqualTo(v, z))
+//          }
+//          paramToArg.clear()
+//          return eval(Vector(array, vector.t))
+
+        case (_, vector: VectorPairs) =>
           var array: Seq[Expr] = Seq()
           for (z <- vector.asInstanceOf[VectorPairs].a) {
             array = array :+ (eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), z)))
           }
           return Vector(array, vector.t)
 
-//        case vector: VectorVar =>
-//          body match{
-//            FunctionCall(FunctionCall(_: MultiplyDouble, arg1), arg2:VectorVar) =>
-//
-//          }
-//          var array: Seq[Expr] = Seq()
-//          for (z <- vector) {
-//            array = array :+ (eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), IntLiteral(z))))
-//          }
-
-        case vector: Sequence =>
+        case (_, vector: Sequence) =>
           var array: Seq[Expr] = Seq()
           for (z <- vector.list) {
             array = array :+ (eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), IntLiteral(z))))
           }
           return Vector(array, vector.t)
-      }
+
+        case (vector1: Vector, vector2: Vector) =>
+          var array: Seq[Expr] = Seq()
+          for (x <- (0 to vector1.list.length-1).toList) {
+              array = array :+ (eval(VectorAccess(vector2,x)))
+          }
+          return Vector(array, vector.t)
+
+        case (_, vector: Vector) =>
+          var array: Seq[Expr] = Seq()
+          for (z <- vector.asInstanceOf[Vector].list) {
+            array = array :+ (eval(FunctionCall((Lambda(param, body.asInstanceOf[Expr])), z)))
+          }
+          return Vector(array, vector.t)
+
+    }
 
       case Fold(body, initial, vector) =>
         vector.a match {
@@ -312,7 +351,7 @@ object DoubleEvaluator {
         case (_: DoubleLiteral, _: DoubleLiteral) => Bool(arg1.asInstanceOf[DoubleLiteral].d > arg2.asInstanceOf[DoubleLiteral].d)
         case (_, _) => if (!hm.isEmpty) {
           val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
-          val newarg2 = if (hm.contains(arg2)) eval(hm(arg2)) else arg2
+          val newarg2 = if (hm.contains(arg2)) eval(hm(eval(arg2))) else arg2
           eval(GreaterThan(newarg1, newarg2))
         }
         else {
@@ -322,7 +361,37 @@ object DoubleEvaluator {
 
       case If_Else(expr, stmt1, stmt2) =>
       expr match{
-        case GreaterThan(arg1, arg2) => eval(expr)
+       case GreaterThan(arg1,arg2) =>
+          if (!hm.isEmpty) {
+            val newarg1 = if (hm.contains(arg1)) hm(arg1) else arg1
+            val newarg2 = if (hm.contains(arg2)) eval(hm(arg2)) else arg2
+            eval(GreaterThan(newarg1, eval(newarg2,paramToArg)))
+          }
+          eval(expr)
+        case GreaterThan(_, _) => eval(expr)
+//        case GreaterThan(_, _) =>
+//          //                (access,drop) match {
+//          //                    case (VectorAccess(vec,i), Drop(vec,i)) =>
+//          //                        var newV = vector
+//          //                        if(hm.contains(vec)){
+//          //                           newV = hm(vec).asInstanceOf[Vector]
+//          //                        }
+//          var newV = (paramToArg.values.head.asInstanceOf[Sequence])
+//
+//          var array: Seq[Expr] = Seq()
+//          for(i <- (0 to newV.list.length).toList) {
+//            array = array :+ eval(EqualTo(MaxVec(newV),IntLiteral(i)))
+//            // array = array :+ eval(If_Else(GreaterThan(VectorSequenceAccess(newV,i),eval(MaxVec(eval(Drop(newV,IntLiteral(i))).asInstanceOf[Sequence]))), DoubleLiteral(0),DoubleLiteral(1)))
+//          }
+//          Vector(array, newV.t)
+
+
+      case EqualTo(arg1,arg2) =>
+        if(arg1.asInstanceOf[IntLiteral].d == arg1.asInstanceOf[IntLiteral].d)
+          stmt1
+        else
+          stmt2
+
         case _ =>
           if (expr.asInstanceOf[Bool].d == true)
             stmt1
@@ -334,14 +403,50 @@ object DoubleEvaluator {
         // store in a map   param -> arg and eval body
 
             (param, body, arg) match {
+              case (elem:Vector,input:Vector,value:Vector) => {
+                paramToArg.put(Param("x_0"),DoubleLiteral(0))
+                paramToArg.put(Param("x_1"),DoubleLiteral(1))
+                paramToArg.put(Param("x_2"),DoubleLiteral(2))
+                var array: Seq[Expr] = Seq()
+                for (z <- value.list) {
+                    array = array :+ eval(z,paramToArg)
+                  }
+                  paramToArg.clear()
+                  Vector(array,Param("x_0").t)
+                }
               case (_: Pair, _,  _: Pair) =>
                 paramToArg.put(param.asInstanceOf[Pair].first, arg.asInstanceOf[Pair].first)
                 paramToArg.put(param.asInstanceOf[Pair].second, arg.asInstanceOf[Pair].second)
                 var z = eval(body, paramToArg)
                 paramToArg.clear()
                 z
-              case(_, MaxVar(vectorVar), _) => eval(arg)
-              case(_, DotProduct(_:VectorVar,_:VectorVar), _) => eval(arg)
+              case(_, MaxVar(vectorVar), _) =>
+                eval(arg,paramToArg)
+//                var x = Param("x")
+//                var y = Param("y")
+//                var listNew = (paramToArg.values.head.asInstanceOf[Vector])
+//                //var listNew = (paramToArg.values.head.asInstanceOf[Sequence])
+//                var max = eval(Fold(GreaterThan(x,y), (listNew.list.head), listNew))
+//               // var max = (listNew.list.max)
+//                var i = Param("i")
+//                eval(Map(i,EqualTo(max,i), listNew ))
+//
+//                var array: Seq[Expr] = Seq()
+//                for (z <- listNew.list) {
+//                  array = array :+ eval(EqualTo(max, z))
+//                }
+//                paramToArg.clear()
+//                Vector(array,listNew.t)
+              //case(_, DotProduct(_:VectorVar,_:VectorVar), _) => eval(arg)
+              case(_,body,vector:Vector) =>
+//                body match{
+                  paramToArg.put(param, vector)
+                   eval(body,paramToArg)
+               // }
+              case(_,body:VectorVar,_) =>
+                //                body match{
+                //paramToArg.put(param, vector)
+                eval(arg,paramToArg)
               case (_,_, _) =>
                 paramToArg.put(param, arg.asInstanceOf[Expr])
                 var z = eval(body, paramToArg)
@@ -358,18 +463,79 @@ object DoubleEvaluator {
           p
         }
       case p: Matrix => p
-      case a: Vector => a
-      case a: VectorVar => a
-      case Drop(vector, index) =>
-        index  match {
-         case index: IntLiteral => VectorVar(vector.a, vector.len - 1)
-         case _ => Drop(vector, index)
+      case a: Vector => if(hm.contains(a)){
+        var temp = hm(a)
+        var result :Seq[Seq[Expr]] = Seq()
+        for (ely <- temp.asInstanceOf[Matrix].a) {
+            var small_array: Seq[Expr] = Seq()
+            for (x <- ely.asInstanceOf[Seq[Expr]]) {
+              small_array = small_array :+ x
+            }
+          result = result :+ small_array
+          }
+        Matrix(result, a.t)
       }
+        else
+        a
+      case a: Sequence => a
+      case a: VectorVar =>
+        if (paramToArg.contains(a)) {
+          eval(paramToArg(a))
+        }
+        else {
+          a
+        }
+      case Drop(vector, index) =>
+      vector match {
+        case _:VectorVar =>
+          index  match {
+            case index: IntLiteral => VectorVar(vector.asInstanceOf[VectorVar].a, vector.asInstanceOf[VectorVar].len - 1)
+            case _ => Drop(vector, index)
+          }
+
+        case _:Vector =>
+          var array: Seq[Expr] = Seq()
+          for(x <- (0 to vector.asInstanceOf[Vector].list.length).toList){
+            if(x != index.asInstanceOf[IntLiteral].d){
+              array = array :+ VectorAccess(vector.asInstanceOf[Vector],x)
+            }
+          }
+          Vector(array, vector.t)
+
+//        case seq:Sequence =>
+//          var newS:Seq[Expr] = Seq()
+//          for(x<-(0 to seq.list.length-1).toList){
+//            if(x != index){
+//              newS = newS :+ VectorSequenceAccess(seq,x)
+//            }
+//          }
+//
+
+      }
+
       case MaxVar(vectorVar) =>
         var i = Param("i")
         if(paramToArg.contains(e))
           eval(paramToArg(e))
         MaxVar(vectorVar)
+
+      case VectorAccess(vector: Vector,index:Int) => vector.a(index)
+      case VectorSequenceAccess(vector: Sequence,index:Int) => IntLiteral(vector.list(index))
+      case MaxVec(v) =>
+//        var max = 0
+//        for(x <- v.list){
+//          if(x > max){
+//            max = x
+//          }
+//        }
+//        IntLiteral(max)
+        IntLiteral(v.list.max)
+
+      case EqualTo(arg1,arg2) =>
+        if(arg1.asInstanceOf[DoubleLiteral].d == arg2.asInstanceOf[DoubleLiteral].d)
+          return IntLiteral(1)
+        else
+          return IntLiteral(0)
     }
   }
 

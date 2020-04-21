@@ -41,11 +41,13 @@ object DerivativeTrace {
         Let(queue.apply(0)._1,  Map(i, If_Else(GreaterThan(VectorVarAccess(vectorVar,i),Drop(vectorVar,i)),IntLiteral(1) , IntLiteral(0)), Sequence((0 to vectorVar.len-1).toList)), e)
 
       case FunctionCall(FunctionCall(_: MultiplyDouble, arg1), arg2:VectorVar) =>
-        if(withRespectTo == arg1){
-          Let(queue.apply(0)._1,arg2,e)
-        }
+        var i = Param("i")
+//        if(withRespectTo == arg1){
+//          Let(queue.apply(0)._1,arg2,arg2)
+//        }
         paramToArg.clear()
-        Let(queue.apply(0)._1,arg2,e)
+        Let(queue.apply(0)._1,  Map(i, arg2, Sequence((0 to arg2.len-1).toList)), arg2)
+        //Let(queue.apply(0)._1,arg2,e)
        // Let(queue.apply(0)._1,VectorVar(IntLiteral(0), arg2.asInstanceOf[VectorVar].len),e)
 
       case FunctionCall(FunctionCall(_: AddDouble, arg1:VectorVar), arg2:VectorVar) =>
@@ -54,13 +56,15 @@ object DerivativeTrace {
         paramToArg.clear()
         //Map(Lambda i, Map (j, differentiate(f(i) w.r.t j ), (0...N)) (0....N))
        // Let(queue.apply(0)._1,  Map(i, Map(j, DifferentiateExpr.differentiate(queue.apply(0)._2, VectorVarAccess(withRespectTo.asInstanceOf[VectorVar],j),paramToArg) , Sequence((0 to withRespectTo.asInstanceOf[VectorVar].len-1).toList)), Sequence((0 to withRespectTo.asInstanceOf[VectorVar].len-1).toList)),e)
-       Let(queue.apply(0)._1,  Map(i, Map(j, If_Else( EqualTo(i,j), IntLiteral(1),IntLiteral(0)) , Sequence((0 to withRespectTo.asInstanceOf[VectorVar].len-1).toList)), Sequence((0 to withRespectTo.asInstanceOf[VectorVar].len-1).toList)),e)
+       Let(queue.apply(0)._1,  Map(i, Map(j, If_Else( EqualTo(i,j), IntLiteral(1),IntLiteral(0)) , Sequence((0 to withRespectTo.asInstanceOf[VectorVar].len-1).toList)), Sequence((0 to withRespectTo.asInstanceOf[VectorVar].len-1).toList)),queue.apply(0)._1)
 
 
       case DotProduct(arg1:VectorVar, arg2:VectorVar) =>
        // if(arg1 === withRespectTo.asInstanceOf[VectorVar])
+        var i = Param("i")
         paramToArg.clear()
-        Let(queue.apply(0)._1,arg2,e)
+       Let(queue.apply(0)._1,  Map(i, arg2, Sequence((0 to arg1.len-1).toList)), arg2)
+       // Let(queue.apply(0)._1,arg2,e)
       case _ =>
         var z_prime: Expr = queue.apply(0)._1
         queue.foreach(x => z_prime = Let(x._1, DifferentiateExpr.differentiate(paramToArg(x._1), withRespectTo, paramToArg), z_prime))

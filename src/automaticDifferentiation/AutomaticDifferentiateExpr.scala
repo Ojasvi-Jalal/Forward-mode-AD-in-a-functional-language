@@ -313,8 +313,7 @@ object AutomaticDifferentiateExpr {
 
 
       case MaxVar(vectorVar: VectorVar) =>
-        forwardPrimalTrace(vectorVar)
-        x.addOne(Param("v_".concat(counter.toString)), MaxVar(hm(vectorVar)))
+        x.addOne(Param("v_".concat(counter.toString)), MaxVar((vectorVar)))
         hm.put(MaxVar(vectorVar), Param("v_".concat(counter.toString)))
         counter = counter + 1
 
